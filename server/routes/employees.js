@@ -52,6 +52,7 @@ router.post("/", upload.single("photo"), async (req, res) => {
         phone,
       },
       address: { street, city, state, zipCode, country },
+      pswrd,
       salary,
       userName,
       position,
@@ -71,7 +72,8 @@ router.post("/", upload.single("photo"), async (req, res) => {
       !lastName ||
       !email ||
       !gender ||
-      !joiningDate
+      !joiningDate ||
+      !pswrd
     ) {
       return res.status(400).json({
         error: "All fields are required",
@@ -89,6 +91,7 @@ router.post("/", upload.single("photo"), async (req, res) => {
         email,
         phone,
       },
+      pswrd,
       photo,
       salary,
       userName,

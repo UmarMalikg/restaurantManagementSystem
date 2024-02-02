@@ -26,6 +26,7 @@ const AddEmployee = ({
     dateOfBirth: "",
     gender: "",
     nationalID: "",
+    pswrd: "",
     photo: null,
     salary: "",
     userName: "",
@@ -71,11 +72,12 @@ const AddEmployee = ({
   const submitForm = () => {
     // Check if all required fields are filled
     if (
-      // !formData.firstName ||
-      // !formData.lastName ||
-      // !formData.dateOfBirth ||
-      // !formData.gender ||
-      // !formData.nationalID ||
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.dateOfBirth ||
+      !formData.gender ||
+      !formData.nationalID ||
+      !formData.pswrd ||
       !formData.photo ||
       !formData.salary ||
       !formData.userName
@@ -104,6 +106,7 @@ const AddEmployee = ({
         email: formData.email,
         phone: formData.phone,
       },
+      pswrd: formData.pswrd,
       photo: formData.photo,
       salary: formData.salary,
       userName: formData.userName,
@@ -129,6 +132,7 @@ const AddEmployee = ({
       dateOfBirth: "",
       gender: "",
       nationalID: "",
+      pswrd: "",
       photo: null,
       salary: "",
       userName: "",
@@ -215,6 +219,15 @@ const AddEmployee = ({
           value={formData.nationalID}
           placeholder="National ID..."
           onChangeText={(text) => handleChange("nationalID", text)}
+        />
+        <Text style={adminStyles.modelLabel}>
+          Passward<Text style={adminStyles.requiredStar}>*</Text>
+        </Text>
+        <TextInput
+          style={adminStyles.modelInput}
+          value={formData.pswrd}
+          placeholder="Passward..."
+          onChangeText={(text) => handleChange("pswrd", text)}
         />
 
         <Text style={adminStyles.modelLabel}>
