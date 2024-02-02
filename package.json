@@ -1,0 +1,11 @@
+{
+  "name": "rms",
+  "version": "1.0.0",
+  "description": "comprehensive solution designed to streamline and enhance the operations of any restaurant",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Umar & Bilal",
+  "license": "ISC"
+}
