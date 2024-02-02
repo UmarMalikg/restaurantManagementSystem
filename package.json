@@ -4,7 +4,9 @@
   "description": "comprehensive solution designed to streamline and enhance the operations of any restaurant",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/server",
+    "client": "npm start --prefix RMSfrontend"
   },
   "author": "Umar & Bilal",
   "license": "ISC",
