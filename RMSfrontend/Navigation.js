@@ -11,11 +11,11 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Admin"
+        initialRouteName="SignIn"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Group>
-          <Stack.Screen name="signIn" component={SignIn} />
+          <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="Waiter" component={Waiter} />
           <Stack.Screen name="Admin" component={Admin} />
         </Stack.Group>

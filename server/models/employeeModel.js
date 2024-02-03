@@ -1,3 +1,6 @@
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
+
 const mongoose = require("mongoose");
 
 const addressSchema = new mongoose.Schema({
@@ -65,6 +68,29 @@ const employeeSchema = mongoose.Schema({
     ref: "employeePositions",
   },
   emergencyContact: emergencySchema,
+});
+
+// Hash the password before saving it to the database
+employeeSchema.pre("save", async function (next) {
+  try {
+    // Hash the password only if it has been modified or is new
+    if (!this.isModified("pswrd")) {
+      return next();
+    }
+
+    // Generate a salt
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+
+    // Hash the password along with the new salt
+    const hashedPassword = await bcrypt.hash(this.pswrd, salt);
+
+    // Replace the plaintext password with the hashed password
+    this.pswrd = hashedPassword;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 });
 
 const Employee = mongoose.model("employees", employeeSchema);
