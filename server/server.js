@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 8080;
+const cookieParser = require("cookie-parser");
 const connectDB = require("./config/config");
 
 const app = express();
@@ -16,10 +17,17 @@ const tableRoute = require(`./routes/tables`);
 const categoryRoute = require(`./routes/categories`);
 const productRoute = require(`./routes/products`);
 const employeeRoute = require(`./routes/employees`);
-const employeePositionRoute = require(`./routes/employeePositions`);
+const loginRoute = require(`./routes/login`);
+const userAuthRoute = require(`./routes/userAuth`);
 
 dotenv.config();
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost:19006"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 connectDB();
 
@@ -27,7 +35,8 @@ app.use(`/tables`, tableRoute);
 app.use(`/categories`, categoryRoute);
 app.use(`/products`, productRoute);
 app.use(`/employees`, employeeRoute);
-app.use(`/employeePositions`, employeePositionRoute);
+app.use(`/login`, loginRoute);
+app.use(`/userAuth`, userAuthRoute);
 
 app.listen(port, () => {
   console.log("app works");

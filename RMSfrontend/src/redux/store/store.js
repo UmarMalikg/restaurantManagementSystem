@@ -5,7 +5,6 @@ import tableReduce from "../reducers/tableReducer";
 import productReducer from "../reducers/productReducer";
 import quantityReducer from "../reducers/quantityReducer";
 import employeeReducer from "../reducers/employeeReducer";
-import employeePositionReducer from "../reducers/employeePositionReducer";
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   products: productReducer,
   qty: quantityReducer,
   employees: employeeReducer,
-  employeePositions: employeePositionReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

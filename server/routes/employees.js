@@ -55,11 +55,16 @@ router.post("/", upload.single("photo"), async (req, res) => {
       pswrd,
       salary,
       userName,
-      position,
+      isAdmin,
+      isWaiter,
+      isCachier,
+      isKitchenManager,
+      isReceptionist,
       joiningDate,
       emergencyContact: { ec_name, ec_email, ec_phone },
     } = req.body;
     const photo = req.file.path;
+
     // const photo = req.file.path;
 
     // Check if all required fields are provided
@@ -67,7 +72,7 @@ router.post("/", upload.single("photo"), async (req, res) => {
       !salary ||
       !userName ||
       // !position ||
-      !photo ||
+      // !photo ||
       !firstName ||
       !lastName ||
       !email ||
@@ -95,15 +100,20 @@ router.post("/", upload.single("photo"), async (req, res) => {
       photo,
       salary,
       userName,
-      position,
       address: { street, city, state, zipCode, country },
       joiningDate,
+      isAdmin,
+      isWaiter,
+      isCachier,
+      isKitchenManager,
+      isReceptionist,
       emergencyContact: { ec_name, ec_email, ec_phone },
+
       // contactInfo: { email, phone },
     });
 
-    // Save the new employee to the database
     const savedEmployee = await newEmployee.save();
+    res.status(201).json(savedProduct);
 
     res.status(201).json(savedEmployee);
   } catch (error) {

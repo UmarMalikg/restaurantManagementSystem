@@ -9,7 +9,7 @@ const NavBar = () => {
     <View style={adminStyles.navBar}>
       <Text>Logo</Text>
       <Text>Search</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("signIn")}>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
         <Text>Log Out</Text>
       </TouchableOpacity>
       <Text>Employee Image</Text>

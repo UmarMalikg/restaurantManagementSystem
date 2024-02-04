@@ -13,6 +13,7 @@ const waiterStyles = StyleSheet.create({
     top: 0,
     height: 67,
     backgroundColor: "#fff",
+    zIndex: 10000,
   },
 
   // styles for sideBar

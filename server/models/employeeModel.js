@@ -16,60 +16,89 @@ const emergencySchema = new mongoose.Schema({
   ec_email: String,
 });
 
-const employeeSchema = mongoose.Schema({
-  personalInfo: {
-    firstName: {
+const employeeSchema = mongoose.Schema(
+  {
+    personalInfo: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+      dateOfBirth: {
+        type: Date,
+        required: true,
+      },
+      gender: {
+        type: String,
+        required: true,
+      },
+      nationalID: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        unique: true,
+      },
+      phone: {
+        type: Number,
+        required: true,
+      },
+    },
+    pswrd: {
       type: String,
       required: true,
     },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    dateOfBirth: {
-      type: Date,
-      required: true,
-    },
-    gender: {
-      type: String,
-      required: true,
-    },
-    nationalID: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-    },
-    phone: {
+    photo: String,
+    salary: {
       type: Number,
       required: true,
     },
+    userName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    address: addressSchema,
+    joiningDate: Date,
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isWaiter: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isCachier: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isKitchenManager: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isReceptionist: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    emergencyContact: emergencySchema,
   },
-  pswrd: {
-    type: String,
-    required: true,
-  },
-  photo: String,
-  salary: {
-    type: Number,
-    required: true,
-  },
-  userName: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  address: addressSchema,
-  joiningDate: Date,
-  position: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "employeePositions",
-  },
-  emergencyContact: emergencySchema,
-});
+  {
+    timestamps: true,
+  }
+);
 
+employeeSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.pswrd);
+};
 // Hash the password before saving it to the database
 employeeSchema.pre("save", async function (next) {
   try {

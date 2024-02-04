@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import adminStyles from "./styles/style";
 import { useNavigation } from "@react-navigation/native";
@@ -88,19 +95,22 @@ const Products = ({
           onChangeText={(text) => setSearchText(text)}
         ></TextInput>
       </View>
-      <View style={adminStyles.tablePosition}>
-        <Table
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Row
-            widthArr={widthArr}
-            data={tableHead}
-            style={adminStyles.tableHead}
-            textStyle={adminStyles.tableHeadText}
-          />
-          {rows}
-        </Table>
-      </View>
+
+      <ScrollView>
+        <View style={adminStyles.tablePosition}>
+          <Table
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Row
+              widthArr={widthArr}
+              data={tableHead}
+              style={adminStyles.tableHead}
+              textStyle={adminStyles.tableHeadText}
+            />
+            {rows}
+          </Table>
+        </View>
+      </ScrollView>
     </View>
   );
 };

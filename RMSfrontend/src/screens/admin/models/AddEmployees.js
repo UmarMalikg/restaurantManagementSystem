@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,16 +9,11 @@ import {
   ScrollView,
 } from "react-native";
 import { connect } from "react-redux";
-import { fetchEmployeePositionData } from "../../../redux/actions/employeePositionActions";
 import { addEmployee } from "../../../redux/actions/employeeActions";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../styles/style";
 
-const AddEmployee = ({
-  addEmployee,
-  fetchEmployeePositionData,
-  employeePositionData,
-}) => {
+const AddEmployee = ({ addEmployee }) => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -37,7 +32,11 @@ const AddEmployee = ({
     country: "",
     email: "",
     phone: "",
-    position: "",
+    isAdmin: false,
+    isWaiter: false,
+    isCachier: false,
+    isKitchenManager: false,
+    isReceptionist: false,
     joiningDate: "",
     emergencyContact: {
       name: "",
@@ -45,11 +44,6 @@ const AddEmployee = ({
       phone: "",
     },
   });
-
-  useEffect(() => {
-    // Fetch category data when the component mounts
-    fetchEmployeePositionData();
-  }, [fetchEmployeePositionData]);
 
   const handleChange = (fieldName, value) => {
     setFormData({
@@ -118,6 +112,11 @@ const AddEmployee = ({
         country: formData.country,
       },
       position: formData.position,
+      isAdmin: formData.isAdmin,
+      isWaiter: formData.isWaiter,
+      isCachier: formData.isCachier,
+      isKitchenManager: formData.isKitchenManager,
+      isReceptionist: formData.isReceptionist,
       joiningDate: formData.joiningDate,
       emergencyContact: formData.emergencyContact,
     };
@@ -143,7 +142,11 @@ const AddEmployee = ({
       country: "",
       email: "",
       phone: "",
-      position: "",
+      isAdmin: false,
+      isWaiter: false,
+      isCachier: false,
+      isKitchenManager: false,
+      isReceptionist: false,
       joiningDate: "",
       emergencyContact: {
         name: "",
@@ -310,17 +313,27 @@ const AddEmployee = ({
 
         <Picker
           style={adminStyles.modelInput}
-          selectedValue={formData.employeePosition}
-          onValueChange={(itemValue) => handleChange("position", itemValue)}
+          selectedValue={null} // Set selectedValue to null initially, as no default role is selected
+          onValueChange={(itemValue) => {
+            // Handle the selected role and set corresponding state values
+            setFormData({
+              ...formData,
+              isAdmin: itemValue === "isAdmin", // Set isAdmin to true when "Admin" is selected
+              isWaiter: itemValue === "isWaiter",
+              isCachier: itemValue === "isCachier",
+              isKitchenManager: itemValue === "isKitchenManager",
+              isReceptionist: itemValue === "isReceptionist",
+              // ... other state values
+            });
+          }}
         >
-          <Picker.Item label="Select a Employee Position" value="" />
-          {employeePositionData.map((position) => (
-            <Picker.Item
-              key={position._id}
-              label={position.name}
-              value={position._id}
-            />
-          ))}
+          <Picker.Item label="Select Role" value={null} />
+          <Picker.Item label="Admin" value="isAdmin" />
+          <Picker.Item label="Waiter" value="isWaiter" />
+          <Picker.Item label="Cahier" value="isCachier" />
+          <Picker.Item label="Kitchen Manager" value="isKitchenManager" />
+          <Picker.Item label="Receptionist" value="isReceptionist" />
+          {/* ... other roles */}
         </Picker>
 
         <Text style={adminStyles.modelLabel}>
@@ -371,15 +384,8 @@ const AddEmployee = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    employeePositionData: state.employeePositions.employeePositionData,
-  };
-};
-
 const mapDispatchToProps = {
   addEmployee,
-  fetchEmployeePositionData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEmployee);
+export default connect(null, mapDispatchToProps)(AddEmployee);

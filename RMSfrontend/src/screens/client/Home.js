@@ -1,13 +1,10 @@
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import Header from "./components/Header";
-import Home from "./Home";
-import { View } from "react-native";
-import waiterStyles from "./styles/style";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-const Waiter = () => {
+const Home = () => {
   const navigation = useNavigation();
 
   axios.defaults.withCredentials = true;
@@ -27,11 +24,13 @@ const Waiter = () => {
     fetchToken();
   }, [navigation]);
   return (
-    <View style={waiterStyles.container}>
-      <Header />
-      <Home />
+    <View>
+      <Text>Home</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+        <Text>Sign In</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default Waiter;
+export default Home;
