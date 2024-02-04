@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
