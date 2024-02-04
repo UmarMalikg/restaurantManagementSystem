@@ -15,18 +15,21 @@ router.post("/", async (req, res) => {
   try {
     if (employee) {
       if (await employee.matchPassword(pswrd)) {
+        // creating access Token to access the pages
         const accessToken = jwt.sign(
           { userName: userName },
           process.env.JWT_SECRET,
           { expiresIn: "1m" }
         );
 
+        // creating a refreshToken to recreact the access token when it expires
         const refreshToken = jwt.sign(
           { userName: userName },
           process.env.JWT_REF_SECRET,
           { expiresIn: "2m" }
         );
 
+        // storing both tokens in cookies
         res.cookie(`accessToken`, accessToken, { maxAge: 60000 });
         res.cookie(`refreshToken`, refreshToken, {
           maxAge: 120000,
@@ -35,17 +38,20 @@ router.post("/", async (req, res) => {
           sameSite: "strict",
         });
 
+        //Checking for the employee roles to grant access based on their roles.
         if (employee.isAdmin) {
-          return res.json({ Login: true, Admin: true });
+          return res.json({ Login: true, Admin: true, employee });
         } else if (employee.isWaiter) {
-          return res.json({ Login: true, Waiter: true });
+          return res.json({ Login: true, Waiter: true, employee });
         } else if (employee.isCachier) {
-          return res.json({ Login: true, Cashier: true });
+          return res.json({ Login: true, Cashier: true, employee });
         } else if (employee.isKitchenManager) {
-          return res.json({ Login: true, KitchenManager: true });
+          return res.json({ Login: true, KitchenManager: true, employee });
         } else if (employee.isReceptionist) {
-          return res.json({ Login: true, Receptionist: true });
-        } else {
+          return res.json({ Login: true, Receptionist: true, employee });
+        }
+        //If no role is selected, then the employee can only view and modify their own data.
+        else {
           return res.json({
             Login: true,
             Admin: false,
@@ -55,7 +61,9 @@ router.post("/", async (req, res) => {
             Receptionist: false,
           });
         }
-      } else {
+      }
+      // if theres Incorrect Password then login credentials set to be false
+      else {
         return res.json(
           {
             Login: false,
@@ -68,7 +76,9 @@ router.post("/", async (req, res) => {
           `Incorrect Username or Password`
         );
       }
-    } else {
+    }
+    // and if no user or employee exists then also login credentials set to be false
+    else {
       return res.json(
         {
           Login: false,

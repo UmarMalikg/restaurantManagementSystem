@@ -1,15 +1,16 @@
-// SignIn.js
-
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { api } from "../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { useAppContext } from "../context/States";
 
 const SignIn = () => {
   const navigation = useNavigation();
   const [userName, setUserName] = useState("");
   const [pswrd, setPswrd] = useState("");
+
+  const { updateEmployee } = useAppContext();
 
   axios.defaults.withCredentials = true;
 
@@ -20,6 +21,7 @@ const SignIn = () => {
         pswrd,
       });
       if (res.data.Login) {
+        updateEmployee(res.data.employee);
         switch (true) {
           case res.data.Admin:
             navigation.navigate("Admin");
