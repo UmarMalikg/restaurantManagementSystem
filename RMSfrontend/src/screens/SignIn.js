@@ -11,6 +11,7 @@ const SignIn = () => {
   const [pswrd, setPswrd] = useState("");
 
   const { updateEmployee } = useAppContext();
+  const { updateUser } = useAppContext();
 
   axios.defaults.withCredentials = true;
 
@@ -21,26 +22,31 @@ const SignIn = () => {
         pswrd,
       });
       if (res.data.Login) {
-        updateEmployee(res.data.employee);
-        switch (true) {
-          case res.data.Admin:
-            navigation.navigate("Admin");
-            break;
-          case res.data.Waiter:
-            navigation.navigate("Waiter");
-            break;
-          case res.data.Cashier:
-            navigation.navigate("Cashier");
-            break;
-          case res.data.KitchenManager:
-            navigation.navigate("Kitchen");
-            break;
-          case res.data.Receptionist:
-            navigation.navigate("Receptionist");
-            break;
-          default:
-            navigation.navigate("EmployeeDetails");
-            break;
+        if (res.data.employee) {
+          updateEmployee(res.data.employee);
+          switch (true) {
+            case res.data.Admin:
+              navigation.navigate("Admin");
+              break;
+            case res.data.Waiter:
+              navigation.navigate("Waiter");
+              break;
+            case res.data.Cashier:
+              navigation.navigate("Cashier");
+              break;
+            case res.data.KitchenManager:
+              navigation.navigate("Kitchen");
+              break;
+            case res.data.Receptionist:
+              navigation.navigate("Receptionist");
+              break;
+            default:
+              navigation.navigate("EmployeeDetails");
+              break;
+          }
+        } else if (res.data.user) {
+          updateUser(res.data.user);
+          navigation.navigate("Home");
         }
       }
     } catch (err) {

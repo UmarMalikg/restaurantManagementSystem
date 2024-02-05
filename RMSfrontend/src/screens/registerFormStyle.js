@@ -50,6 +50,24 @@ const registrFormStyles = StyleSheet.create({
     outline: "none",
   },
 
+  registerButtonPositioning: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  registerButton: {
+    marginVertical: isWeb ? 10 : 7,
+    paddingVertical: isWeb ? 6 : 5,
+    paddingHorizontal: isWeb ? 15 : 13,
+    borderRadius: 10,
+    backgroundColor: "crimson",
+  },
+  registerButtonText: {
+    fontWeight: "bold",
+    color: "white",
+  },
+
   alreadyAccount: {
     display: "flex",
     flexDirection: "row",

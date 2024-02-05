@@ -310,9 +310,14 @@ const Register = ({ addUser }) => {
                 </View>
               </View>
 
-              <View>
-                <TouchableOpacity onPress={submitForm}>
-                  <Text>SignIn</Text>
+              <View style={registrFormStyles.registerButtonPositioning}>
+                <TouchableOpacity
+                  style={registrFormStyles.registerButton}
+                  onPress={submitForm}
+                >
+                  <Text style={registrFormStyles.registerButtonText}>
+                    Register
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
