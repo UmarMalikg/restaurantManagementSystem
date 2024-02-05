@@ -61,25 +61,25 @@ router.put("/:categoryId", async (req, res) => {
     const updateData = req.body;
 
     // Check if the table exists
-    const existingCategory = await Table.findById(categoryId);
+    const existingCategory = await Category.findById(categoryId);
 
     if (!existingCategory) {
-      return res.status(404).json({ error: "Table not found" });
+      return res.status(404).json({ error: "category not found" });
     }
 
     // Update the table
     await Category.findByIdAndUpdate(categoryId, updateData, { new: true });
 
-    res.status(200).json({ message: "Table updated successfully" });
+    res.status(200).json({ message: "category updated successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Error updating the table" });
+    res.status(500).json({ error: "Error updating the category" });
   }
 });
 
 // Getting a single category
 router.get("/:categoryId", async (req, res) => {
   try {
-    const categoryId = req.params.tableId;
+    const categoryId = req.params.categoryId;
 
     // Find the table by ID
     const category = await Table.findById(categoryId);

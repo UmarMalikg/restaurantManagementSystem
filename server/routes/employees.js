@@ -113,7 +113,6 @@ router.post("/", upload.single("photo"), async (req, res) => {
     });
 
     const savedEmployee = await newEmployee.save();
-    res.status(201).json(savedProduct);
 
     res.status(201).json(savedEmployee);
   } catch (error) {

@@ -11,6 +11,7 @@ import Receptionist from "./src/screens/receptionist/Receptionist";
 import Cashier from "./src/screens/cashier/Cashier";
 import Kitchen from "./src/screens/kitchen/Kitchen";
 import EmployeeDetails from "./src/screens/employees/EmployeeDetails";
+import Register from "./src/screens/Register";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +57,7 @@ const Navigation = () => {
         <Stack.Group>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="Waiter" component={Waiter} />
           <Stack.Screen name="Cashier" component={Cashier} />

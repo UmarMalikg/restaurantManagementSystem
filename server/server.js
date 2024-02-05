@@ -19,6 +19,7 @@ const productRoute = require(`./routes/products`);
 const employeeRoute = require(`./routes/employees`);
 const loginRoute = require(`./routes/login`);
 const userAuthRoute = require(`./routes/userAuth`);
+const userRoute = require(`./routes/users`);
 
 dotenv.config();
 app.use(cookieParser());
@@ -37,6 +38,7 @@ app.use(`/products`, productRoute);
 app.use(`/employees`, employeeRoute);
 app.use(`/login`, loginRoute);
 app.use(`/userAuth`, userAuthRoute);
+app.use(`/users`, userRoute);
 
 app.listen(port, () => {
   console.log("app works");

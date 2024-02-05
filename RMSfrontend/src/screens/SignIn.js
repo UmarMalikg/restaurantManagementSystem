@@ -68,6 +68,10 @@ const SignIn = () => {
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <Text>Go back to Home</Text>
       </TouchableOpacity>
+      <Text>Don't have account</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Text>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
