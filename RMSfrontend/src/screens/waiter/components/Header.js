@@ -1,18 +1,66 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import waiterStyles from "../styles/style";
-import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { useAppContext } from "../../../context/States";
 
 const Header = () => {
   const navigation = useNavigation();
+
+  const { employee } = useAppContext();
   return (
     // <ScrollView>
     <View style={waiterStyles.header}>
-      <Button
-        onPress={() => navigation.navigate("Admin")}
-        title="Go to admin page"
-      />
+      {/* left */}
+      <View>
+        <Text>LOGO</Text>
+      </View>
+      {/* centre */}
+      <View>Orders</View>
+      {/* right */}
+
+      {employee && employee.isWaiter ? (
+        <View style={waiterStyles.headerEmployeeAction}>
+          <View>
+            <Text>Notifications</Text>
+          </View>
+          <View>
+            <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+              <Text>Log Out</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={waiterStyles.headerEmployeeInfo}>
+            <View style={waiterStyles.headerEmployeeImgBox}>
+              <Image
+                source={{
+                  uri: `http://localhost:8080/${employee.photo.replace(
+                    /\\/g,
+                    "/"
+                  )}`,
+                }}
+                style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
+              />
+            </View>
+
+            <View style={waiterStyles.headerEmployeeNameAndRole}>
+              <View style={waiterStyles.headerEmployeeName}>
+                <Text style={waiterStyles.headerEmployeeNameText}>
+                  {employee.personalInfo.firstName +
+                    employee.personalInfo.lastName}
+                </Text>
+              </View>
+              <View style={waiterStyles.headerEmployeeRole}>
+                <Text style={waiterStyles.headerEmployeeRoleText}>Waiter</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+          <Text>Sign In</Text>
+        </TouchableOpacity>
+      )}
     </View>
     // </ScrollView>
   );

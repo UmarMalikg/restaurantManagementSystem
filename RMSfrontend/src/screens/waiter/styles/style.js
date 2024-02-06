@@ -14,6 +14,51 @@ const waiterStyles = StyleSheet.create({
     height: 67,
     backgroundColor: "#fff",
     zIndex: 10000,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+  },
+
+  headerEmployeeAction: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  headerEmployeeInfo: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  headerEmployeeImgBox: {
+    height: 50,
+    width: 50,
+    marginHorizontal: 12,
+  },
+  headerEmployeeImg: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+  },
+  headerEmployeeNameAndRole: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  headerEmployeeName: {
+    // marginBottom: 10,
+  },
+  headerEmployeeNameText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  headerEmployeeRole: {
+    // marginTop: 10,
+  },
+  headerEmployeeRoleText: {
+    fontSize: 16,
   },
 
   // styles for sideBar

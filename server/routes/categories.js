@@ -82,7 +82,7 @@ router.get("/:categoryId", async (req, res) => {
     const categoryId = req.params.categoryId;
 
     // Find the table by ID
-    const category = await Table.findById(categoryId);
+    const category = await Category.findById(categoryId);
 
     if (!category) {
       return res.status(404).json({ error: "category not found" });
