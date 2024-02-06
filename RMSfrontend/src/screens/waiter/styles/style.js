@@ -97,8 +97,9 @@ const waiterStyles = StyleSheet.create({
     top: 70,
     bottom: 0,
     right: 20,
-    width: 400,
+    width: 350,
     backgroundColor: "#777",
+    borderRadius: 20,
   },
   orderCalculationsBox: {
     // position: "absolute",
@@ -198,9 +199,9 @@ const waiterStyles = StyleSheet.create({
 
   // styling for order menu
   orderMenuBox: {
-    margin: 15,
-    borderTopWidth: 1,
-    paddingTop: 10,
+    marginHorizontal: 15,
+    // borderTopWidth: 1,
+    // paddingTop: 10,
   },
   singleOrderMenuBox: {
     display: "flex",
@@ -254,7 +255,7 @@ const waiterStyles = StyleSheet.create({
 
   // styling for table selection
 
-  orderSelectTableBox: { margin: 10 },
+  orderSelectTableBox: { margin: 10, borderBottomWidth: 1, paddingBottom: 20 },
   orderSelectTable: {
     textAlign: "center",
     paddingVertical: 5,
@@ -273,15 +274,15 @@ const waiterStyles = StyleSheet.create({
     top: 70,
     left: 20,
     bottom: 0,
-    right: 420,
+    right: 370,
     backgroundColor: "#f2f2f2",
   },
   //catagories buttons styling
   category: {
     position: "absolute",
     top: 20,
-    left: 20,
-    right: 20,
+    left: 0,
+    right: 0,
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
@@ -305,18 +306,18 @@ const waiterStyles = StyleSheet.create({
   products: {
     position: "absolute",
     top: 100,
-    left: 20,
-    right: 20,
+    left: 0,
+    right: 0,
     bottom: 0,
   },
   product: {
     flex: 1, // Use flex: 1 to distribute width evenly
-    aspectRatio: 0.85, // To maintain a square aspect ratio
-    alignItems: "center",
+    aspectRatio: "auto", // To maintain a square aspect ratio
+    // alignItems: "center",
     borderWidth: 2,
     borderColor: "#fff",
-    marginVertical: 60,
-    marginHorizontal: 30,
+    marginVertical: 15,
+    marginHorizontal: 15,
     backgroundColor: "white", // Example background color
     shadowColor: "rgba(d, d, d, 0.5)", // Shadow color and opacity
     shadowOffset: {
@@ -328,45 +329,28 @@ const waiterStyles = StyleSheet.create({
     borderRadius: 10,
   },
   productImage: {
-    position: "absolute",
-    top: -60,
-    flex: 1,
-    height: 120,
-    width: 120,
-    borderRadius: 500,
+    width: "90%",
   },
-  productDetail: {
-    position: "absolute",
-    top: 85,
-    left: 0,
-    flex: 1,
-    justifyContent: "flex-start",
-  },
-  productDetail: {
-    position: "absolute",
-    top: 85,
-    left: 0,
-    right: 0,
-    flex: 1,
-    justifyContent: "flex-start",
-  },
+  productDetail: {},
+  productDetail: {},
 
   productName: {
     fontWeight: "bold",
     fontSize: 18,
   },
+
   productDetailItem: {
     flex: 1,
+    margin: 5,
+    display: "flex",
     justifyContent: "space-between",
     flexDirection: "row",
   },
 
   productCartButton: {
-    position: "absolute",
-    bottom: 2,
-    left: 10,
-    right: 10,
-    padding: 15,
+    margin: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

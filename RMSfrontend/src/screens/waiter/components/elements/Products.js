@@ -9,7 +9,7 @@ import {
 import { Text, View, FlatList, Image, TouchableOpacity } from "react-native";
 import waiterStyles from "../../styles/style";
 
-const numColumns = 3; // Number of columns
+const numColumns = 5; // Number of columns
 
 const Products = ({
   productData,
@@ -52,7 +52,7 @@ const Products = ({
                 source={{
                   uri: `http://localhost:8080/${item.img.replace(/\\/g, "/")}`,
                 }}
-                style={{ width: 120, height: 120, borderRadius: 120 }}
+                style={{ width: "100%", aspectRatio: 1, borderRadius: 10 }}
                 onError={(error) =>
                   console.error(
                     `Error loading image: ${error.nativeEvent.error}`
@@ -62,52 +62,31 @@ const Products = ({
             </View>
             <View style={waiterStyles.productDetail}>
               <View>
-                <Text style={waiterStyles.productName}>{item.name}</Text>
+                <Text
+                  style={[waiterStyles.productName, { textAlign: "center" }]}
+                >
+                  {item.name}
+                </Text>
               </View>
-              <View style={waiterStyles.productDetailItem}>
-                <Text>Price</Text>
-                <Text>{item.price} PKR</Text>
+              <View>
+                <Text style={{ textAlign: "center" }}>Rs. {item.price}</Text>
               </View>
-              <View style={waiterStyles.productDetailItem}>
-                <View>
-                  <Text>Quantity</Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
+
+              <View>
+                <View style={waiterStyles.productDetailItem}>
                   <TouchableOpacity onPress={() => decreaseQuantity(item._id)}>
-                    <Text
-                      style={{
-                        borderWidth: 1,
-                        borderColor: "#ddd",
-                        padding: 2,
-                      }}
-                    >
-                      -{" "}
-                    </Text>
+                    <Text>&minus; </Text>
                   </TouchableOpacity>
-                  <Text
-                    style={{ borderWidth: 1, borderColor: "#ddd", padding: 2 }}
-                  >
-                    {" "}
-                    {quantity[item._id] || 1}{" "}
-                  </Text>
+                  <Text> {quantity[item._id] || 1} </Text>
                   <TouchableOpacity onPress={() => increaseQuantity(item._id)}>
-                    <Text
-                      style={{
-                        borderWidth: 1,
-                        borderColor: "#ddd",
-                        padding: 2,
-                      }}
-                    >
-                      {" "}
-                      +{" "}
-                    </Text>
+                    <Text> + </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
             <View style={waiterStyles.productCartButton}>
               <TouchableOpacity>
-                <Text style={waiterStyles.colorWhite}>Add to Cart</Text>
+                <Text style={waiterStyles.colorWhite}>Add</Text>
               </TouchableOpacity>
             </View>
           </View>
