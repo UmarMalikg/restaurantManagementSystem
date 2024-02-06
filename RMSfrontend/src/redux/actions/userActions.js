@@ -2,12 +2,12 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 export const setUserData = (userData) => ({
-  type: "SET_User_DATA",
+  type: "SET_USER_DATA",
   payload: userData,
 });
 
 export const addUserToStore = (userData) => ({
-  type: "ADD_User",
+  type: "ADD_USER",
   payload: userData,
 });
 

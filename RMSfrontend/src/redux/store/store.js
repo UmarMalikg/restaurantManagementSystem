@@ -6,6 +6,7 @@ import productReducer from "../reducers/productReducer";
 import quantityReducer from "../reducers/quantityReducer";
 import employeeReducer from "../reducers/employeeReducer";
 import userReducer from "../reducers/userReducer";
+import orderReducer from "../reducers/orderReducer";
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   qty: quantityReducer,
   employees: employeeReducer,
   users: userReducer,
+  orders: orderReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

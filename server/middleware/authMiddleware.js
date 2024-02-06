@@ -44,7 +44,7 @@ const renewToken = (req, res, callback) => {
         process.env.JWT_SECRET,
         { expiresIn: "1m" }
       );
-      res.cookie(`accessToken`, accessToken, { maxAge: 60000 });
+      res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
       callback(true); // Token renewed successfully
     }
   });

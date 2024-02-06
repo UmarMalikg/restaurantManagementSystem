@@ -35,7 +35,7 @@ const orderSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Pending", "Preparing", "Ready", "Delivered"],
+    enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
     default: "Pending",
   },
   isPaid: {
@@ -90,12 +90,19 @@ orderSchema.pre("save", async function (next) {
     let totalPrice = 0;
     const orderItems = this.orderItems;
 
+    // Calculate the total price from order items
     for (const item of orderItems) {
       const menuItem = await Product.findById(item.menuItem);
       totalPrice += menuItem.price * item.quantity;
     }
 
-    this.totalPrice = totalPrice;
+    // Add delivery charges and apply discounts if applicable
+    totalPrice += this.deliveryCharges;
+    totalPrice -= this.discount;
+
+    // Ensure total price is non-negative
+    this.totalPrice = Math.max(totalPrice, 0);
+
     next();
   } catch (error) {
     next(error);
