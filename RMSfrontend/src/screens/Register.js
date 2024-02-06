@@ -93,18 +93,17 @@ const Register = ({ addUser }) => {
   return (
     <View style={registrFormStyles.container}>
       <View style={registrFormStyles.positioner}>
-        <View>
-          <View>
-            <Text style={registrFormStyles.formHeader}>Registeration Form</Text>
-          </View>
-        </View>
-
         <View style={registrFormStyles.formBox}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >
             <View>
+              <View>
+                <Text style={registrFormStyles.formHeader}>
+                  Registeration Form
+                </Text>
+              </View>
               <View>
                 <View>
                   <Text style={registrFormStyles.fieldName}>

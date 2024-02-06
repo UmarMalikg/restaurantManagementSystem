@@ -6,18 +6,17 @@ const registrFormStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#999",
     alignItems: "center",
   },
   positioner: {
-    height: "90%",
+    height: isWeb ? "90%" : "99%",
     width: isWeb ? 450 : "100%",
     display: "flex",
     alignItems: "center",
   },
   formHeader: {
     fontWeight: "bold",
-    fontSize: "30px",
+    fontSize: 30,
     marginBottom: isWeb ? 20 : 10,
   },
   formBox: {
@@ -43,11 +42,10 @@ const registrFormStyles = StyleSheet.create({
     paddingVertical: isWeb ? 10 : 6,
     paddingHorizontal: isWeb ? 15 : 8,
     marginBottom: isWeb ? 15 : 8,
-    fontWeight: 16,
+    fontSize: 16,
     borderWidth: 1,
     borderColor: "#777",
     borderRadius: 8,
-    outline: "none",
   },
 
   registerButtonPositioning: {
