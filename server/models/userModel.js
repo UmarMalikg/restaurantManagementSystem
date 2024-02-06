@@ -47,7 +47,6 @@ const userSchema = mongoose.Schema(
       state: String,
       zipCode: Number,
       country: String,
-      addressDesc: String,
     },
   },
   {
