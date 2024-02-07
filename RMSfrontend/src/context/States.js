@@ -13,32 +13,40 @@ export const AppProvider = ({ children }) => {
     setUser(newUser);
   };
 
-  const [orderItems, setOrderItems] = useState([{ item: "", qty: "" }]);
-  const updateOrderItems = (item, qty) => {
+  const [addedItemsForOrder, setAddedItemsforOrder] = useState([
+    { item: "", qty: "" },
+  ]);
+  const updateItemsForOrder = (item, qty) => {
     // Find if the item already exists in orderItems
-    const existingItemIndex = orderItems.findIndex(
-      (orderItem) => orderItem.item === item
+    const existingItemIndex = addedItemsForOrder.findIndex(
+      (addedItemsForOrder) => addedItemsForOrder.item === item
     );
-    const emptyItemIndex = orderItems.findIndex(
-      (orderItem) => orderItem.item === "" && orderItem.qty === ""
+    const emptyItemIndex = addedItemsForOrder.findIndex(
+      (addedItemsForOrder) =>
+        addedItemsForOrder.item === "" && addedItemsForOrder.qty === ""
     );
     if (emptyItemIndex !== -1) {
       const addFirstItem = [{ item, qty }];
-      setOrderItems(addFirstItem);
+      setAddedItemsforOrder(addFirstItem);
       console.log("first item", addFirstItem);
     }
 
     // If the item already exists, update its quantity
     else if (existingItemIndex !== -1) {
-      const updatedOrderItems = [...orderItems];
+      const updatedOrderItems = [...addedItemsForOrder];
       updatedOrderItems[existingItemIndex].qty = qty;
-      setOrderItems(updatedOrderItems);
+      setAddedItemsforOrder(updatedOrderItems);
       console.log("Item updated:", updatedOrderItems);
     } else {
       // If the item doesn't exist, add it to orderItems
-      setOrderItems([...orderItems, { item, qty }]);
-      console.log("Item added:", [...orderItems, { item, qty }]);
+      setAddedItemsforOrder([...addedItemsForOrder, { item, qty }]);
+      console.log("Item added:", [...addedItemsForOrder, { item, qty }]);
     }
+  };
+
+  const [selectedTable, setSelectedTable] = useState(null);
+  const updateSelectedTable = (newSelectedTable) => {
+    setSelectedTable(newSelectedTable);
   };
 
   return (
@@ -48,8 +56,12 @@ export const AppProvider = ({ children }) => {
         updateEmployee,
         user,
         updateUser,
-        orderItems,
-        updateOrderItems,
+        addedItemsForOrder,
+        updateItemsForOrder,
+        setAddedItemsforOrder,
+        selectedTable,
+        updateSelectedTable,
+        setSelectedTable,
       }}
     >
       {children}

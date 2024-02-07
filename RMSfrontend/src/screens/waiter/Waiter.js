@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import Header from "./components/Header";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Home";
 import { View } from "react-native";
 import waiterStyles from "./styles/style";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Tables from "./models/Tables";
+
+const Stack = createNativeStackNavigator();
 
 const Waiter = () => {
   const navigation = useNavigation();
@@ -29,7 +33,21 @@ const Waiter = () => {
   return (
     <View style={waiterStyles.container}>
       <Header />
-      <Home />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Group>
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            presentation: "transparentModal",
+          }}
+        >
+          <Stack.Screen name="Tables" component={Tables} />
+        </Stack.Group>
+      </Stack.Navigator>
     </View>
   );
 };

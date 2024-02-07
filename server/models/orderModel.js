@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const Product = require("./productModel");
 
 const orderItemSchema = mongoose.Schema({
-  menuItem: {
+  item: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "products",
     required: true,
   },
-  quantity: {
+  qty: {
     type: Number,
     required: true,
     min: 1,
@@ -91,9 +91,9 @@ orderSchema.pre("save", async function (next) {
     const orderItems = this.orderItems;
 
     // Calculate the total price from order items
-    for (const item of orderItems) {
-      const menuItem = await Product.findById(item.menuItem);
-      totalPrice += menuItem.price * item.quantity;
+    for (const i of orderItems) {
+      const item = await Product.findById(i.item);
+      totalPrice += item.price * item.qty;
     }
 
     // Add delivery charges and apply discounts if applicable

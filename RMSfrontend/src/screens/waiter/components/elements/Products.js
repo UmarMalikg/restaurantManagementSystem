@@ -20,7 +20,7 @@ const Products = ({
   decreaseQuantity,
   quantity,
 }) => {
-  const { employee, updateOrderItems } = useAppContext();
+  const { employee, updateItemsForOrder } = useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Products = ({
 
   const handleAddItemsToOrder = (item, qty) => {
     if (employee) {
-      updateOrderItems(item, qty); // Call the updateOrderItems function with item and qty
+      updateItemsForOrder(item, qty); // Call the updateOrderItems function with item and qty
     } else {
       alert("Please Login before taking order");
     }

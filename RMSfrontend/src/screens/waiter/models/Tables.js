@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import waiterStyles from "../styles/style";
+import { useNavigation } from "@react-navigation/native";
 import { SearchBar } from "react-native-elements";
 
 import { connect } from "react-redux";
-import {
-  fetchTableData,
-  makeTableReserved,
-} from "../../../redux/actions/tableActions";
+import { fetchTableData } from "../../../redux/actions/tableActions";
 
-const SideBar = ({ tableData, fetchTableData, makeTableReserved }) => {
+import { useAppContext } from "../../../context/States";
+
+// setSelectedTable
+
+const Tables = ({ tableData, fetchTableData }) => {
   const [search, setSearch] = useState("");
+
+  const { updateSelectedTable } = useAppContext();
 
   useEffect(() => {
     fetchTableData();
   }, [fetchTableData]);
+
+  const navigation = useNavigation();
 
   const filteredData = search
     ? tableData.filter((item) =>
@@ -24,6 +30,11 @@ const SideBar = ({ tableData, fetchTableData, makeTableReserved }) => {
 
   const updateSearch = (text) => {
     setSearch(text);
+  };
+
+  const selectTable = (tableID) => {
+    updateSelectedTable(tableID);
+    navigation.navigate("Home");
   };
 
   return (
@@ -44,9 +55,7 @@ const SideBar = ({ tableData, fetchTableData, makeTableReserved }) => {
               table.isReserved && { backgroundColor: "red" },
             ]}
             key={table._id}
-            onPress={() => {
-              makeTableReserved(table._id);
-            }}
+            onPress={() => selectTable(table._id)}
           >
             <Text key={table._id}>{table.name}</Text>
           </TouchableOpacity>
@@ -64,7 +73,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchTableData,
-  makeTableReserved,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(Tables);

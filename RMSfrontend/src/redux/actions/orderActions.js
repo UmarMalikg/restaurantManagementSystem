@@ -13,7 +13,7 @@ export const setOrderData = (orderData) => ({
   payload: orderData,
 });
 
-export const addOrder = (order) => ({
+export const addOrderToStore = (order) => ({
   type: ADD_ORDER,
   payload: order,
 });
@@ -41,13 +41,14 @@ export const fetchOrderData = () => {
 };
 
 // Thunk Action to Add an Order
-export const addOrderRequest = (order) => {
+export const addOrder = (order) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${api}/orders`, order);
-      dispatch(addOrder(response.data));
+      dispatch(addOrderToStore(response.data));
     } catch (error) {
       console.error("Error adding Order:", error);
+      throw error;
     }
   };
 };

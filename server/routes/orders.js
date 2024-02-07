@@ -52,7 +52,7 @@ router.get("/:orderId", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: `Error fetching the order with id ${orderID}` });
+      .json({ message: `Error fetching the order with id ${orderId}` });
   }
 });
 
