@@ -16,7 +16,9 @@ const Header = () => {
         <Text>LOGO</Text>
       </View>
       {/* centre */}
-      <View>Orders</View>
+      <View>
+        <Text>Orders</Text>
+      </View>
       {/* right */}
 
       {employee && employee.isWaiter ? (

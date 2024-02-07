@@ -6,7 +6,7 @@ import {
 } from "../actions/orderActions";
 
 const initialState = {
-  orders: [],
+  orderData: [],
   selectedOrder: null,
 };
 
@@ -15,17 +15,19 @@ const orderReducer = (state = initialState, action) => {
     case SET_ORDER_DATA:
       return {
         ...state,
-        orders: action.payload,
+        orderData: action.payload,
       };
     case ADD_ORDER:
       return {
         ...state,
-        orders: [...state.orders, action.payload],
+        orderData: [...state.orderData, action.payload],
       };
     case DELETE_ORDER:
       return {
         ...state,
-        orders: state.orders.filter((order) => order._id !== action.payload),
+        orderData: state.orderData.filter(
+          (order) => order._id !== action.payload
+        ),
       };
     case GET_ORDER_BY_ID:
       return {

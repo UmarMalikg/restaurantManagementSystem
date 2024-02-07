@@ -8,6 +8,7 @@ import {
 } from "../../../../redux/actions/quantityActions";
 import { Text, View, FlatList, Image, TouchableOpacity } from "react-native";
 import waiterStyles from "../../styles/style";
+import { useAppContext } from "../../../../context/States";
 
 const numColumns = 5; // Number of columns
 
@@ -19,6 +20,7 @@ const Products = ({
   decreaseQuantity,
   quantity,
 }) => {
+  const { employee, updateOrderItems } = useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -37,6 +39,14 @@ const Products = ({
       setFilteredProducts(productData);
     }
   }, [selectedCategory, productData]);
+
+  const handleAddItemsToOrder = (item, qty) => {
+    if (employee) {
+      updateOrderItems(item, qty); // Call the updateOrderItems function with item and qty
+    } else {
+      alert("Please Login before taking order");
+    }
+  };
 
   return (
     <View style={waiterStyles.products}>
@@ -85,7 +95,11 @@ const Products = ({
               </View>
             </View>
             <View style={waiterStyles.productCartButton}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  handleAddItemsToOrder(item._id, quantity[item._id] || 1)
+                }
+              >
                 <Text style={waiterStyles.colorWhite}>Add</Text>
               </TouchableOpacity>
             </View>
