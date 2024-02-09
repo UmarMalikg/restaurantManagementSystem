@@ -13,12 +13,14 @@ import { Table, Row } from "react-native-table-component";
 import { connect } from "react-redux";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchCategoryData } from "../../redux/actions/categoryActions";
+import { deleteProduct } from "../../redux/actions/productAction";
 
 const Products = ({
   fetchProductData,
   productData,
   categoryData,
   fetchCategoryData,
+  deleteProduct,
 }) => {
   useEffect(() => {
     fetchProductData();
@@ -39,15 +41,7 @@ const Products = ({
 
   let serialNo = 1;
 
-  const tableHead = [
-    "Sr#No",
-    "Image",
-    "Name",
-    "Description",
-    "Quantity",
-    "Category",
-    "Price",
-  ];
+  const tableHead = ["Sr#No", "Image", "Name", "Category", "Price", "Actions"];
   const tableData = filteredProductData.map((product) => [
     serialNo++,
     <Image
@@ -57,14 +51,26 @@ const Products = ({
       style={{ width: 50, height: 50, borderRadius: 50 }}
     />,
     product.name,
-    product.description,
-    product.qty,
     categoryData.find((category) => category._id === product.category)?.name ||
       "N/A",
     product.price,
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+    >
+      <TouchableOpacity onPress={() => deleteProduct(product._id)}>
+        <Text>delete</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text>edit</Text>
+      </TouchableOpacity>
+    </View>,
   ]);
 
-  const widthArr = [80, 120, 180, 220, 100, 180, 80];
+  const widthArr = [80, 120, 220, 180, 120, 120];
 
   const rows = tableData.map((rowData, index) => (
     <Row
@@ -125,5 +131,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchProductData,
   fetchCategoryData,
+  deleteProduct,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

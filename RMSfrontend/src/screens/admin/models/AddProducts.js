@@ -16,6 +16,8 @@ import adminStyles from "../styles/style";
 
 const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   const navigation = useNavigation();
+
+  // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -25,18 +27,24 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
     qty: "",
   });
 
+  // fetching the required data needed during the submission of form
   useEffect(() => {
     // Fetch category data when the component mounts
     fetchCategoryData();
   }, [fetchCategoryData]);
 
-  const handleChange = (fieldName, value) => {
-    setFormData({
-      ...formData,
-      [fieldName]: value,
-    });
+  //definig the function resposible for chang of values in the fields
+  // here isNumeric is defined for those fields that can only accepts the numeric value
+  const handleChange = (fieldName, value, isNumeric) => {
+    const cleanedValue = isNumeric ? value.replace(/[^0-9]/g, "") : value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: cleanedValue,
+    }));
   };
 
+  // defining the field that handles the change of selection of image
   const handleImageChange = (event) => {
     const file = event.target.files[0];
 
@@ -48,6 +56,7 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
     }
   };
 
+  // defining the for submission function
   const submitForm = () => {
     // Check if all required fields are filled
     if (
@@ -156,8 +165,7 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
           style={adminStyles.modelInput}
           value={formData.qty}
           placeholder="Quantity..."
-          onChangeText={(text) => handleChange("qty", text)}
-          keyboardType="numeric" // Assuming price is a numeric value
+          onChangeText={(text) => handleChange("qty", text, true)}
         />
         <Text style={adminStyles.modelLabel}>
           Product Price<Text style={adminStyles.requiredStar}>*</Text>
@@ -166,7 +174,7 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
           style={adminStyles.modelInput}
           value={formData.price}
           placeholder="Price-..."
-          onChangeText={(text) => handleChange("price", text)}
+          onChangeText={(text) => handleChange("price", text, true)}
           keyboardType="numeric" // Assuming price is a numeric value
         />
         <TouchableOpacity onPress={submitForm} style={adminStyles.modelButton}>

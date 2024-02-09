@@ -19,6 +19,8 @@ let isWeb = Platform.OS === "web";
 
 const AddEmployee = ({ addEmployee }) => {
   const navigation = useNavigation();
+
+  // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -49,21 +51,21 @@ const AddEmployee = ({ addEmployee }) => {
     },
   });
 
+  // as gender field is taken by RadioButtons so defined here
   const [gender, setGender] = useState(formData.gender);
 
+  // defining the function resposible for handling the change in gender field
+  const handleGenderChange = (value) => {
+    setGender(value);
+    setFormData({ ...formData, gender: value });
+  };
+
+  // defining the states resonsible for picking the date in android
   const [isDOBPickerVisible, setDOBPickerVisible] = useState(false);
   const [isJoningDatePickerVisible, setJoningDatePickerVisible] =
     useState(false);
-  const handleJoiningDateChange = (date) => {
-    setJoningDatePickerVisible(false);
-    if (date) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        joiningDate: date,
-      }));
-    }
-  };
 
+  // defining the fuctions responsible for changing the date
   const handleBOBDateChange = (date) => {
     setDOBPickerVisible(false);
     if (date) {
@@ -74,6 +76,17 @@ const AddEmployee = ({ addEmployee }) => {
     }
   };
 
+  const handleJoiningDateChange = (date) => {
+    setJoningDatePickerVisible(false);
+    if (date) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        joiningDate: date,
+      }));
+    }
+  };
+
+  // defining the functions resposible for displaying the date picker modal
   const showJoiningDatePicker = () => {
     setJoningDatePickerVisible(true);
   };
@@ -81,14 +94,15 @@ const AddEmployee = ({ addEmployee }) => {
     setDOBPickerVisible(true);
   };
 
+  // defining the fuction resposible for hiding the date picker modal
   const hideDatePicker = () => {
     setDOBPickerVisible(false);
     setJoningDatePickerVisible(false);
   };
 
-  //handling the form data
+  //definig the function resposible for chang of values in the fields
+  // here isNumeric is defined for those fields that can only accepts the numeric value
   const handleChange = (fieldName, value, isNumeric) => {
-    // If isNumeric is true, remove non-numeric characters
     const cleanedValue = isNumeric ? value.replace(/[^0-9]/g, "") : value;
 
     setFormData((prevFormData) => ({
@@ -97,11 +111,7 @@ const AddEmployee = ({ addEmployee }) => {
     }));
   };
 
-  const handleGenderChange = (value) => {
-    setGender(value);
-    setFormData({ ...formData, gender: value });
-  };
-
+  // defining the field that handles the change of selection of image
   const handleImageChange = (event) => {
     const file = event.target.files[0];
 
@@ -113,6 +123,7 @@ const AddEmployee = ({ addEmployee }) => {
     }
   };
 
+  // defining the for submission function
   const submitForm = () => {
     // Check if all required fields are filled
     if (
@@ -125,14 +136,6 @@ const AddEmployee = ({ addEmployee }) => {
       !formData.photo ||
       !formData.salary ||
       !formData.userName
-      // !formData.street ||
-      // !formData.city ||
-      // !formData.state ||
-      // !formData.zipCode ||
-      // !formData.country ||
-      // !formData.email ||
-      // !formData.phone ||
-      // !formData.joiningDate
     ) {
       console.log("Please fill in all fields");
       alert("Please fill in all required fields");
@@ -206,6 +209,7 @@ const AddEmployee = ({ addEmployee }) => {
     });
   };
 
+  //Component
   return (
     <View style={adminStyles.model}>
       <Text style={adminStyles.modelHeader}>Add New Employee</Text>

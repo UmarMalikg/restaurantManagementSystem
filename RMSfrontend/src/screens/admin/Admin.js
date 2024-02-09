@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SideBar from "./components/SideBar";
@@ -13,10 +13,12 @@ import AddEmployees from "./models/AddEmployees";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { useAppContext } from "../../context/States";
 
 const Stack = createNativeStackNavigator();
 
 const Admin = () => {
+  const { employee } = useAppContext();
   const navigation = useNavigation();
 
   axios.defaults.withCredentials = true;
@@ -36,7 +38,7 @@ const Admin = () => {
     fetchToken();
   }, [navigation]);
 
-  return (
+  return employee ? (
     <View style={adminStyles.container}>
       <NavBar />
       <SideBar />
@@ -59,6 +61,12 @@ const Admin = () => {
           <Stack.Screen name="Add Employee" component={AddEmployees} />
         </Stack.Group>
       </Stack.Navigator>
+    </View>
+  ) : (
+    <View>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+        <Text>Please Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };

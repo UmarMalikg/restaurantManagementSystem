@@ -10,6 +10,10 @@ export const addProductToStore = (productData) => ({
   type: "ADD_PRODUCT",
   payload: productData,
 });
+export const deleteProductFromStore = (productId) => ({
+  type: "DELETE_PRODUCT",
+  payload: productId,
+});
 
 export const fetchProductData = () => {
   return async (dispatch) => {
@@ -36,6 +40,20 @@ export const addProduct = (productData) => {
       dispatch(addProductToStore(response.data));
     } catch (error) {
       console.error("Error adding a product:", error);
+    }
+  };
+};
+
+export const deleteProduct = (productId) => {
+  return async (dispatch) => {
+    try {
+      // Send a DELETE request to your server's API endpoint to delete the product
+      await axios.delete(`${api}/products/${productId}`);
+
+      // Dispatch the action to delete the product from the Redux store
+      dispatch(deleteProductFromStore(productId));
+    } catch (error) {
+      console.error("Error deleting a product:", error);
     }
   };
 };
