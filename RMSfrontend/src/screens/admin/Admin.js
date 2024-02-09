@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard";
 import NavBar from "./components/NavBar";
 import Products from "./Products";
 import Employees from "./Employees";
+import OrderLists from "./OrderLists";
 import AddProducts from "./models/AddProducts";
 import AddEmployees from "./models/AddEmployees";
 import { api } from "../../api/api";
@@ -47,6 +48,7 @@ const Admin = () => {
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Employees" component={Employees} />
           <Stack.Screen name="Products" component={Products} />
+          <Stack.Screen name="OrderLists" component={OrderLists} />
         </Stack.Group>
         <Stack.Group
           screenOptions={{

@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
   Picker,
   ScrollView,
 } from "react-native";
@@ -12,6 +13,9 @@ import { connect } from "react-redux";
 import { addEmployee } from "../../../redux/actions/employeeActions";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../styles/style";
+import { RadioButton } from "react-native-paper";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+let isWeb = Platform.OS === "web";
 
 const AddEmployee = ({ addEmployee }) => {
   const navigation = useNavigation();
@@ -19,7 +23,7 @@ const AddEmployee = ({ addEmployee }) => {
     firstName: "",
     lastName: "",
     dateOfBirth: "",
-    gender: "",
+    gender: "male",
     nationalID: "",
     pswrd: "",
     photo: null,
@@ -45,11 +49,57 @@ const AddEmployee = ({ addEmployee }) => {
     },
   });
 
-  const handleChange = (fieldName, value) => {
-    setFormData({
-      ...formData,
-      [fieldName]: value,
-    });
+  const [gender, setGender] = useState(formData.gender);
+
+  const [isDOBPickerVisible, setDOBPickerVisible] = useState(false);
+  const [isJoningDatePickerVisible, setJoningDatePickerVisible] =
+    useState(false);
+  const handleJoiningDateChange = (date) => {
+    setJoningDatePickerVisible(false);
+    if (date) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        joiningDate: date,
+      }));
+    }
+  };
+
+  const handleBOBDateChange = (date) => {
+    setDOBPickerVisible(false);
+    if (date) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        dateOfBirth: date,
+      }));
+    }
+  };
+
+  const showJoiningDatePicker = () => {
+    setJoningDatePickerVisible(true);
+  };
+  const showDOBDatePicker = () => {
+    setDOBPickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setDOBPickerVisible(false);
+    setJoningDatePickerVisible(false);
+  };
+
+  //handling the form data
+  const handleChange = (fieldName, value, isNumeric) => {
+    // If isNumeric is true, remove non-numeric characters
+    const cleanedValue = isNumeric ? value.replace(/[^0-9]/g, "") : value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: cleanedValue,
+    }));
+  };
+
+  const handleGenderChange = (value) => {
+    setGender(value);
+    setFormData({ ...formData, gender: value });
   };
 
   const handleImageChange = (event) => {
@@ -129,7 +179,7 @@ const AddEmployee = ({ addEmployee }) => {
       firstName: "",
       lastName: "",
       dateOfBirth: "",
-      gender: "",
+      gender: "male",
       nationalID: "",
       pswrd: "",
       photo: null,
@@ -196,23 +246,79 @@ const AddEmployee = ({ addEmployee }) => {
         <Text style={adminStyles.modelLabel}>
           Date of Birth<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <TextInput
-          type="date"
-          style={adminStyles.modelInput}
-          value={formData.dateOfBirth}
-          placeholder="Date of Birth..."
-          onChangeText={(text) => handleChange("dateOfBirth", text)}
-        />
 
-        <Text style={adminStyles.modelLabel}>
-          Gender<Text style={adminStyles.requiredStar}>*</Text>
-        </Text>
-        <TextInput
-          style={adminStyles.modelInput}
-          value={formData.gender}
-          placeholder="Gender..."
-          onChangeText={(text) => handleChange("gender", text)}
-        />
+        {isWeb ? (
+          <input
+            type="date"
+            style={adminStyles.modelInput}
+            value={formData.dateOfBirth}
+            onChange={(e) => {
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                dateOfBirth: e.target.value,
+              }));
+            }}
+          />
+        ) : (
+          <View>
+            <View
+              style={[
+                adminStyles.modelInput,
+                {
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                },
+              ]}
+            >
+              <Text>
+                {formData.dateOfBirth
+                  ? formData.dateOfBirth.toDateString()
+                  : `Date of Birth...`}
+              </Text>
+
+              <TouchableOpacity onPress={showDOBDatePicker}>
+                <Image
+                  style={{ width: 30, height: 30 }}
+                  source={require("../../../../assets/images/datePicker.png")}
+                />
+              </TouchableOpacity>
+            </View>
+            <DateTimePickerModal
+              isVisible={isDOBPickerVisible}
+              mode="date"
+              onConfirm={handleBOBDateChange}
+              onCancel={hideDatePicker}
+            />
+          </View>
+        )}
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={adminStyles.modelLabel}>
+            Gender<Text style={adminStyles.requiredStar}>*</Text>
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <RadioButton
+              value="male"
+              status={gender === "male" ? "checked" : "unchecked"}
+              onPress={() => handleGenderChange("male")}
+            />
+            <Text>Male</Text>
+            <RadioButton
+              value="female"
+              status={gender === "female" ? "checked" : "unchecked"}
+              onPress={() => handleGenderChange("female")}
+            />
+            <Text>Female</Text>
+            <RadioButton
+              value="other"
+              status={gender === "other" ? "checked" : "unchecked"}
+              onPress={() => handleGenderChange("other")}
+            />
+            <Text>Other</Text>
+          </View>
+        </View>
 
         <Text style={adminStyles.modelLabel}>
           National ID<Text style={adminStyles.requiredStar}>*</Text>
@@ -221,7 +327,7 @@ const AddEmployee = ({ addEmployee }) => {
           style={adminStyles.modelInput}
           value={formData.nationalID}
           placeholder="National ID..."
-          onChangeText={(text) => handleChange("nationalID", text)}
+          onChangeText={(text) => handleChange("nationalID", text, true)}
         />
         <Text style={adminStyles.modelLabel}>
           Passward<Text style={adminStyles.requiredStar}>*</Text>
@@ -231,6 +337,7 @@ const AddEmployee = ({ addEmployee }) => {
           value={formData.pswrd}
           placeholder="Passward..."
           onChangeText={(text) => handleChange("pswrd", text)}
+          secureTextEntry
         />
 
         <Text style={adminStyles.modelLabel}>
@@ -257,8 +364,7 @@ const AddEmployee = ({ addEmployee }) => {
           style={adminStyles.modelInput}
           value={formData.salary}
           placeholder="Salary..."
-          onChangeText={(text) => handleChange("salary", text)}
-          keyboardType="numeric"
+          onChangeText={(text) => handleChange("salary", text, true)}
         />
 
         <Text style={adminStyles.modelLabel}>
@@ -308,7 +414,7 @@ const AddEmployee = ({ addEmployee }) => {
           style={adminStyles.modelInput}
           value={formData.zipCode}
           placeholder="Zip Code..."
-          onChangeText={(text) => handleChange("zipCode", text)}
+          onChangeText={(text) => handleChange("zipCode", text, true)}
         />
 
         <Picker
@@ -363,19 +469,59 @@ const AddEmployee = ({ addEmployee }) => {
           style={adminStyles.modelInput}
           value={formData.phone}
           placeholder="Phone..."
-          onChangeText={(text) => handleChange("phone", text)}
+          onChangeText={(text) => handleChange("phone", text, true)}
           keyboardType="numeric"
         />
 
         <Text style={adminStyles.modelLabel}>
           Joining Date<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <TextInput
-          style={adminStyles.modelInput}
-          value={formData.joiningDate}
-          placeholder="Joining Date..."
-          onChangeText={(text) => handleChange("joiningDate", text)}
-        />
+        {isWeb ? (
+          <input
+            type="date"
+            style={adminStyles.modelInput}
+            value={formData.joiningDate}
+            onChange={(e) => {
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                joiningDate: e.target.value,
+              }));
+            }}
+          />
+        ) : (
+          <View>
+            <View
+              style={[
+                adminStyles.modelInput,
+                {
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                },
+              ]}
+            >
+              <Text>
+                {formData.joiningDate
+                  ? formData.joiningDate.toDateString()
+                  : `Date of Birth...`}
+              </Text>
+
+              <TouchableOpacity onPress={showJoiningDatePicker}>
+                <Image
+                  style={{ width: 30, height: 30 }}
+                  source={require("../../../../assets/images/datePicker.png")}
+                />
+              </TouchableOpacity>
+            </View>
+            <DateTimePickerModal
+              isVisible={isJoningDatePickerVisible}
+              mode="date"
+              onConfirm={handleJoiningDateChange}
+              onCancel={hideDatePicker}
+            />
+          </View>
+        )}
         <TouchableOpacity onPress={submitForm} style={adminStyles.modelButton}>
           <Text style={adminStyles.modelButtonText}>Add Product</Text>
         </TouchableOpacity>
