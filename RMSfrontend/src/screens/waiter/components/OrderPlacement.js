@@ -106,6 +106,10 @@ const OrderPlacement = ({
     setAddedItemsforOrder([{ item: "", qty: "" }]);
     setSelectedTable(null);
   };
+  const cancelOrder = () => {
+    setAddedItemsforOrder([{ item: "", qty: "" }]);
+    setSelectedTable(null);
+  };
 
   return (
     <View style={waiterStyles.orderPlacement}>
@@ -244,6 +248,7 @@ const OrderPlacement = ({
             <Text style={waiterStyles.orderButtonsText}>Order</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => cancelOrder()}
             style={[waiterStyles.orderButtons, waiterStyles.orderCancelButton]}
           >
             <Text style={waiterStyles.orderButtonsText}>Cancel</Text>
