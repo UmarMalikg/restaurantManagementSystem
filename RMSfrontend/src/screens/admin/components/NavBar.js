@@ -3,6 +3,7 @@ import React from "react";
 import adminStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
+import waiterStyles from "../../waiter/styles/style";
 
 const NavBar = () => {
   const navigation = useNavigation();
@@ -13,12 +14,42 @@ const NavBar = () => {
     <View style={adminStyles.navBar}>
       <Text>Logo</Text>
       <Text>Search</Text>
-      <Pressable onPress={() => navigation.navigate("SignIn")}>
-        <Text>Log Out</Text>
-      </Pressable>
-      <Text>
-        {employee ? employee.personalInfo.firstName : "Employee Name"}
-      </Text>
+      <View style={waiterStyles.headerEmployeeAction}>
+        <View>
+          <Text>Notifications</Text>
+        </View>
+        <View>
+          <Pressable onPress={() => navigation.navigate("SignIn")}>
+            <Text>Log Out</Text>
+          </Pressable>
+        </View>
+
+        <View style={waiterStyles.headerEmployeeInfo}>
+          <View style={waiterStyles.headerEmployeeImgBox}>
+            <Image
+              source={{
+                uri: `http://localhost:8080/${employee.photo.replace(
+                  /\\/g,
+                  "/"
+                )}`,
+              }}
+              style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
+            />
+          </View>
+
+          <View style={waiterStyles.headerEmployeeNameAndRole}>
+            <View style={waiterStyles.headerEmployeeName}>
+              <Text style={waiterStyles.headerEmployeeNameText}>
+                {employee.personalInfo.firstName +
+                  employee.personalInfo.lastName}
+              </Text>
+            </View>
+            <View style={waiterStyles.headerEmployeeRole}>
+              <Text style={waiterStyles.headerEmployeeRoleText}>Waiter</Text>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
