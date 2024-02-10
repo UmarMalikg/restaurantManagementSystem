@@ -44,7 +44,14 @@ const SideBarLinks = ({ text, icon, link }) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      {icon}
+      <Image
+        style={[
+          adminStyles.sideBarLinkIcon,
+          (isHovered || isPressed) && adminStyles.hoverSideBarLinks,
+          isActive && adminStyles.activeSideBarLinks,
+        ]}
+        source={`${icon}`}
+      />
       <Text
         style={[
           adminStyles.sideBarLinkText,
