@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import waiterStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
@@ -27,9 +27,9 @@ const Header = () => {
             <Text>Notifications</Text>
           </View>
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <Pressable onPress={() => navigation.navigate("SignIn")}>
               <Text>Log Out</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
 
           <View style={waiterStyles.headerEmployeeInfo}>
@@ -59,9 +59,9 @@ const Header = () => {
           </View>
         </View>
       ) : (
-        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+        <Pressable onPress={() => navigation.navigate("SignIn")}>
           <Text>Sign In</Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
     </View>
     // </ScrollView>

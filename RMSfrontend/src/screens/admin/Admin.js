@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SideBar from "./components/SideBar";
@@ -64,9 +64,9 @@ const Admin = () => {
     </View>
   ) : (
     <View>
-      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+      <Pressable onPress={() => navigation.navigate("SignIn")}>
         <Text>Please Login</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

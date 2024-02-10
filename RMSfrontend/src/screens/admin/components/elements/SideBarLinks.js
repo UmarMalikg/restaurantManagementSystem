@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, Image } from "react-native";
+import { Text, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/style";
@@ -24,7 +24,7 @@ const SideBarLinks = ({ text, icon, link }) => {
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={[
         adminStyles.sideBarLinks,
         (isHovered || isPressed) && adminStyles.hoversideBarLinks,
@@ -50,7 +50,7 @@ const SideBarLinks = ({ text, icon, link }) => {
       >
         {text}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

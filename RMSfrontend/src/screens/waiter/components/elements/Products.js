@@ -6,7 +6,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from "../../../../redux/actions/quantityActions";
-import { Text, View, FlatList, Image, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, Image, Pressable } from "react-native";
 import waiterStyles from "../../styles/style";
 import { useAppContext } from "../../../../context/States";
 
@@ -84,24 +84,24 @@ const Products = ({
 
               <View>
                 <View style={waiterStyles.productDetailItem}>
-                  <TouchableOpacity onPress={() => decreaseQuantity(item._id)}>
+                  <Pressable onPress={() => decreaseQuantity(item._id)}>
                     <Text>&minus; </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                   <Text> {quantity[item._id] || 1} </Text>
-                  <TouchableOpacity onPress={() => increaseQuantity(item._id)}>
+                  <Pressable onPress={() => increaseQuantity(item._id)}>
                     <Text> + </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
               </View>
             </View>
             <View style={waiterStyles.productCartButton}>
-              <TouchableOpacity
+              <Pressable
                 onPress={() =>
                   handleAddItemsToOrder(item._id, quantity[item._id] || 1)
                 }
               >
                 <Text style={waiterStyles.colorWhite}>Add</Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         )}

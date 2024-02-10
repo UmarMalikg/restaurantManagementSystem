@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import waiterStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
 import { SearchBar } from "react-native-elements";
@@ -49,7 +49,7 @@ const Tables = ({ tableData, fetchTableData }) => {
       />
       <ScrollView>
         {filteredData.map((table) => (
-          <TouchableOpacity
+          <Pressable
             style={[
               waiterStyles.sideBarTables,
               table.isReserved && { backgroundColor: "red" },
@@ -58,7 +58,7 @@ const Tables = ({ tableData, fetchTableData }) => {
             onPress={() => selectTable(table._id)}
           >
             <Text key={table._id}>{table.name}</Text>
-          </TouchableOpacity>
+          </Pressable>
         ))}
       </ScrollView>
     </View>

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import React from "react";
 import adminStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
@@ -13,9 +13,9 @@ const NavBar = () => {
     <View style={adminStyles.navBar}>
       <Text>Logo</Text>
       <Text>Search</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+      <Pressable onPress={() => navigation.navigate("SignIn")}>
         <Text>Log Out</Text>
-      </TouchableOpacity>
+      </Pressable>
       <Text>
         {employee ? employee.personalInfo.firstName : "Employee Name"}
       </Text>

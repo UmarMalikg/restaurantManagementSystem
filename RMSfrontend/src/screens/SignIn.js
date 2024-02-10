@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
 import { api } from "../api/api";
 import axios from "axios";
@@ -68,16 +68,16 @@ const SignIn = () => {
         onChangeText={(text) => setPswrd(text)}
         secureTextEntry
       />
-      <TouchableOpacity onPress={handleLogin}>
+      <Pressable onPress={handleLogin}>
         <Text>Sign In</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate("Home")}>
         <Text>Go back to Home</Text>
-      </TouchableOpacity>
+      </Pressable>
       <Text>Don't have account</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+      <Pressable onPress={() => navigation.navigate("Register")}>
         <Text>Sign Up</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

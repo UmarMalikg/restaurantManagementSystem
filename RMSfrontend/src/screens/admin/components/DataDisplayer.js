@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from "react";
 import adminStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
@@ -19,12 +19,12 @@ const DataDisplayer = ({
         <View>
           <Text style={adminStyles.dataTitle}>{dataTitle}</Text>
         </View>
-        <TouchableOpacity
+        <Pressable
           onPress={() => navigation.navigate(`${modelLink}`)}
           style={adminStyles.goToModelButton}
         >
           <Text style={adminStyles.goToModelButtonText}>{modelButtonText}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={adminStyles.tablePosition}>
         <Table borderStyle={adminStyles.tableBorderStyle}>

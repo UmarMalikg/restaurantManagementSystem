@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
 import { connect } from "react-redux";
 import registrFormStyles from "./registerFormStyle";
 import { useNavigation } from "@react-navigation/native";
@@ -310,14 +304,14 @@ const Register = ({ addUser }) => {
               </View>
 
               <View style={registrFormStyles.registerButtonPositioning}>
-                <TouchableOpacity
+                <Pressable
                   style={registrFormStyles.registerButton}
                   onPress={submitForm}
                 >
                   <Text style={registrFormStyles.registerButtonText}>
                     Register
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             </View>
           </ScrollView>

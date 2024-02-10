@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  TouchableOpacity,
+  Pressable,
   Image,
   TextInput,
   ScrollView,
@@ -86,12 +86,12 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
         <View>
           <Text style={adminStyles.dataTitle}>All Employees</Text>
         </View>
-        <TouchableOpacity
+        <Pressable
           onPress={() => navigation.navigate("Add Employee")}
           style={adminStyles.goToModelButton}
         >
           <Text style={adminStyles.goToModelButtonText}>Add Employees</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View>
         <TextInput

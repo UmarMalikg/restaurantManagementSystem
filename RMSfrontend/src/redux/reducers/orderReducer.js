@@ -3,6 +3,7 @@ import {
   ADD_ORDER,
   DELETE_ORDER,
   GET_ORDER_BY_ID,
+  SET_TOTAL_SALES_COUNT,
 } from "../actions/orderActions";
 
 const initialState = {
@@ -33,6 +34,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedOrder: action.payload,
+      };
+    case SET_TOTAL_SALES_COUNT:
+      return {
+        ...state,
+        totalSalesCount: action.payload,
       };
     default:
       return state;

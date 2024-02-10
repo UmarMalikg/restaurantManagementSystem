@@ -6,6 +6,7 @@ export const SET_ORDER_DATA = "SET_ORDER_DATA";
 export const ADD_ORDER = "ADD_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const SET_TOTAL_SALES_COUNT = "SET_TOTAL_SALES_COUNT";
 
 // Action Creators
 export const setOrderData = (orderData) => ({
@@ -26,6 +27,11 @@ export const deleteOrder = (orderId) => ({
 export const getOrderById = (orderId) => ({
   type: GET_ORDER_BY_ID,
   payload: orderId,
+});
+
+export const setTotalSalesCount = (count) => ({
+  type: SET_TOTAL_SALES_COUNT,
+  payload: count,
 });
 
 // Thunk Action to Fetch Order Data
@@ -73,6 +79,18 @@ export const getOrderByIdRequest = (orderId) => {
       dispatch(getOrderById(response.data));
     } catch (error) {
       console.error("Error getting Order by ID:", error);
+    }
+  };
+};
+
+export const totalSales = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${api}/orders`);
+      const salesCount = response.data.length; // Assuming the response is an array of employees
+      dispatch(setTotalSalesCount(salesCount));
+    } catch (error) {
+      console.error("Error fetching sales Count data:", error);
     }
   };
 };

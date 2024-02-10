@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   Image,
   Platform,
   Picker,
@@ -213,12 +213,12 @@ const AddEmployee = ({ addEmployee }) => {
   return (
     <View style={adminStyles.model}>
       <Text style={adminStyles.modelHeader}>Add New Employee</Text>
-      <TouchableOpacity
+      <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Employees")}
       >
         <Text style={adminStyles.modelCloserText}>X</Text>
-      </TouchableOpacity>
+      </Pressable>
       <ScrollView
         style={adminStyles.scroller}
         showsHorizontalScrollIndicator={false}
@@ -282,12 +282,12 @@ const AddEmployee = ({ addEmployee }) => {
                   : `Date of Birth...`}
               </Text>
 
-              <TouchableOpacity onPress={showDOBDatePicker}>
+              <Pressable onPress={showDOBDatePicker}>
                 <Image
                   style={{ width: 30, height: 30 }}
                   source={require("../../../../assets/images/datePicker.png")}
                 />
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <DateTimePickerModal
               isVisible={isDOBPickerVisible}
@@ -511,12 +511,12 @@ const AddEmployee = ({ addEmployee }) => {
                   : `Date of Birth...`}
               </Text>
 
-              <TouchableOpacity onPress={showJoiningDatePicker}>
+              <Pressable onPress={showJoiningDatePicker}>
                 <Image
                   style={{ width: 30, height: 30 }}
                   source={require("../../../../assets/images/datePicker.png")}
                 />
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <DateTimePickerModal
               isVisible={isJoningDatePickerVisible}
@@ -526,9 +526,9 @@ const AddEmployee = ({ addEmployee }) => {
             />
           </View>
         )}
-        <TouchableOpacity onPress={submitForm} style={adminStyles.modelButton}>
+        <Pressable onPress={submitForm} style={adminStyles.modelButton}>
           <Text style={adminStyles.modelButtonText}>Add Product</Text>
-        </TouchableOpacity>
+        </Pressable>
       </ScrollView>
     </View>
   );

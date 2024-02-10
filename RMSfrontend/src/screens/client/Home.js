@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import { api } from "../../api/api";
 import axios from "axios";
@@ -26,9 +26,9 @@ const Home = () => {
   return (
     <View>
       <Text>Home</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+      <Pressable onPress={() => navigation.navigate("SignIn")}>
         <Text>Sign In</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

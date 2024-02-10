@@ -8,18 +8,22 @@ import RevenueDetail from "./components/RevenueDetail";
 import { connect } from "react-redux";
 import { totalEmployees } from "../../redux/actions/employeeActions";
 import { totalProducts } from "../../redux/actions/productAction";
+import { totalSales } from "../../redux/actions/orderActions";
 
 const Dashboard = ({
   totalEmployees,
   totalEmployeesCount,
   totalProducts,
   totalProductsCount,
+  totalSales,
+  totalSalesCount,
 }) => {
   useEffect(() => {
     // Fetch total employees when the component mounts
     totalEmployees();
     totalProducts();
-  }, [totalEmployees, totalProducts]);
+    totalSales();
+  }, [totalEmployees, totalProducts, totalSales]);
   return (
     <View style={adminStyles.theScreen}>
       <ScrollView>
@@ -38,7 +42,7 @@ const Dashboard = ({
           />
           <RecordOverview
             recordName={`Total Sales`}
-            recordNums={17}
+            recordNums={totalSalesCount}
             bgColor={`#7978e9`}
           />
           <RecordOverview
@@ -58,11 +62,13 @@ const Dashboard = ({
   );
 };
 const mapStateToProps = (state) => ({
-  totalProductsCount: state.products.totalProductsCount,
   totalEmployeesCount: state.employees.totalEmployeesCount, // Map totalEmployeesCount from Redux state to props
+  totalProductsCount: state.products.totalProductsCount,
+  totalSalesCount: state.orders.totalSalesCount,
 });
 const mapDispatchToProps = {
   totalEmployees,
   totalProducts,
+  totalSales,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

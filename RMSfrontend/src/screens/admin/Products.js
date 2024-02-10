@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  TouchableOpacity,
+  Pressable,
   Image,
   TextInput,
   ScrollView,
@@ -61,12 +61,12 @@ const Products = ({
         alignItems: "center",
       }}
     >
-      <TouchableOpacity onPress={() => deleteProduct(product._id)}>
+      <Pressable onPress={() => deleteProduct(product._id)}>
         <Text>delete</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
+      </Pressable>
+      <Pressable>
         <Text>edit</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>,
   ]);
 
@@ -87,12 +87,12 @@ const Products = ({
         <View>
           <Text style={adminStyles.dataTitle}>All Menus</Text>
         </View>
-        <TouchableOpacity
+        <Pressable
           onPress={() => navigation.navigate("Add Product")}
           style={adminStyles.goToModelButton}
         >
           <Text style={adminStyles.goToModelButtonText}>Add Product</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View>
         <TextInput

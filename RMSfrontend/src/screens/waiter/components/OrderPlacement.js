@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, Pressable, View } from "react-native";
 import waiterStyles from "../styles/style";
 import { useAppContext } from "../../../context/States";
 import { connect } from "react-redux";
@@ -114,7 +114,7 @@ const OrderPlacement = ({
   return (
     <View style={waiterStyles.orderPlacement}>
       <View style={waiterStyles.orderSelectTableBox}>
-        <TouchableOpacity
+        <Pressable
           style={waiterStyles.orderSelectTable}
           onPress={() => selectTable()}
         >
@@ -125,7 +125,7 @@ const OrderPlacement = ({
                 } Selected`
               : `Select Table`}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <ScrollView
@@ -170,13 +170,13 @@ const OrderPlacement = ({
                       </View>
                       <View style={waiterStyles.orderMenuQty}>
                         <View style={waiterStyles.orderMenuQtyActionBox}>
-                          <TouchableOpacity
+                          <Pressable
                             onPress={() => quantityDecrease(item.item)}
                           >
                             <Text style={waiterStyles.orderMenuQtyActionText}>
                               &minus;
                             </Text>
-                          </TouchableOpacity>
+                          </Pressable>
                         </View>
                         <View style={waiterStyles.orderMenuQtyTextBox}>
                           <Text style={waiterStyles.orderMenuQtyText}>
@@ -184,21 +184,21 @@ const OrderPlacement = ({
                           </Text>
                         </View>
                         <View style={waiterStyles.orderMenuQtyActionBox}>
-                          <TouchableOpacity
+                          <Pressable
                             onPress={() => quantityIncrease(item.item)}
                           >
                             <Text style={waiterStyles.orderMenuQtyActionText}>
                               +
                             </Text>
-                          </TouchableOpacity>
+                          </Pressable>
                         </View>
                       </View>
                     </View>
 
                     <View style={waiterStyles.orderMenuActionBox}>
-                      <TouchableOpacity>
+                      <Pressable>
                         <Text>delete</Text>
-                      </TouchableOpacity>
+                      </Pressable>
                     </View>
                   </View>
                 </View>
@@ -241,19 +241,19 @@ const OrderPlacement = ({
           </View>
         </View>
         <View style={waiterStyles.orderActionButtons}>
-          <TouchableOpacity
+          <Pressable
             style={[waiterStyles.orderButtons, waiterStyles.orderPlaceButton]}
             onPress={() => submitOrderform()}
           >
             <Text style={waiterStyles.orderButtonsText}>Order</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             onPress={() => cancelOrder()}
             style={[waiterStyles.orderButtons, waiterStyles.orderCancelButton]}
           >
             <Text style={waiterStyles.orderButtonsText}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             style={[waiterStyles.orderButtons, waiterStyles.orderDraftButton]}
           >
             <Text
@@ -262,7 +262,7 @@ const OrderPlacement = ({
             >
               Draft
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </View>

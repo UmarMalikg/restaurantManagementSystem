@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   Image,
   Picker,
   ScrollView,
@@ -97,12 +97,12 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   return (
     <View style={adminStyles.model}>
       <Text style={adminStyles.modelHeader}>Add New Product</Text>
-      <TouchableOpacity
+      <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Products")}
       >
         <Text style={adminStyles.modelCloserText}>X</Text>
-      </TouchableOpacity>
+      </Pressable>
       <ScrollView
         style={adminStyles.scroller}
         showsHorizontalScrollIndicator={false}
@@ -177,9 +177,9 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
           onChangeText={(text) => handleChange("price", text, true)}
           keyboardType="numeric" // Assuming price is a numeric value
         />
-        <TouchableOpacity onPress={submitForm} style={adminStyles.modelButton}>
+        <Pressable onPress={submitForm} style={adminStyles.modelButton}>
           <Text style={adminStyles.modelButtonText}>Add Product</Text>
-        </TouchableOpacity>
+        </Pressable>
       </ScrollView>
     </View>
   );

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import axios from "axios";
-import { View, TouchableOpacity, Text, ScrollView } from "react-native";
+import { View, Pressable, Text, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import {
   fetchCategoryData,
@@ -27,7 +26,7 @@ const CategoryButtons = ({
     <>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={waiterStyles.category}>
-          <TouchableOpacity
+          <Pressable
             style={[
               waiterStyles.categoryButtons,
               selectedCategory === null && waiterStyles.selectedCategoryButtons,
@@ -35,9 +34,9 @@ const CategoryButtons = ({
             onPress={() => handleCategoryClick(null)} // Deselect category (All button)
           >
             <Text>All</Text>
-          </TouchableOpacity>
+          </Pressable>
           {categoryData.map((category) => (
-            <TouchableOpacity
+            <Pressable
               key={category._id}
               style={[
                 waiterStyles.categoryButtons,
@@ -47,7 +46,7 @@ const CategoryButtons = ({
               onPress={() => handleCategoryClick(category._id)} // Handle other category clicks
             >
               <Text>{category.name}</Text>
-            </TouchableOpacity>
+            </Pressable>
           ))}
         </View>
       </ScrollView>
