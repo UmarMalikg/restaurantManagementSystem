@@ -1,12 +1,18 @@
 import { ScrollView, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import adminStyles from "./styles/style";
 import RecordOverview from "./components/RecordOverview";
 import SalesDetail from "./components/SalesDetail";
 import OrderChart from "./components/OrderChart";
 import RevenueDetail from "./components/RevenueDetail";
+import { connect } from "react-redux";
+import { totalEmployees } from "../../redux/actions/employeeActions";
 
-const Dashboard = () => {
+const Dashboard = ({ totalEmployees, totalEmployeesCount }) => {
+  useEffect(() => {
+    // Fetch total employees when the component mounts
+    totalEmployees();
+  }, [totalEmployees]);
   return (
     <View style={adminStyles.theScreen}>
       <ScrollView>
@@ -19,7 +25,7 @@ const Dashboard = () => {
           />
           <RecordOverview
             recordName={`Total Employess`}
-            recordNums={16}
+            recordNums={totalEmployeesCount}
             bgColor={`#4b49ac`}
             link={`Employees`}
           />
@@ -44,5 +50,10 @@ const Dashboard = () => {
     </View>
   );
 };
-
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  totalEmployeesCount: state.employees.totalEmployeesCount, // Map totalEmployeesCount from Redux state to props
+});
+const mapDispatchToProps = {
+  totalEmployees,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

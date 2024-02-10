@@ -11,9 +11,12 @@ import adminStyles from "./styles/style";
 import { useNavigation } from "@react-navigation/native";
 import { Table, Row } from "react-native-table-component";
 import { connect } from "react-redux";
-import { fetchEmployeeData } from "../../redux/actions/employeeActions";
+import {
+  fetchEmployeeData,
+  deleteEmployee,
+} from "../../redux/actions/employeeActions";
 
-const Employees = ({ fetchEmployeeData, employeeData }) => {
+const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
   useEffect(() => {
     fetchEmployeeData();
   }, [fetchEmployeeData]);
@@ -31,12 +34,11 @@ const Employees = ({ fetchEmployeeData, employeeData }) => {
     "Sr#No",
     "Image",
     "Name",
-    "User Name",
-    "dOB",
     "Gender",
     "Email",
     "Phone",
     "Salary",
+    "Actions",
   ];
   const tableData = filteredEmployeeData.map((employee) => [
     serialNo++,
@@ -46,16 +48,28 @@ const Employees = ({ fetchEmployeeData, employeeData }) => {
       }}
       style={{ width: 50, height: 50, borderRadius: 50 }}
     />,
-    employee.personalInfo.firstName + employee.personalInfo.lastName,
-    employee.userName,
-    employee.personalInfo.dateOfBirth,
+    `${employee.personalInfo.firstName} ${employee.personalInfo.lastName}`,
     employee.personalInfo.gender,
     employee.personalInfo.email,
     employee.personalInfo.phone,
     employee.salary,
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+    >
+      <TouchableOpacity onPress={() => deleteEmployee(employee._id)}>
+        <Text>delete</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text>edit</Text>
+      </TouchableOpacity>
+    </View>,
   ]);
 
-  const widthArr = [80, 80, 80, 80, 81, 80, 80, 80, 80, 80, 80];
+  const widthArr = [60, 80, 150, 60, 180, 120, 80, 80];
 
   const rows = tableData.map((rowData, index) => (
     <Row
@@ -113,5 +127,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchEmployeeData,
+  deleteEmployee,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Employees);
