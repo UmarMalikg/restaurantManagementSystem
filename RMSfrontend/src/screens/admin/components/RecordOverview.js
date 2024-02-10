@@ -2,6 +2,7 @@ import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../styles/style";
+import { useAppContext } from "../../../context/States";
 
 const RecordOverview = ({
   recordName,
@@ -10,10 +11,16 @@ const RecordOverview = ({
   bgColor,
   link,
 }) => {
+  const { updateAdminActivedLink } = useAppContext();
   const navigation = useNavigation();
+
+  const handleClick = (e) => {
+    updateAdminActivedLink(e);
+    navigation.navigate(e);
+  };
   return (
     <Pressable
-      onPress={() => navigation.navigate(`${link}`)}
+      onPress={() => handleClick(`${link}`)}
       style={[adminStyles.recordOverviewBox, { backgroundColor: `${bgColor}` }]}
     >
       <View style={adminStyles.recordDetail}>

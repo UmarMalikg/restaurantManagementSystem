@@ -60,12 +60,12 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
         alignItems: "center",
       }}
     >
-      <TouchableOpacity onPress={() => deleteEmployee(employee._id)}>
+      <Pressable onPress={() => deleteEmployee(employee._id)}>
         <Text>delete</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
+      </Pressable>
+      <Pressable>
         <Text>edit</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>,
   ]);
 

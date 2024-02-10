@@ -38,7 +38,7 @@ const Admin = () => {
     fetchToken();
   }, [navigation]);
 
-  return employee ? (
+  return (
     <View style={adminStyles.container}>
       <NavBar />
       <SideBar />
@@ -62,13 +62,14 @@ const Admin = () => {
         </Stack.Group>
       </Stack.Navigator>
     </View>
-  ) : (
-    <View>
+  );
+  /* (
+    /*<View>
       <Pressable onPress={() => navigation.navigate("SignIn")}>
         <Text>Please Login</Text>
       </Pressable>
     </View>
-  );
+  // )*/
 };
 
 export default Admin;

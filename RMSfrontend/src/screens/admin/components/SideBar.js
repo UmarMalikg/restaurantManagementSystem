@@ -6,14 +6,10 @@ import SideBarLinks from "./elements/SideBarLinks";
 const SideBar = () => {
   return (
     <View style={adminStyles.sideBar}>
-      <SideBarLinks
-        text={`Dashboard`}
-        link={`Dashboard`}
-        icon={require(`../../../../assets/images/Admin/dummy.jpg`)}
-      />
+      <SideBarLinks text={`Dashboard`} link={`Dashboard`} />
       <SideBarLinks text={`Employees`} link={`Employees`} />
       <SideBarLinks text={`Products`} link={`Products`} />
-      <SideBarLinks text={`Orders List`} link={`OrdersLists`} />
+      <SideBarLinks text={`Orders List`} link={`OrderLists`} />
     </View>
   );
 };

@@ -44,6 +44,12 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const [adminActivedLink, setAdminActivedLink] = useState("Dashboard");
+
+  const updateAdminActivedLink = (link) => {
+    setAdminActivedLink(link);
+  };
+
   const [selectedTable, setSelectedTable] = useState(null);
   const updateSelectedTable = (newSelectedTable) => {
     setSelectedTable(newSelectedTable);
@@ -62,6 +68,8 @@ export const AppProvider = ({ children }) => {
         selectedTable,
         updateSelectedTable,
         setSelectedTable,
+        adminActivedLink,
+        updateAdminActivedLink,
       }}
     >
       {children}

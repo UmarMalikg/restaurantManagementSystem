@@ -51,8 +51,12 @@ const adminStyles = StyleSheet.create({
     borderTopRightRadius: -50,
     borderBottomRightRadius: -50,
   },
-  hoversideBarLinks: {
+  activeSideBarLinks: {
     backgroundColor: "#4b49ac",
+    color: "#fff",
+  },
+  hoverSideBarLinks: {
+    backgroundColor: "#7978e9",
     color: "#fff",
   },
   sideBarLinkIcon: {
@@ -252,6 +256,127 @@ const adminStyles = StyleSheet.create({
     elevation: 5,
     borderRadius: 15,
     padding: 7,
+  },
+
+  //styles for orders list page
+  orderFilter: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    marginHorizontal: 30,
+    marginVertical: 20,
+  },
+  orderTypeFilter: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+  },
+  filterButtons: {
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 30,
+    backgroundColor: "#fff",
+  },
+  allOrders: {
+    marginBottom: 30,
+    marginHorizontal: 30,
+  },
+  singleOrder: { marginVertical: 20 },
+  orderHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    backgroundColor: "#4b49ac",
+    padding: 10,
+  },
+  orderHeaderBorder: {
+    borderWidth: 1,
+    borderColor: "#7978e9",
+  },
+  //
+  orderHeaderText: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#FFFFFF",
+  },
+  orderData: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+  },
+  orderTableNo: {
+    // flex: 1,
+  },
+  orderTakerName: {
+    // flex: 1,
+  },
+  orderMenuDetails: {
+    // flex: 5,
+  },
+  orderSingleMenuStyle: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+    flex: 1,
+  },
+  orderTypeStyle: {
+    // flex: 1,
+  },
+  orderTotalAndRecieptAction: {
+    // flex: 3,
+    paddingHorizontal: 8,
+  },
+  orderTotalPriceStyling: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  orderTotalPriceTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  orderTotalPriceValue: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  orderRecieptPositionStyling: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  orderRecieptButtonStyling: {
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+    borderRadius: 30,
+    backgroundColor: "#0f0",
+  },
+  pagination: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginBottom: 15,
+  },
+  paginationButtons: {
+    marginHorizontal: 20,
+    backgroundColor: "#00f",
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+    borderRadius: 30,
+  },
+  rowCentered: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
 });
 

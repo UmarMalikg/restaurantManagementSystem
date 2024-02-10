@@ -14,42 +14,50 @@ const NavBar = () => {
     <View style={adminStyles.navBar}>
       <Text>Logo</Text>
       <Text>Search</Text>
-      <View style={waiterStyles.headerEmployeeAction}>
-        <View>
-          <Text>Notifications</Text>
+
+      {employee && employee.isAdmin ? (
+        <View style={waiterStyles.headerEmployeeAction}>
+          <View>
+            <Text>Notifications</Text>
+          </View>
+          <View>
+            <Pressable onPress={() => navigation.navigate("SignIn")}>
+              <Text>Log Out</Text>
+            </Pressable>
+          </View>
+
+          <View style={waiterStyles.headerEmployeeInfo}>
+            <View style={waiterStyles.headerEmployeeImgBox}>
+              <Image
+                source={{
+                  uri: `http://localhost:8080/${employee.photo.replace(
+                    /\\/g,
+                    "/"
+                  )}`,
+                }}
+                style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
+              />
+            </View>
+
+            <View style={waiterStyles.headerEmployeeNameAndRole}>
+              <View style={waiterStyles.headerEmployeeName}>
+                <Text style={waiterStyles.headerEmployeeNameText}>
+                  {`${employee.personalInfo.firstName} ${employee.personalInfo.lastName}`}
+                </Text>
+              </View>
+              <View style={waiterStyles.headerEmployeeRole}>
+                <Text style={waiterStyles.headerEmployeeRoleText}>Admin</Text>
+              </View>
+            </View>
+          </View>
         </View>
+      ) : (
         <View>
           <Pressable onPress={() => navigation.navigate("SignIn")}>
-            <Text>Log Out</Text>
+            <Text>Log In</Text>
           </Pressable>
         </View>
-
-        <View style={waiterStyles.headerEmployeeInfo}>
-          <View style={waiterStyles.headerEmployeeImgBox}>
-            <Image
-              source={{
-                uri: `http://localhost:8080/${employee.photo.replace(
-                  /\\/g,
-                  "/"
-                )}`,
-              }}
-              style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
-            />
-          </View>
-
-          <View style={waiterStyles.headerEmployeeNameAndRole}>
-            <View style={waiterStyles.headerEmployeeName}>
-              <Text style={waiterStyles.headerEmployeeNameText}>
-                {employee.personalInfo.firstName +
-                  employee.personalInfo.lastName}
-              </Text>
-            </View>
-            <View style={waiterStyles.headerEmployeeRole}>
-              <Text style={waiterStyles.headerEmployeeRoleText}>Waiter</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      )}
     </View>
   );
 };
