@@ -15,75 +15,80 @@ const orderItemSchema = mongoose.Schema({
   },
 });
 
-const orderSchema = mongoose.Schema({
-  tableNo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "tables",
-    required: this.orderType === "Dine-In" ? true : false,
-  },
-  orderItems: [orderItemSchema],
-  orderType: {
-    type: String,
-    enum: ["Dine-In", "Take-Away", "Delivery"],
-    required: true,
-    default: "Dine-In",
-  },
-  orderTaker: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: this.orderType === "Delivery" ? "users" : "employees",
-  },
-  status: {
-    type: String,
-    enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
-    default: "Pending",
-  },
-  isPaid: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  paidAt: {
-    type: Date,
-  },
-  isDelivered: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  deliveredAt: {
-    type: Date,
-  },
-  deliveryAddress: {
-    type: String,
-    required: this.orderType === "Delivery" ? true : false,
-  },
+const orderSchema = mongoose.Schema(
+  {
+    tableNo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "tables",
+      required: this.orderType === "Dine-In" ? true : false,
+    },
+    orderItems: [orderItemSchema],
+    orderType: {
+      type: String,
+      enum: ["Dine-In", "Take-Away", "Delivery"],
+      required: true,
+      default: "Dine-In",
+    },
+    orderTaker: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: this.orderType === "Delivery" ? "users" : "employees",
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
+      default: "Pending",
+    },
+    isPaid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    paidAt: {
+      type: Date,
+    },
+    isDelivered: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    deliveredAt: {
+      type: Date,
+    },
+    deliveryAddress: {
+      type: String,
+      required: this.orderType === "Delivery" ? true : false,
+    },
 
-  deliveryCharges: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0,
-  },
-  discount: {
-    type: Number,
-    min: 0,
-    default: 0,
-  },
+    deliveryCharges: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
+    },
+    discount: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
 
-  totalPrice: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0,
+    totalPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
+    },
+    taxPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
+    },
   },
-  taxPrice: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 orderSchema.pre("save", async function (next) {
   try {
