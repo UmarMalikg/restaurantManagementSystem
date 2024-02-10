@@ -28,6 +28,11 @@ const productReducer = (state = initialState, action) => {
           (product) => product._id !== action.payload
         ),
       };
+    case "SET_TOTAL_PRODUCTS_COUNT":
+      return {
+        ...state,
+        totalProductsCount: action.payload,
+      };
 
     default:
       return state;

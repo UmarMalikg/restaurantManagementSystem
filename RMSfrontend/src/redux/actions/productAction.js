@@ -15,6 +15,11 @@ export const deleteProductFromStore = (productId) => ({
   payload: productId,
 });
 
+export const setProductsCount = (count) => ({
+  type: "SET_TOTAL_PRODUCTS_COUNT",
+  payload: count,
+});
+
 export const fetchProductData = () => {
   return async (dispatch) => {
     try {
@@ -54,6 +59,18 @@ export const deleteProduct = (productId) => {
       dispatch(deleteProductFromStore(productId));
     } catch (error) {
       console.error("Error deleting a product:", error);
+    }
+  };
+};
+
+export const totalProducts = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${api}/products`);
+      const productCount = response.data.length; // Assuming the response is an array of employees
+      dispatch(setProductsCount(productCount));
+    } catch (error) {
+      console.error("Error fetching Employees data:", error);
     }
   };
 };
