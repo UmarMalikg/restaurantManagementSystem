@@ -527,7 +527,7 @@ const AddEmployee = ({ addEmployee }) => {
           </View>
         )}
         <Pressable onPress={submitForm} style={adminStyles.modelButton}>
-          <Text style={adminStyles.modelButtonText}>Add Product</Text>
+          <Text style={adminStyles.modelButtonText}>Add Employee</Text>
         </Pressable>
       </ScrollView>
     </View>

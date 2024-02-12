@@ -10,6 +10,10 @@ import Employees from "./Employees";
 import OrderLists from "./OrderLists";
 import AddProducts from "./models/AddProducts";
 import AddEmployees from "./models/AddEmployees";
+import Tables from "./Tables";
+import Categories from "./Categories";
+import AddCategories from "./models/AddCategories";
+import AddTables from "./models/AddTables";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -51,6 +55,8 @@ const Admin = () => {
           <Stack.Screen name="Employees" component={Employees} />
           <Stack.Screen name="Products" component={Products} />
           <Stack.Screen name="OrderLists" component={OrderLists} />
+          <Stack.Screen name="Categories" component={Categories} />
+          <Stack.Screen name="Tables" component={Tables} />
         </Stack.Group>
         <Stack.Group
           screenOptions={{
@@ -59,6 +65,8 @@ const Admin = () => {
         >
           <Stack.Screen name="Add Product" component={AddProducts} />
           <Stack.Screen name="Add Employee" component={AddEmployees} />
+          <Stack.Screen name="Add Categories" component={AddCategories} />
+          <Stack.Screen name="Add Tables" component={AddTables} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

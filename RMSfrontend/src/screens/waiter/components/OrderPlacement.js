@@ -90,11 +90,11 @@ const OrderPlacement = ({
 
   const submitOrderform = () => {
     if (emptyItemIndex) {
-      alert("please select an item for taking the order");
+      return alert("please select an item for taking the order");
     } else if (!employee) {
-      alert("Please Login first");
+      return alert("Please Login first");
     } else if (!selectedTable) {
-      alert("please select the table before taking order");
+      return alert("please select the table before taking order");
     }
     console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
     const newOrder = {

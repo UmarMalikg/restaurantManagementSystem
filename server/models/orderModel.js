@@ -98,7 +98,7 @@ orderSchema.pre("save", async function (next) {
     // Calculate the total price from order items
     for (const i of orderItems) {
       const item = await Product.findById(i.item);
-      totalPrice += item.price * item.qty;
+      totalPrice += item.price * i.qty;
     }
 
     // Add delivery charges and apply discounts if applicable

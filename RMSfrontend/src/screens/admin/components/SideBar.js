@@ -10,6 +10,8 @@ const SideBar = () => {
       <SideBarLinks text={`Employees`} link={`Employees`} />
       <SideBarLinks text={`Products`} link={`Products`} />
       <SideBarLinks text={`Orders List`} link={`OrderLists`} />
+      <SideBarLinks text={`Categories`} link={`Categories`} />
+      <SideBarLinks text={`Tables`} link={`Tables`} />
     </View>
   );
 };
