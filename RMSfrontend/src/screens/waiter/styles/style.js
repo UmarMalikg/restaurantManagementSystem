@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
+
+const isWeb = Platform.OS === "web";
 
 const waiterStyles = StyleSheet.create({
   // styles for sideBar
@@ -62,13 +64,28 @@ const waiterStyles = StyleSheet.create({
   },
 
   // styles for sideBar
-  sideBar: {
+  tables: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tableBox: {
     position: "absolute",
-    left: 0,
     top: 70,
-    bottom: 0,
-    width: 200,
-    backgroundColor: "#777",
+    width: isWeb ? "70%" : "100%",
+    bottom: 5,
+    top: 70,
+    backgroundColor: "#ddd",
+  },
+  cancelButtonPosition: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  cancelButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: "#999",
   },
   sideSearchEngine: {
     borderRadius: 20,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable, Platform } from "react-native";
 import waiterStyles from "../styles/style";
 import { useNavigation } from "@react-navigation/native";
 import { SearchBar } from "react-native-elements";
@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { fetchTableData } from "../../../redux/actions/tableActions";
 
 import { useAppContext } from "../../../context/States";
+let isWeb = Platform.OS === "web";
 
 // setSelectedTable
 
@@ -38,29 +39,55 @@ const Tables = ({ tableData, fetchTableData }) => {
   };
 
   return (
-    <View style={waiterStyles.sideBar}>
-      <SearchBar
-        containerStyle={waiterStyles.sideSearchEngine}
-        inputContainerStyle={waiterStyles.sideSearchInputEngine}
-        inputStyle={{ fontSize: 16 }}
-        placeholder="Search..."
-        onChangeText={updateSearch}
-        value={search}
-      />
-      <ScrollView>
-        {filteredData.map((table) => (
+    <View style={waiterStyles.tables}>
+      <View style={waiterStyles.tableBox}>
+        <View style={waiterStyles.cancelButtonPosition}>
           <Pressable
-            style={[
-              waiterStyles.sideBarTables,
-              table.isReserved && { backgroundColor: "red" },
-            ]}
-            key={table._id}
-            onPress={() => selectTable(table._id)}
+            onPress={() => navigation.navigate("Home")}
+            style={waiterStyles.cancelButton}
           >
-            <Text key={table._id}>{table.name}</Text>
+            <Text style={{ fontSize: 19 }}>X</Text>
           </Pressable>
-        ))}
-      </ScrollView>
+        </View>
+        <View style={{ position: "absolute", left: 10, top: 10 }}>
+          <Text style={{ fontWeight: "bold", fontSize: 28 }}>Select Table</Text>
+        </View>
+        <View style={{ marginTop: 45 }}>
+          <SearchBar
+            containerStyle={waiterStyles.sideSearchEngine}
+            inputContainerStyle={waiterStyles.sideSearchInputEngine}
+            inputStyle={{ fontSize: 16 }}
+            placeholder="Search..."
+            onChangeText={updateSearch}
+            value={search}
+          />
+          <ScrollView>
+            <View
+              style={{
+                ...(isWeb && {
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+                  padding: 20,
+                }),
+              }}
+            >
+              {filteredData.map((table) => (
+                <Pressable
+                  style={[
+                    waiterStyles.sideBarTables,
+                    table.isReserved && { backgroundColor: "red" },
+                    { backgroundColor: "#ff0" },
+                  ]}
+                  key={table._id}
+                  onPress={() => selectTable(table._id)}
+                >
+                  <Text key={table._id}>{table.name}</Text>
+                </Pressable>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
     </View>
   );
 };
