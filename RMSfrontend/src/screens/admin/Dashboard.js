@@ -53,9 +53,9 @@ const Dashboard = ({
           />
         </View>
         <View style={adminStyles.charts}>
-          <SalesDetail />
+          {/* <SalesDetail />
           <RevenueDetail />
-          <OrderChart />
+          <OrderChart /> */}
         </View>
       </ScrollView>
     </View>

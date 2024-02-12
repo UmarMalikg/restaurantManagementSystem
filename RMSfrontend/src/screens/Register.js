@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Pressable,
+  ImageBackground,
+} from "react-native";
 import { connect } from "react-redux";
 import registrFormStyles from "./registerFormStyle";
 import { useNavigation } from "@react-navigation/native";
@@ -85,225 +92,158 @@ const Register = ({ addUser }) => {
   };
 
   return (
-    <View style={registrFormStyles.container}>
-      <View style={registrFormStyles.positioner}>
-        <View style={registrFormStyles.formBox}>
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-          >
-            <View>
+    <ImageBackground
+      source={require("../../assets/images/background.jpg")}
+      style={{
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+      }}
+    >
+      <View style={registrFormStyles.container}>
+        <View style={registrFormStyles.positioner}>
+          <View style={registrFormStyles.formBox}>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+            >
               <View>
-                <Text style={registrFormStyles.formHeader}>
-                  Registeration Form
-                </Text>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Name<Text style={registrFormStyles.requiredField}>*</Text>
+                <View style={registrFormStyles.formHeader}>
+                  <Text style={registrFormStyles.formHeaderTitle}>
+                    Registeration Form
                   </Text>
                 </View>
                 <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.name}
-                    placeholder="Enter your full name..."
-                    onChangeText={(text) => handleChange("name", text)}
-                    required
-                  />
-                </View>
-              </View>
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.name}
+                      placeholder="Enter your full name..."
+                      onChangeText={(text) => handleChange("name", text)}
+                      required
+                    />
+                  </View>
 
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Username
-                    <Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.userName}
-                    placeholder="Type the username..."
-                    onChangeText={(text) => handleChange("userName", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Email<Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.email}
-                    placeholder="Enter your email..."
-                    onChangeText={(text) => handleChange("email", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Phone No:
-                    <Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.phNo}
-                    placeholder="Enter mobile phone number..."
-                    onChangeText={(text) => handleChange("phNo", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Password
-                    <Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.pswrd}
-                    placeholder="Enter the strong Passwword..."
-                    onChangeText={(text) => handleChange("pswrd", text)}
-                    secureTextEntry
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Date of Birth
-                    <Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.dOB}
-                    placeholder="Enter your dOB..."
-                    onChangeText={(text) => handleChange("dOB", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    Gender<Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.gender}
-                    placeholder="Select your gender..."
-                    onChangeText={(text) => handleChange("gender", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>
-                    National ID
-                    <Text style={registrFormStyles.requiredField}>*</Text>
-                  </Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.nationalId}
-                    placeholder="Enter your National Id..."
-                    onChangeText={(text) => handleChange("nationalId", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>Street</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.street}
-                    placeholder="Street..."
-                    onChangeText={(text) => handleChange("street", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>City</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.city}
-                    placeholder="City..."
-                    onChangeText={(text) => handleChange("city", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>State</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.state}
-                    placeholder="State..."
-                    onChangeText={(text) => handleChange("state", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>Zip Code</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.zipCode}
-                    placeholder="Zip Code..."
-                    onChangeText={(text) => handleChange("zipCode", text)}
-                    required
-                  />
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text style={registrFormStyles.fieldName}>Country</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={registrFormStyles.inputfield}
-                    value={formData.country}
-                    placeholder="Country..."
-                    onChangeText={(text) => handleChange("country", text)}
-                    required
-                  />
-                </View>
-              </View>
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.userName}
+                      placeholder="Type the username..."
+                      onChangeText={(text) => handleChange("userName", text)}
+                      required
+                    />
+                  </View>
 
-              <View style={registrFormStyles.registerButtonPositioning}>
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.email}
+                      placeholder="Enter your email..."
+                      onChangeText={(text) => handleChange("email", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.phNo}
+                      placeholder="Enter mobile phone number..."
+                      onChangeText={(text) => handleChange("phNo", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.pswrd}
+                      placeholder="Enter the strong Passwword..."
+                      onChangeText={(text) => handleChange("pswrd", text)}
+                      secureTextEntry
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.dOB}
+                      placeholder="Enter your dOB..."
+                      onChangeText={(text) => handleChange("dOB", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.gender}
+                      placeholder="Select your gender..."
+                      onChangeText={(text) => handleChange("gender", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.nationalId}
+                      placeholder="Enter your National Id..."
+                      onChangeText={(text) => handleChange("nationalId", text)}
+                      required
+                    />
+                  </View>
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.street}
+                      placeholder="Street..."
+                      onChangeText={(text) => handleChange("street", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.city}
+                      placeholder="City..."
+                      onChangeText={(text) => handleChange("city", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.state}
+                      placeholder="State..."
+                      onChangeText={(text) => handleChange("state", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.zipCode}
+                      placeholder="Zip Code..."
+                      onChangeText={(text) => handleChange("zipCode", text)}
+                      required
+                    />
+                  </View>
+
+                  <View>
+                    <TextInput
+                      style={registrFormStyles.inputfield}
+                      value={formData.country}
+                      placeholder="Country..."
+                      onChangeText={(text) => handleChange("country", text)}
+                      required
+                    />
+                  </View>
+                </View>
+
                 <Pressable
                   style={registrFormStyles.registerButton}
                   onPress={submitForm}
@@ -313,17 +253,20 @@ const Register = ({ addUser }) => {
                   </Text>
                 </Pressable>
               </View>
+            </ScrollView>
+            <View style={registrFormStyles.alreadyAccount}>
+              <Text>Already have an account? </Text>
+              <Text
+                style={{ fontWeight: "bold", color: "#00f" }}
+                onPress={() => navigation.navigate("SignIn")}
+              >
+                Login
+              </Text>
             </View>
-          </ScrollView>
-          <View style={registrFormStyles.alreadyAccount}>
-            <Text onPress={() => navigation.navigate("SignIn")}>
-              Already have an account?
-            </Text>
-            <Text onPress={() => navigation.navigate("SignIn")}>login</Text>
           </View>
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

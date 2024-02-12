@@ -32,6 +32,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#729B79",
   },
   webStatusBar: {
     backgroundColor: "green",

@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Pressable, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Platform,
+  ImageBackground,
+} from "react-native";
 import React, { useState } from "react";
 import { api } from "../api/api";
 import axios from "axios";
@@ -58,58 +65,65 @@ const SignIn = () => {
   };
 
   return (
-    <View style={loginFormStyles.container}>
-      <View style={loginFormStyles.loginBox}>
-        <View style={loginFormStyles.loginTitle}>
-          <Text style={loginFormStyles.loginTitleText}>SignIn</Text>
-        </View>
-        <View
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            marginBottom: 30,
-          }}
-        >
-          <Text style={{ color: "#666" }}>
-            Welcome back! Login to access the RMS
-          </Text>
-        </View>
-        <TextInput
-          placeholder="Enter ID..."
-          value={userName}
-          onChangeText={(text) => setUserName(text)}
-          style={loginFormStyles.loginInput}
-        />
-        <TextInput
-          placeholder="Enter Password..."
-          value={pswrd}
-          onChangeText={(text) => setPswrd(text)}
-          secureTextEntry
-          style={loginFormStyles.loginInput}
-        />
-        <Pressable onPress={handleLogin} style={loginFormStyles.loginButton}>
-          <Text style={{ fontWeight: "bold", fontSize: 22 }}>Sign In</Text>
-        </Pressable>
-        {/* <Pressable onPress={() => navigation.navigate("Home")}>
+    <ImageBackground
+      source={require("../../assets/images/background.jpg")}
+      style={{
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+      }}
+    >
+      <View style={loginFormStyles.container}>
+        <View style={loginFormStyles.loginBox}>
+          <View style={loginFormStyles.loginTitle}>
+            <Text style={loginFormStyles.loginTitleText}>SignIn</Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+              marginBottom: 30,
+            }}
+          >
+            <Text>Welcome back! Login to access the RMS</Text>
+          </View>
+          <TextInput
+            placeholder="Enter ID..."
+            value={userName}
+            onChangeText={(text) => setUserName(text)}
+            style={loginFormStyles.loginInput}
+          />
+          <TextInput
+            placeholder="Enter Password..."
+            value={pswrd}
+            onChangeText={(text) => setPswrd(text)}
+            secureTextEntry
+            style={loginFormStyles.loginInput}
+          />
+          <Pressable onPress={handleLogin} style={loginFormStyles.loginButton}>
+            <Text style={{ fontWeight: "bold", fontSize: 22 }}>Sign In</Text>
+          </Pressable>
+          {/* <Pressable onPress={() => navigation.navigate("Home")}>
           <Text>Go back to Home</Text>
         </Pressable> */}
-        <View
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Text>Don't have account? </Text>
-          <Pressable onPress={() => navigation.navigate("Register")}>
-            <Text style={{ fontWeight: "bold", color: "#00f" }}>Sign Up</Text>
-          </Pressable>
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Text>Don't have account? </Text>
+            <Pressable onPress={() => navigation.navigate("Register")}>
+              <Text style={{ fontWeight: "bold", color: "#00f" }}>Sign Up</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

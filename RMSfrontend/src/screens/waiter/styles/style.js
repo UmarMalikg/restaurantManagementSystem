@@ -14,7 +14,7 @@ const waiterStyles = StyleSheet.create({
     right: 0,
     top: 0,
     height: 67,
-    backgroundColor: "#fff",
+    backgroundColor: "#436850",
     zIndex: 10000,
     display: "flex",
     alignItems: "center",
@@ -75,7 +75,9 @@ const waiterStyles = StyleSheet.create({
     width: isWeb ? "70%" : "100%",
     bottom: 5,
     top: 70,
-    backgroundColor: "#ddd",
+    backgroundColor: "#dfffdf",
+    borderWidth: 3,
+    borderColor: "#004346",
   },
   cancelButtonPosition: {
     position: "absolute",
@@ -100,7 +102,7 @@ const waiterStyles = StyleSheet.create({
   },
   sideBarTables: {
     flex: 1 / 2,
-    backgroundColor: "#ddd",
+    backgroundColor: "#729b79",
     borderRadius: 10,
     alignItems: "center",
     padding: 10,
@@ -115,7 +117,7 @@ const waiterStyles = StyleSheet.create({
     bottom: 0,
     right: 20,
     width: 350,
-    backgroundColor: "#777",
+    backgroundColor: "#729B79",
     borderRadius: 20,
   },
   orderCalculationsBox: {
@@ -201,7 +203,7 @@ const waiterStyles = StyleSheet.create({
     top: -3,
     height: 25,
     width: 25,
-    backgroundColor: "#fff",
+    backgroundColor: "#dfffdf",
     borderRadius: 25,
   },
   orderRightCircle: {
@@ -210,7 +212,7 @@ const waiterStyles = StyleSheet.create({
     top: -3,
     height: 25,
     width: 25,
-    backgroundColor: "#fff",
+    backgroundColor: "#dfffdf",
     borderRadius: 25,
   },
 
@@ -261,12 +263,12 @@ const waiterStyles = StyleSheet.create({
     flexDirection: "row",
   },
   orderMenuQtyActionBox: {
-    backgroundColor: "#f00",
+    backgroundColor: "#004346",
     paddingHorizontal: 10,
     borderRadius: 20,
   },
   orderMenuQtyActionText: { fontSize: 18, fontWeight: "bold" },
-  orderMenuQtyTextBox: { marginHorizontal: 20 },
+  orderMenuQtyTextBox: { marginHorizontal: 10 },
   orderMenuQtyText: {},
   orderMenuActionBox: {},
 
@@ -292,7 +294,7 @@ const waiterStyles = StyleSheet.create({
     left: 20,
     bottom: 0,
     right: 370,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#dfffdf",
   },
   //catagories buttons styling
   category: {
@@ -330,12 +332,9 @@ const waiterStyles = StyleSheet.create({
   product: {
     flex: 1, // Use flex: 1 to distribute width evenly
     aspectRatio: "auto", // To maintain a square aspect ratio
-    // alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#fff",
     marginVertical: 15,
     marginHorizontal: 15,
-    backgroundColor: "white", // Example background color
+    backgroundColor: "#cdffcd", // Example background color
     shadowColor: "rgba(d, d, d, 0.5)", // Shadow color and opacity
     shadowOffset: {
       width: 5, // Horizontal offset
@@ -346,7 +345,11 @@ const waiterStyles = StyleSheet.create({
     borderRadius: 10,
   },
   productImage: {
-    width: "90%",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   productDetail: {},
   productDetail: {},
@@ -363,6 +366,12 @@ const waiterStyles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  qtyButtons: {
+    marginHorizontal: 10,
+    paddingHorizontal: 6,
+    borderRadius: 2,
+    backgroundColor: "#004346",
+  },
 
   productCartButton: {
     margin: 10,
@@ -371,7 +380,7 @@ const waiterStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#004346",
     borderRadius: 15,
   },
   colorWhite: {

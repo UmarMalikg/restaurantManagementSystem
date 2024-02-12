@@ -83,13 +83,43 @@ const Products = ({
               </View>
 
               <View>
-                <View style={waiterStyles.productDetailItem}>
-                  <Pressable onPress={() => decreaseQuantity(item._id)}>
-                    <Text>&minus; </Text>
+                <View
+                  style={[
+                    waiterStyles.productDetailItem,
+                    { justifyContent: "center" },
+                  ]}
+                >
+                  <Pressable
+                    style={waiterStyles.qtyButtons}
+                    onPress={() => decreaseQuantity(item._id)}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        color: "#fff",
+                      }}
+                    >
+                      &minus;
+                    </Text>
                   </Pressable>
-                  <Text> {quantity[item._id] || 1} </Text>
-                  <Pressable onPress={() => increaseQuantity(item._id)}>
-                    <Text> + </Text>
+                  <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                    {" "}
+                    {quantity[item._id] || 1}{" "}
+                  </Text>
+                  <Pressable
+                    style={waiterStyles.qtyButtons}
+                    onPress={() => increaseQuantity(item._id)}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        color: "#fff",
+                      }}
+                    >
+                      +
+                    </Text>
                   </Pressable>
                 </View>
               </View>

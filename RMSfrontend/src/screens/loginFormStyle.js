@@ -12,6 +12,10 @@ const loginFormStyles = StyleSheet.create({
     width: isWeb ? 400 : "100%",
     height: isWeb ? 500 : "100%",
     padding: isWeb ? 15 : 10,
+    backgroundColor: "rgba(200, 200, 200, 0.8)",
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   loginTitle: {
     display: "flex",
@@ -36,9 +40,6 @@ const loginFormStyles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
     fontSize: 18,
-    ...(isWeb && {
-      outline: "none",
-    }),
   },
   loginButton: {
     display: "flex",

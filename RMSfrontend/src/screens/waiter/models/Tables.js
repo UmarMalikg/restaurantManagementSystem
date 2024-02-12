@@ -76,7 +76,6 @@ const Tables = ({ tableData, fetchTableData }) => {
                   style={[
                     waiterStyles.sideBarTables,
                     table.isReserved && { backgroundColor: "red" },
-                    { backgroundColor: "#ff0" },
                   ]}
                   key={table._id}
                   onPress={() => selectTable(table._id)}

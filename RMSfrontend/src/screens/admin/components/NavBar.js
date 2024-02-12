@@ -12,8 +12,10 @@ const NavBar = () => {
 
   return (
     <View style={adminStyles.navBar}>
-      <Text>Logo</Text>
-      <Text>Search</Text>
+      <Image
+        source={require("../../../../assets/images/logo.png")}
+        style={{ height: 40, width: 250 }}
+      />
 
       {employee && employee.isAdmin ? (
         <View style={waiterStyles.headerEmployeeAction}>

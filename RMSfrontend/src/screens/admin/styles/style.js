@@ -4,6 +4,7 @@ const adminStyles = StyleSheet.create({
   // styles for sideBar
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   navBar: {
     position: "fixed",
@@ -13,19 +14,14 @@ const adminStyles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: 60,
-    backgroundColor: "white",
+    backgroundColor: "#729B79",
     zIndex: 1000,
     top: 0,
     left: 0,
     right: 0,
     height: 60,
-    backgroundColor: "white",
     zIndex: 1000,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+
     paddingHorizontal: 25,
   },
   // styles for sideBar
@@ -36,8 +32,8 @@ const adminStyles = StyleSheet.create({
     width: 220,
     bottom: 0,
     top: 60,
-    backgroundColor: "white",
-    paddingTop: 20,
+    backgroundColor: "#729B79",
+    paddingTop: 10,
     paddingLeft: 20,
   },
   sideBarLinks: {
@@ -76,7 +72,7 @@ const adminStyles = StyleSheet.create({
     bottom: 0,
     top: 60,
     right: 0,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#dfffdf",
   },
   // styles for table Page
   tablePosition: {
@@ -222,10 +218,12 @@ const adminStyles = StyleSheet.create({
   },
   recordName: {
     fontSize: "18px",
+    fontFamily: "Sans-Serif",
   },
   recordNums: {
     fontSize: "25px",
     marginTop: 10,
+    fontFamily: "Sans-Serif",
   },
   recordIconPos: {
     position: "absolute",
