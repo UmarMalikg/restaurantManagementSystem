@@ -35,13 +35,29 @@ const OrderLists = ({
 
   const [page, setPage] = useState(1); // Current page number
   const [itemsPerPage, setItemsPerPage] = useState(20); // Number of items per page
+  const [searchText, setSearchText] = useState(""); // Search text
+  const [orderTypeFilter, setOrderTypeFilter] = useState(null); // Selected order type filter
 
   // Calculate the start and end index for pagination
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   // Slice the orderData array based on pagination
-  const displayedOrders = orderData.slice(startIndex, endIndex);
+  const displayedOrders = orderData
+    .filter((order) => {
+      // Filter by order type if a filter is selected
+      if (orderTypeFilter) {
+        return order.orderType === orderTypeFilter;
+      }
+      return true;
+    })
+    .filter((order) => {
+      // Filter by search text if available
+      return order.orderItems.some((item) =>
+        item.item.includes(searchText.toLowerCase())
+      );
+    })
+    .slice(startIndex, endIndex);
 
   // Handle next and previous page navigation
   const nextPage = () => {
@@ -62,17 +78,47 @@ const OrderLists = ({
           <TextInput
             style={adminStyles.dataSearcher}
             placeholder="search the order with table No, id..."
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
           />
         </View>
         <View style={adminStyles.orderFilter}>
           <View style={adminStyles.orderTypeFilter}>
-            <Pressable style={adminStyles.filterButtons}>
+            <Pressable
+              style={[
+                adminStyles.filterButtons,
+                orderTypeFilter === null && adminStyles.activeFilterButton,
+              ]}
+              onPress={() => setOrderTypeFilter(null)}
+            >
+              <Text>All</Text>
+            </Pressable>
+            <Pressable
+              style={[
+                adminStyles.filterButtons,
+                orderTypeFilter === "Delivery" &&
+                  adminStyles.activeFilterButton,
+              ]}
+              onPress={() => setOrderTypeFilter("Delivery")}
+            >
               <Text>Delivery</Text>
             </Pressable>
-            <Pressable style={adminStyles.filterButtons}>
+            <Pressable
+              style={[
+                adminStyles.filterButtons,
+                orderTypeFilter === "Walk-In" && adminStyles.activeFilterButton,
+              ]}
+              onPress={() => setOrderTypeFilter("Walk-In")}
+            >
               <Text>Walk In</Text>
             </Pressable>
-            <Pressable style={adminStyles.filterButtons}>
+            <Pressable
+              style={[
+                adminStyles.filterButtons,
+                orderTypeFilter === "Dine-In" && adminStyles.activeFilterButton,
+              ]}
+              onPress={() => setOrderTypeFilter("Dine-In")}
+            >
               <Text>Dine In</Text>
             </Pressable>
           </View>
@@ -324,11 +370,6 @@ const OrderLists = ({
                           Rs. {order.totalPrice}
                         </Text>
                       </View>
-                    </View>
-                    <View style={adminStyles.orderRecieptPositionStyling}>
-                      <Pressable style={adminStyles.orderRecieptButtonStyling}>
-                        <Text>Get Reciept</Text>
-                      </Pressable>
                     </View>
                   </View>
                 </View>

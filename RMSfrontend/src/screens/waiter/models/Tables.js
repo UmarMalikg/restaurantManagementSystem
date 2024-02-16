@@ -35,7 +35,7 @@ const Tables = ({ tableData, fetchTableData }) => {
 
   const selectTable = (tableID) => {
     updateSelectedTable(tableID);
-    navigation.navigate("Home");
+    navigation.navigate("WaiterHome");
   };
 
   return (

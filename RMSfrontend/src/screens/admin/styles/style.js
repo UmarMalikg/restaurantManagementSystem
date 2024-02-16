@@ -277,6 +277,9 @@ const adminStyles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "#fff",
   },
+  activeFilterButton: {
+    backgroundColor: "#0f0",
+  },
   allOrders: {
     marginBottom: 30,
     marginHorizontal: 30,

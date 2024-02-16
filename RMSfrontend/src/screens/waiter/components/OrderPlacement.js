@@ -111,6 +111,13 @@ const OrderPlacement = ({
     setSelectedTable(null);
   };
 
+  const deleteListedItem = (productId) => {
+    const updatedItems = addedItemsForOrder.filter(
+      (item) => item.item !== productId
+    );
+    setAddedItemsforOrder(updatedItems);
+  };
+
   return (
     <View style={waiterStyles.orderPlacement}>
       <View style={waiterStyles.orderSelectTableBox}>
@@ -196,7 +203,7 @@ const OrderPlacement = ({
                     </View>
 
                     <View style={waiterStyles.orderMenuActionBox}>
-                      <Pressable>
+                      <Pressable onPress={() => deleteListedItem(item.item)}>
                         <Text>delete</Text>
                       </Pressable>
                     </View>
