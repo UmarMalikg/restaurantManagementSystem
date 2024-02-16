@@ -1,0 +1,5 @@
+export const SET_ORDER_DATA = "SET_ORDER_DATA";
+export const ADD_ORDER = "ADD_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const SET_TOTAL_SALES_COUNT = "SET_TOTAL_SALES_COUNT";
