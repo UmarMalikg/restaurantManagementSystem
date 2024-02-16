@@ -3,8 +3,10 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 // Action Types
-export const SET_CATEGORY_DATA = "SET_CATEGORY_DATA";
-export const SELECT_CATEGORY = "SELECT_CATEGORY";
+import {
+  SET_CATEGORY_DATA,
+  SELECT_CATEGORY,
+} from "../../constants/categotyConstants";
 
 // Action Creators
 export const setCategoryData = (categoryData) => ({

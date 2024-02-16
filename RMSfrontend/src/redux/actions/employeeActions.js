@@ -1,23 +1,31 @@
 import axios from "axios";
 import { api } from "../../api/api";
 
+// action types
+import {
+  SET_EMPLOYEE_DATA,
+  ADD_EMPLOYEE,
+  DELETE_EMPLOYEE,
+  SET_TOTAL_EMPLOYEES_COUNT,
+} from "../../constants/employeeConstants";
+
 export const setEmployeeData = (employeeData) => ({
-  type: "SET_EMPLOYEE_DATA",
+  type: SET_EMPLOYEE_DATA,
   payload: employeeData,
 });
 
 export const addEmployeeToStore = (employeeData) => ({
-  type: "ADD_EMPLOYEE",
+  type: ADD_EMPLOYEE,
   payload: employeeData,
 });
 
 export const deleteEmployeeFromStore = (employeeId) => ({
-  type: "DELETE_EMPLOYEE",
+  type: DELETE_EMPLOYEE,
   payload: employeeId,
 });
 
 export const setTotalEmployeesCount = (count) => ({
-  type: "SET_TOTAL_EMPLOYEES_COUNT",
+  type: SET_TOTAL_EMPLOYEES_COUNT,
   payload: count,
 });
 

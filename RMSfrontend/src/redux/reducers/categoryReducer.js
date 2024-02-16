@@ -1,4 +1,7 @@
-import { SET_CATEGORY_DATA, SELECT_CATEGORY } from "../actions/categoryActions";
+import {
+  SET_CATEGORY_DATA,
+  SELECT_CATEGORY,
+} from "../../constants/categotyConstants";
 
 const initialState = {
   categoryData: [],

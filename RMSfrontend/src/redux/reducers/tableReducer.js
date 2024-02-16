@@ -1,3 +1,10 @@
+import {
+  SET_TABLE_DATA,
+  SET_RESERVED_TABLES,
+  MADE_TABLE_RESERVED,
+  MADE_TABLE_AVAILABLE,
+} from "../../constants/tableConstants";
+
 const initialState = {
   tableData: [],
   reservedTables: [],
@@ -5,17 +12,17 @@ const initialState = {
 
 const tableReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_TABLE_DATA":
+    case SET_TABLE_DATA:
       return {
         ...state,
         tableData: action.payload,
       };
-    case "SET_RESERVED_TABLES":
+    case SET_RESERVED_TABLES:
       return {
         ...state,
         reservedTables: action.payload,
       };
-    case "MADE_TABLE_RESERVED":
+    case MADE_TABLE_RESERVED:
       const reservedTableId = action.tableId;
       const updatedReservedTablesReserved =
         state.reservedTables.concat(reservedTableId);
@@ -23,7 +30,7 @@ const tableReducer = (state = initialState, action) => {
         ...state,
         reservedTables: updatedReservedTablesReserved,
       };
-    case "MADE_TABLE_AVAILABLE":
+    case MADE_TABLE_AVAILABLE:
       const availableTableId = action.tableId;
       const updatedReservedTablesAvailable = state.reservedTables.filter(
         (tableId) => tableId !== availableTableId

@@ -1,27 +1,34 @@
+import {
+  SET_EMPLOYEE_DATA,
+  ADD_EMPLOYEE,
+  DELETE_EMPLOYEE,
+  SET_TOTAL_EMPLOYEES_COUNT,
+} from "../../constants/employeeConstants";
+
 const initialState = {
   employeeData: [],
 };
 
 const employeeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_EMPLOYEE_DATA":
+    case SET_EMPLOYEE_DATA:
       return {
         ...state,
         employeeData: action.payload,
       };
-    case "ADD_EMPLOYEE":
+    case ADD_EMPLOYEE:
       return {
         ...state,
         employeeData: [...state.employeeData, action.payload],
       };
-    case "DELETE_EMPLOYEE":
+    case DELETE_EMPLOYEE:
       return {
         ...state,
         employeeData: state.employeeData.filter(
           (employee) => employee._id !== action.payload
         ),
       };
-    case "SET_TOTAL_EMPLOYEES_COUNT":
+    case SET_TOTAL_EMPLOYEES_COUNT:
       return {
         ...state,
         totalEmployeesCount: action.payload,

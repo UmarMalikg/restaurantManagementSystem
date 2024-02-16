@@ -1,21 +1,28 @@
 import axios from "axios";
 import { api } from "../../api/api";
 
+import {
+  SET_TABLE_DATA,
+  SET_RESERVED_TABLES,
+  MADE_TABLE_AVAILABLE,
+  MADE_TABLE_RESERVED,
+} from "../../constants/tableConstants";
+
 export const setTableData = (tableData) => ({
-  type: "SET_TABLE_DATA",
+  type: SET_TABLE_DATA,
   payload: tableData,
 });
 
 export const setReservedTables = (reservedTables) => ({
-  type: "SET_RESERVED_TABLES",
+  type: SET_RESERVED_TABLES,
   payload: reservedTables,
 });
 export const setTableReserved = (tableId) => ({
-  type: "MADE_TABLE_RESERVED",
+  type: MADE_TABLE_RESERVED,
   tableId,
 });
 export const setTableAvailable = (tableId) => ({
-  type: "MADE_TABLE_AVAILABLE",
+  type: MADE_TABLE_AVAILABLE,
   tableId,
 });
 

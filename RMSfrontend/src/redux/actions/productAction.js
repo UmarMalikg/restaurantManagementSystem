@@ -1,22 +1,30 @@
 import axios from "axios";
 import { api } from "../../api/api";
 
+// action types
+import {
+  SET_PRODUCT_DATA,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  SET_TOTAL_PRODUCTS_COUNT,
+} from "../../constants/productConstants";
+
 export const setProductData = (productData) => ({
-  type: "SET_PRODUCT_DATA",
+  type: SET_PRODUCT_DATA,
   payload: productData,
 });
 // productActions.js
 export const addProductToStore = (productData) => ({
-  type: "ADD_PRODUCT",
+  type: ADD_PRODUCT,
   payload: productData,
 });
 export const deleteProductFromStore = (productId) => ({
-  type: "DELETE_PRODUCT",
+  type: DELETE_PRODUCT,
   payload: productId,
 });
 
 export const setProductsCount = (count) => ({
-  type: "SET_TOTAL_PRODUCTS_COUNT",
+  type: SET_TOTAL_PRODUCTS_COUNT,
   payload: count,
 });
 

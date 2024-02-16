@@ -4,7 +4,7 @@ import {
   DELETE_ORDER,
   GET_ORDER_BY_ID,
   SET_TOTAL_SALES_COUNT,
-} from "../actions/orderActions";
+} from "../../constants/orderConstants";
 
 const initialState = {
   orderData: [],
