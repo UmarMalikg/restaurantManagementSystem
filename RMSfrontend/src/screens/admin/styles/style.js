@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { isWeb } from "../../../constants/stylesConstants";
 
 const adminStyles = StyleSheet.create({
   // styles for sideBar
@@ -378,6 +379,28 @@ const adminStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+  },
+
+  catTabPosition: {
+    margin: 30,
+    ...(isWeb && {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+      gridColumnGap: 16,
+      gridRowGap: 16,
+    }),
+  },
+  catTabBox: {
+    height: 50,
+    padding: 20,
+    borderRadius: 15,
+  },
+  catTabNameText: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  catProductNumText: {
+    fontSize: 23,
   },
 });
 

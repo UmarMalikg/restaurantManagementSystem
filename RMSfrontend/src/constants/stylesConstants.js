@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-const isWeb = Platform.OS === "web";
+export const isWeb = Platform.OS === "web";
 
 // widths and heights
 export const navBarWidth = 70;
