@@ -16,8 +16,26 @@ const Header = () => {
         <Text>LOGO</Text>
       </View>
       {/* centre */}
-      <View>
-        <Text>Orders</Text>
+      <View
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Pressable
+          style={{ marginHorizontal: 10 }}
+          onPress={() => navigation.navigate("WaiterHome")}
+        >
+          <Text>Home</Text>
+        </Pressable>
+        <Pressable
+          style={{ marginHorizontal: 10 }}
+          onPress={() => navigation.navigate("Orders")}
+        >
+          <Text>Orders</Text>
+        </Pressable>
       </View>
       {/* right */}
 

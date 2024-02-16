@@ -8,6 +8,7 @@ import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import Tables from "./models/Tables";
+import Orders from "./Orders";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,11 +35,12 @@ const Waiter = () => {
     <View style={waiterStyles.container}>
       <Header />
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="WaiterHome"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Group>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="WaiterHome" component={Home} />
+          <Stack.Screen name="Orders" component={Orders} />
         </Stack.Group>
         <Stack.Group
           screenOptions={{

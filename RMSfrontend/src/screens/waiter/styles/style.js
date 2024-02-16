@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 
 const isWeb = Platform.OS === "web";
+let fullLightGreenColor = "#dfffdf";
 
 const waiterStyles = StyleSheet.create({
   // styles for sideBar
@@ -294,7 +295,7 @@ const waiterStyles = StyleSheet.create({
     left: 20,
     bottom: 0,
     right: 370,
-    backgroundColor: "#dfffdf",
+    backgroundColor: fullLightGreenColor,
   },
   //catagories buttons styling
   category: {
@@ -387,6 +388,15 @@ const waiterStyles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 17,
+  },
+  orders: {
+    position: "absolute",
+    top: 70,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: fullLightGreenColor,
+    paddingHorizontal: 20,
   },
 });
 
