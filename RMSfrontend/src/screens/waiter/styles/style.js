@@ -398,6 +398,26 @@ const waiterStyles = StyleSheet.create({
     backgroundColor: fullLightGreenColor,
     paddingHorizontal: 20,
   },
+
+  // styles for order page
+  singleOrder: {},
+  allItems: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+  },
+  singleItem: {
+    backgroundColor: "#f00",
+    width: 120,
+    borderRadius: 10,
+    margin: 10,
+  },
+  orderedImage: {
+    width: "60%",
+    aspectRatio: 1 / 1,
+    borderRadius: 40,
+  },
 });
 
 export default waiterStyles;
