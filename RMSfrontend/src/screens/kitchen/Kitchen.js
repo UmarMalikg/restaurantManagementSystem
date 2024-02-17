@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Header from "./components/Header";
+import KitchenOrders from "./components/KitchenOrders";
 
 const Kitchen = () => {
   const navigation = useNavigation();
@@ -25,6 +27,8 @@ const Kitchen = () => {
   }, [navigation]);
   return (
     <View>
+      <Header />
+      <KitchenOrders />
       <Text>Kitchen</Text>
     </View>
   );
