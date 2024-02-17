@@ -13,6 +13,12 @@ const orderItemSchema = mongoose.Schema({
     min: 1,
     default: 1,
   },
+  itemStatus: {
+    type: String,
+    enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
+    default: "Pending",
+    required: true,
+  },
 });
 
 const orderSchema = mongoose.Schema(
@@ -38,6 +44,7 @@ const orderSchema = mongoose.Schema(
       type: String,
       enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
       default: "Pending",
+      required: true,
     },
     isPaid: {
       type: Boolean,

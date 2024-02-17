@@ -5,12 +5,16 @@ import {
   TextInput,
   ScrollView,
   Pressable,
+  Platform,
   ImageBackground,
 } from "react-native";
+import { RadioButton } from "react-native-paper";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from "react-redux";
 import registrFormStyles from "./registerFormStyle";
 import { useNavigation } from "@react-navigation/native";
 import { addUser } from "../redux/actions/userActions";
+import { isWeb } from "../constants/stylesConstants";
 
 const Register = ({ addUser }) => {
   const navigation = useNavigation();
@@ -22,7 +26,7 @@ const Register = ({ addUser }) => {
     phNo: "",
     pswrd: "",
     dOB: "",
-    gender: "",
+    gender: "male",
     nationalId: "",
     street: "",
     city: "",
@@ -31,11 +35,36 @@ const Register = ({ addUser }) => {
     country: "",
   });
 
-  const handleChange = (fieldName, value) => {
-    setFormData({
-      ...formData,
-      [fieldName]: value,
-    });
+  const handleChange = (fieldName, value, isNumeric) => {
+    const cleanedValue = isNumeric ? value.replace(/[^0-9]/g, "") : value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: cleanedValue,
+    }));
+  };
+
+  const [gender, setGender] = useState(formData.gender);
+  const handleGenderChange = (value) => {
+    setGender(value);
+    setFormData({ ...formData, gender: value });
+  };
+
+  const [isDOBPickerVisible, setDOBPickerVisible] = useState(false);
+  const handleBOBDateChange = (date) => {
+    setDOBPickerVisible(false);
+    if (date) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        dOB: date,
+      }));
+    }
+  };
+  const showDOBDatePicker = () => {
+    setDOBPickerVisible(true);
+  };
+  const hideDatePicker = () => {
+    setDOBPickerVisible(false);
   };
 
   const submitForm = () => {
@@ -80,7 +109,7 @@ const Register = ({ addUser }) => {
       phNo: "",
       pswrd: "",
       dOB: "",
-      gender: "",
+      gender: "male",
       nationalId: "",
       street: "",
       city: "",
@@ -109,9 +138,18 @@ const Register = ({ addUser }) => {
             >
               <View>
                 <View style={registrFormStyles.formHeader}>
-                  <Text style={registrFormStyles.formHeaderTitle}>
-                    Registeration Form
-                  </Text>
+                  <Text style={registrFormStyles.formHeaderTitle}>Sign Up</Text>
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    marginBottom: 30,
+                  }}
+                >
+                  <Text>Register yourself to enjoy the delecious meal</Text>
                 </View>
                 <View>
                   <View>
@@ -149,7 +187,7 @@ const Register = ({ addUser }) => {
                       style={registrFormStyles.inputfield}
                       value={formData.phNo}
                       placeholder="Enter mobile phone number..."
-                      onChangeText={(text) => handleChange("phNo", text)}
+                      onChangeText={(text) => handleChange("phNo", text, true)}
                       required
                     />
                   </View>
@@ -173,15 +211,100 @@ const Register = ({ addUser }) => {
                       required
                     />
                   </View>
+                  <View style={{ marginHorizontal: 20 }}>
+                    <Text style={{ fontSize: 18 }}>
+                      Date of Birth
+                      <Text style={{ fontSize: 18, color: "#f00" }}>*</Text>
+                    </Text>
 
-                  <View>
-                    <TextInput
-                      style={registrFormStyles.inputfield}
-                      value={formData.gender}
-                      placeholder="Select your gender..."
-                      onChangeText={(text) => handleChange("gender", text)}
-                      required
-                    />
+                    {isWeb ? (
+                      <input
+                        style={{
+                          fontSize: 18,
+                          borderWidth: 0,
+                          borderBottomWidth: 1,
+                          borderColor: "#000",
+                          padding: 10,
+                          backgroundColor: "transparent",
+                        }}
+                        type="date"
+                        value={formData.dOB}
+                        onChange={(e) => {
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            dOB: e.target.value,
+                          }));
+                        }}
+                      />
+                    ) : (
+                      <View>
+                        <View
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Text>
+                            {formData.dOB
+                              ? formData.dOB.toDateString()
+                              : `Date of Birth...`}
+                          </Text>
+
+                          <Pressable onPress={showDOBDatePicker}>
+                            <Image
+                              style={{ width: 30, height: 30 }}
+                              source={require("../../assets/images/datePicker.png")}
+                            />
+                          </Pressable>
+                        </View>
+                        <DateTimePickerModal
+                          isVisible={isDOBPickerVisible}
+                          mode="date"
+                          onConfirm={handleBOBDateChange}
+                          onCancel={hideDatePicker}
+                        />
+                      </View>
+                    )}
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginHorizontal: 20,
+                      marginTop: 20,
+                    }}
+                  >
+                    <Text style={{ fontSize: 18 }}>
+                      Gender<Text>*</Text>
+                    </Text>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <RadioButton
+                        style={{ fontSize: 18 }}
+                        value="male"
+                        status={gender === "male" ? "checked" : "unchecked"}
+                        onPress={() => handleGenderChange("male")}
+                      />
+                      <Text style={{ fontSize: 18 }}>Male</Text>
+                      <RadioButton
+                        style={{ fontSize: 18 }}
+                        value="female"
+                        status={gender === "female" ? "checked" : "unchecked"}
+                        onPress={() => handleGenderChange("female")}
+                      />
+                      <Text style={{ fontSize: 18 }}>Female</Text>
+                      <RadioButton
+                        style={{ fontSize: 18 }}
+                        value="other"
+                        status={gender === "other" ? "checked" : "unchecked"}
+                        onPress={() => handleGenderChange("other")}
+                      />
+                      <Text style={{ fontSize: 18 }}>Other</Text>
+                    </View>
                   </View>
 
                   <View>

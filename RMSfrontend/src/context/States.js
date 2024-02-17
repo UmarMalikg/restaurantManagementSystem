@@ -3,20 +3,23 @@ import React, { createContext, useContext, useState } from "react";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  // state that keep track of logined employee
   const [employee, setEmployee] = useState(null);
   const updateEmployee = (newEmployee) => {
     setEmployee(newEmployee);
   };
 
+  // state that keep track of logined user
   const [user, setUser] = useState(null);
   const updateUser = (newUser) => {
     setUser(newUser);
   };
 
+  // states that keep track of added Items for order
   const [addedItemsForOrder, setAddedItemsforOrder] = useState([
-    { item: "", qty: "" },
+    { item: "", qty: "", itemStatus: "Pending" },
   ]);
-  const updateItemsForOrder = (item, qty) => {
+  const updateItemsForOrder = (item, qty, itemStatus) => {
     // Find if the item already exists in orderItems
     const existingItemIndex = addedItemsForOrder.findIndex(
       (addedItemsForOrder) => addedItemsForOrder.item === item
@@ -26,7 +29,7 @@ export const AppProvider = ({ children }) => {
         addedItemsForOrder.item === "" && addedItemsForOrder.qty === ""
     );
     if (emptyItemIndex !== -1) {
-      const addFirstItem = [{ item, qty }];
+      const addFirstItem = [{ item, qty, itemStatus }];
       setAddedItemsforOrder(addFirstItem);
       console.log("first item", addFirstItem);
     }
@@ -39,22 +42,27 @@ export const AppProvider = ({ children }) => {
       console.log("Item updated:", updatedOrderItems);
     } else {
       // If the item doesn't exist, add it to orderItems
-      setAddedItemsforOrder([...addedItemsForOrder, { item, qty }]);
-      console.log("Item added:", [...addedItemsForOrder, { item, qty }]);
+      setAddedItemsforOrder([...addedItemsForOrder, { item, qty, itemStatus }]);
+      console.log("Item added:", [
+        ...addedItemsForOrder,
+        { item, qty, itemStatus },
+      ]);
     }
   };
 
+  // states for checking the actived admin link
   const [adminActivedLink, setAdminActivedLink] = useState("Dashboard");
-
   const updateAdminActivedLink = (link) => {
     setAdminActivedLink(link);
   };
 
+  // state for selecting the table for order
   const [selectedTable, setSelectedTable] = useState(null);
   const updateSelectedTable = (newSelectedTable) => {
     setSelectedTable(newSelectedTable);
   };
 
+  // return
   return (
     <AppContext.Provider
       value={{

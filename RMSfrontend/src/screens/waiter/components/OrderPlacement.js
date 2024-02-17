@@ -103,11 +103,11 @@ const OrderPlacement = ({
       orderTaker: employee._id,
     };
     addOrder(newOrder);
-    setAddedItemsforOrder([{ item: "", qty: "" }]);
+    setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
     setSelectedTable(null);
   };
   const cancelOrder = () => {
-    setAddedItemsforOrder([{ item: "", qty: "" }]);
+    setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
     setSelectedTable(null);
   };
 

@@ -9,8 +9,8 @@ const registrFormStyles = StyleSheet.create({
     alignItems: "center",
   },
   positioner: {
-    height: isWeb ? "90%" : "99%",
-    width: isWeb ? 450 : "100%",
+    height: isWeb ? 500 : "99%",
+    width: isWeb ? 400 : "100%",
     display: "flex",
     alignItems: "center",
   },

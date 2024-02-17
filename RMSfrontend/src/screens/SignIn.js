@@ -76,7 +76,7 @@ const SignIn = () => {
       <View style={loginFormStyles.container}>
         <View style={loginFormStyles.loginBox}>
           <View style={loginFormStyles.loginTitle}>
-            <Text style={loginFormStyles.loginTitleText}>SignIn</Text>
+            <Text style={loginFormStyles.loginTitleText}>Sign In</Text>
           </View>
           <View
             style={{
@@ -103,7 +103,9 @@ const SignIn = () => {
             style={loginFormStyles.loginInput}
           />
           <Pressable onPress={handleLogin} style={loginFormStyles.loginButton}>
-            <Text style={{ fontWeight: "bold", fontSize: 22 }}>Sign In</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 22, color: "#fff" }}>
+              Sign In
+            </Text>
           </Pressable>
           {/* <Pressable onPress={() => navigation.navigate("Home")}>
           <Text>Go back to Home</Text>
