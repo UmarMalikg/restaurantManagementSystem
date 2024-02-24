@@ -1,7 +1,13 @@
-import { StyleSheet, Platform } from "react-native";
-
-const isWeb = Platform.OS === "web";
-let fullLightGreenColor = "#dfffdf";
+import { StyleSheet } from "react-native";
+import {
+  isWeb,
+  fullLightGreen,
+  navBarHeight,
+  fullDarkgreen,
+  darkGreen,
+  lightGreen,
+  darkBlueGreen,
+} from "../../../constants/stylesConstants";
 
 const waiterStyles = StyleSheet.create({
   // styles for sideBar
@@ -14,8 +20,8 @@ const waiterStyles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    height: 67,
-    backgroundColor: "#436850",
+    height: navBarHeight,
+    backgroundColor: fullDarkgreen,
     zIndex: 10000,
     display: "flex",
     alignItems: "center",
@@ -76,7 +82,7 @@ const waiterStyles = StyleSheet.create({
     width: isWeb ? "70%" : "100%",
     bottom: 5,
     top: 70,
-    backgroundColor: "#dfffdf",
+    backgroundColor: fullLightGreen,
     borderWidth: 3,
     borderColor: "#004346",
   },
@@ -103,7 +109,7 @@ const waiterStyles = StyleSheet.create({
   },
   sideBarTables: {
     flex: 1 / 2,
-    backgroundColor: "#729b79",
+    backgroundColor: darkGreen,
     borderRadius: 10,
     alignItems: "center",
     padding: 10,
@@ -118,7 +124,7 @@ const waiterStyles = StyleSheet.create({
     bottom: 0,
     right: 20,
     width: 350,
-    backgroundColor: "#729B79",
+    backgroundColor: darkGreen,
     borderRadius: 20,
   },
   orderCalculationsBox: {
@@ -204,7 +210,7 @@ const waiterStyles = StyleSheet.create({
     top: -3,
     height: 25,
     width: 25,
-    backgroundColor: "#dfffdf",
+    backgroundColor: fullLightGreen,
     borderRadius: 25,
   },
   orderRightCircle: {
@@ -213,7 +219,7 @@ const waiterStyles = StyleSheet.create({
     top: -3,
     height: 25,
     width: 25,
-    backgroundColor: "#dfffdf",
+    backgroundColor: fullLightGreen,
     borderRadius: 25,
   },
 
@@ -295,7 +301,7 @@ const waiterStyles = StyleSheet.create({
     left: 20,
     bottom: 0,
     right: 370,
-    backgroundColor: fullLightGreenColor,
+    backgroundColor: fullLightGreen,
   },
   //catagories buttons styling
   category: {
@@ -335,7 +341,7 @@ const waiterStyles = StyleSheet.create({
     aspectRatio: "auto", // To maintain a square aspect ratio
     marginVertical: 15,
     marginHorizontal: 15,
-    backgroundColor: "#cdffcd", // Example background color
+    backgroundColor: lightGreen, // Example background color
     shadowColor: "rgba(d, d, d, 0.5)", // Shadow color and opacity
     shadowOffset: {
       width: 5, // Horizontal offset
@@ -371,7 +377,7 @@ const waiterStyles = StyleSheet.create({
     marginHorizontal: 10,
     paddingHorizontal: 6,
     borderRadius: 2,
-    backgroundColor: "#004346",
+    backgroundColor: darkBlueGreen,
   },
 
   productCartButton: {
@@ -381,7 +387,7 @@ const waiterStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#004346",
+    backgroundColor: darkBlueGreen,
     borderRadius: 15,
   },
   colorWhite: {
@@ -395,7 +401,7 @@ const waiterStyles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: fullLightGreenColor,
+    backgroundColor: fullLightGreen,
     paddingHorizontal: 20,
   },
 

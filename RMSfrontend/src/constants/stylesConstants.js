@@ -26,3 +26,5 @@ export const skyBlue = "#98bdff";
 export const lightBlue = "#7978e9";
 
 export const lightOrange = "#f3797e";
+
+export const darkBlueGreen = "#004346";
