@@ -124,3 +124,5 @@ orderSchema.pre("save", async function (next) {
 const Order = mongoose.model("orders", orderSchema);
 
 module.exports = Order;
+
+// https://www.color-hex.com/color/004346#:~:text=Web%20safe%20color%20of%20%23004346%20is%20%23,003333.%20Color%20%23004346%20contains%20mainly%20BLUE%20color.

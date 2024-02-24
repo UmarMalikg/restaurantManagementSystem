@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Picker } from "react-native";
 import React, { useEffect } from "react";
 import waiterStyles from "../../waiter/styles/style";
 import defaultStyles from "../../../defaultStyles";
@@ -55,77 +55,90 @@ const KitchenOrders = ({
               <ScrollView showsHorizontalScrollIndicator={false}>
                 {/* single Item */}
                 <View style={waiterStyles.allItems}>
-                  {order.orderItems.map((item) => {
-                    const product = productData.find(
-                      (p) => p._id === item.item
-                    );
+                  {order.orderItems
+                    .filter((item) => item.itemStatus !== "Completed")
+                    .map((item) => {
+                      const product = productData.find(
+                        (p) => p._id === item.item
+                      );
 
-                    return (
-                      <View key={item.item} style={waiterStyles.singleItem}>
-                        <View
-                          style={[
-                            defaultStyles.rowSpacingFlex,
-                            defaultStyles.mrg6,
-                          ]}
-                        >
-                          <View>
-                            <Text>{item?.itemStatus || "NA"}</Text>
-                          </View>
-                          <View>
-                            <Text>Time</Text>
-                          </View>
-                        </View>
-
-                        <View
-                          style={[
-                            defaultStyles.rowCenteredFlex,
-                            { flex: 1 },
-                            defaultStyles.mrgV6,
-                          ]}
-                        >
-                          {product?.img ? (
-                            <Image
-                              style={waiterStyles.orderedImage}
-                              source={{
-                                uri: `http://localhost:8080/${product.img.replace(
-                                  /\\/g,
-                                  "/"
-                                )}`,
-                              }}
-                            />
-                          ) : (
-                            <View style={defaultStyles.rowCenteredFlex}>
-                              <Text>Image</Text>
-                            </View>
-                          )}
-                        </View>
-                        <View style={defaultStyles.rowCenteredFlex}>
-                          <Text
-                            style={[defaultStyles.fs18, defaultStyles.bold]}
+                      return (
+                        <View key={item.item} style={waiterStyles.singleItem}>
+                          <View
+                            style={[
+                              defaultStyles.rowSpacingFlex,
+                              defaultStyles.mrg6,
+                            ]}
                           >
-                            {product?.name || "NA"}
-                          </Text>
-                        </View>
-                        <View
-                          style={[
-                            defaultStyles.rowCenteredFlex,
-                            defaultStyles.mrgT8,
-                          ]}
-                        >
-                          <Text>{item?.qty || "NA"}</Text>
-                        </View>
+                            <View>
+                              <Text>{item?.itemStatus || "NA"}</Text>
+                            </View>
+                            <View>
+                              <Text>Time</Text>
+                            </View>
+                          </View>
 
-                        <View
-                          style={[
-                            defaultStyles.rowCenteredFlex,
-                            defaultStyles.mrgV8,
-                          ]}
-                        >
-                          <Text>Picker for changing the status</Text>
+                          <View
+                            style={[
+                              defaultStyles.rowCenteredFlex,
+                              { flex: 1 },
+                              defaultStyles.mrgV6,
+                            ]}
+                          >
+                            {product?.img ? (
+                              <Image
+                                style={waiterStyles.orderedImage}
+                                source={{
+                                  uri: `http://localhost:8080/${product.img.replace(
+                                    /\\/g,
+                                    "/"
+                                  )}`,
+                                }}
+                              />
+                            ) : (
+                              <View style={defaultStyles.rowCenteredFlex}>
+                                <Text>Image</Text>
+                              </View>
+                            )}
+                          </View>
+                          <View style={defaultStyles.rowCenteredFlex}>
+                            <Text
+                              style={[defaultStyles.fs18, defaultStyles.bold]}
+                            >
+                              {product?.name || "NA"}
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              defaultStyles.rowCenteredFlex,
+                              defaultStyles.mrgT8,
+                            ]}
+                          >
+                            <Text>{item?.qty || "NA"}</Text>
+                          </View>
+
+                          <View
+                            style={[
+                              defaultStyles.rowCenteredFlex,
+                              defaultStyles.mrgV8,
+                            ]}
+                          >
+                            <Picker selectedValue={null}>
+                              <Picker.Item label="Pending" value="Pending" />
+                              <Picker.Item
+                                label="Preparing"
+                                value="Preparing"
+                              />
+                              <Picker.Item label="Ready" value="Ready" />
+                              <Picker.Item
+                                label="Delivered"
+                                value="Delivered"
+                              />
+                            </Picker>
+                          </View>
                         </View>
-                      </View>
-                    );
-                  })}
+                      );
+                    })}
                 </View>
               </ScrollView>
               {/* status */}
