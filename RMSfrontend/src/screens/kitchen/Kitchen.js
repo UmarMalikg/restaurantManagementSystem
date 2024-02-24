@@ -1,10 +1,14 @@
-import { View, Text } from "react-native";
 import React, { useEffect } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { View } from "react-native";
+import waiterStyles from "../waiter/styles/style";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import Header from "./components/Header";
 import KitchenOrders from "./components/KitchenOrders";
+
+const Stack = createNativeStackNavigator();
 
 const Kitchen = () => {
   const navigation = useNavigation();
@@ -26,10 +30,16 @@ const Kitchen = () => {
     fetchToken();
   }, [navigation]);
   return (
-    <View>
+    <View style={waiterStyles.container}>
       <Header />
-      <KitchenOrders />
-      <Text>Kitchen</Text>
+      <Stack.Navigator
+        initialRouteName="KitchenOrders"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Group>
+          <Stack.Screen name="KitchenOrders" component={KitchenOrders} />
+        </Stack.Group>
+      </Stack.Navigator>
     </View>
   );
 };

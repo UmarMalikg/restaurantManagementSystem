@@ -1,5 +1,19 @@
 import { StyleSheet } from "react-native";
-import { isWeb } from "../../../constants/stylesConstants";
+import {
+  isWeb,
+  navBarHeight,
+  darkGreen,
+  adminLeftSidebarWidth,
+  fullDarkBlue,
+  lightBlue,
+  fullLightGreen,
+  addModelWidth,
+  addModelHeight,
+  dashboardIconsHeight,
+  dashboardIconsWidth,
+  chartBoxHeight,
+  chartBoxWidth,
+} from "../../../constants/stylesConstants";
 
 const adminStyles = StyleSheet.create({
   // styles for sideBar
@@ -8,32 +22,29 @@ const adminStyles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   navBar: {
-    position: "fixed",
+    position: "absolute",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    height: 60,
-    backgroundColor: "#729B79",
+    height: navBarHeight,
+    backgroundColor: darkGreen,
     zIndex: 1000,
     top: 0,
     left: 0,
     right: 0,
-    height: 60,
-    zIndex: 1000,
-
     paddingHorizontal: 25,
   },
   // styles for sideBar
   sideBar: {
     zIndex: 2,
-    position: "fixed",
+    position: "absolute",
     left: 0,
-    width: 220,
+    width: adminLeftSidebarWidth,
     bottom: 0,
-    top: 60,
-    backgroundColor: "#729B79",
+    top: navBarHeight,
+    backgroundColor: darkGreen,
     paddingTop: 10,
     paddingLeft: 20,
   },
@@ -49,11 +60,11 @@ const adminStyles = StyleSheet.create({
     borderBottomRightRadius: -50,
   },
   activeSideBarLinks: {
-    backgroundColor: "#4b49ac",
+    backgroundColor: fullDarkBlue,
     color: "#fff",
   },
   hoverSideBarLinks: {
-    backgroundColor: "#7978e9",
+    backgroundColor: lightBlue,
     color: "#fff",
   },
   sideBarLinkIcon: {
@@ -69,11 +80,11 @@ const adminStyles = StyleSheet.create({
   // styles for all the screens
   theScreen: {
     position: "absolute",
-    left: 220,
+    left: adminLeftSidebarWidth,
     bottom: 0,
-    top: 60,
+    top: navBarHeight,
     right: 0,
-    backgroundColor: "#dfffdf",
+    backgroundColor: fullLightGreen,
   },
   // styles for table Page
   tablePosition: {
@@ -91,7 +102,7 @@ const adminStyles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
-    backgroundColor: "#4b49ac",
+    backgroundColor: fullDarkBlue,
   },
   goToModelButtonText: {
     color: "#fff",
@@ -111,12 +122,12 @@ const adminStyles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 20,
     fontSize: 18,
-    outlineColor: "#4b49ac",
+    outlineColor: fullDarkBlue,
     borderRadius: 20,
   },
   // styles for tables
-  tableHead: { height: 40, backgroundColor: "#4b49ac" },
-  tableBorderStyle: { borderWidth: 2, borderColor: "#4b49ac" },
+  tableHead: { height: 40, backgroundColor: fullDarkBlue },
+  tableBorderStyle: { borderWidth: 2, borderColor: fullDarkBlue },
   tableHeadText: {
     fontWeight: "bold",
     fontSize: 16,
@@ -140,8 +151,8 @@ const adminStyles = StyleSheet.create({
       { translateX: -350 + 112 }, // Adjust this value based on half of the modal width
       { translateY: -200 + 35 }, // Adjust this value based on half of the modal height
     ],
-    width: 700,
-    height: 400,
+    width: addModelWidth,
+    height: addModelHeight,
     backgroundColor: "#fff",
     borderRadius: 20,
     padding: 30,
@@ -158,7 +169,9 @@ const adminStyles = StyleSheet.create({
     // height: 40,
     borderRadius: 100,
     backgroundColor: "#ccc",
-    cursor: "pointer",
+    ...(isWeb && {
+      cursor: "pointer",
+    }),
     paddingVertical: 10,
     paddingHorizontal: 18,
   },
@@ -183,12 +196,12 @@ const adminStyles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "#ccc",
-    outlineColor: "#4b49ac",
+    outlineColor: fullDarkBlue,
   },
   modelButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: "#4b49ac",
+    backgroundColor: fullDarkBlue,
   },
   modelButtonText: {
     fontWeight: "bold",
@@ -211,7 +224,9 @@ const adminStyles = StyleSheet.create({
     borderRadius: 15,
     margin: 20,
     width: 200,
-    cursor: "pointer",
+    ...(isWeb && {
+      cursor: "pointer",
+    }),
   },
   recordDetail: {
     marginTop: 10,
@@ -233,8 +248,8 @@ const adminStyles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   recordIcon: {
-    height: 37,
-    width: 37,
+    height: dashboardIconsHeight,
+    width: dashboardIconsWidth,
   },
 
   // Sales Detail
@@ -245,8 +260,8 @@ const adminStyles = StyleSheet.create({
     margin: 20,
   },
   chartBoxes: {
-    height: 300,
-    width: 300,
+    height: chartBoxHeight,
+    width: chartBoxWidth,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -291,18 +306,18 @@ const adminStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    backgroundColor: "#4b49ac",
+    backgroundColor: fullDarkBlue,
     padding: 10,
   },
   orderHeaderBorder: {
     borderWidth: 1,
-    borderColor: "#7978e9",
+    borderColor: lightBlue,
   },
   //
   orderHeaderText: {
     fontWeight: "bold",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: "#fff",
   },
   orderData: {
     display: "flex",

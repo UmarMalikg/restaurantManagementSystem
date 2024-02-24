@@ -53,8 +53,8 @@ const Header = () => {
             <View style={waiterStyles.headerEmployeeNameAndRole}>
               <View style={waiterStyles.headerEmployeeName}>
                 <Text style={waiterStyles.headerEmployeeNameText}>
-                  {employee.personalInfo.firstName +
-                    employee.personalInfo.lastName}
+                  {employee.personalInfo.firstName}{" "}
+                  {employee.personalInfo.lastName}
                 </Text>
               </View>
               <View style={waiterStyles.headerEmployeeRole}>

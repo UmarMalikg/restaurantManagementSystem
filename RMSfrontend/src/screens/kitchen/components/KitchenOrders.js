@@ -10,6 +10,10 @@ import { fetchProductData } from "../../../redux/actions/productAction";
 import { fetchTableData } from "../../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../../redux/actions/employeeActions";
 
+import { useNavigation } from "@react-navigation/native";
+
+import { useAppContext } from "../../../context/States";
+
 const KitchenOrders = ({
   fetchOrderData,
   orderData,
@@ -20,12 +24,11 @@ const KitchenOrders = ({
   fetchEmployeeData,
   employeeData,
 }) => {
+  const navigation = useNavigation();
+
+  const { employee } = useAppContext();
   // getting all the orders Data
   useEffect(() => {
-    console.log("Order data:", orderData);
-    console.log("Product data:", productData);
-    console.log("tableData:", tableData);
-    console.log("employeeData:", employeeData);
     fetchOrderData();
     fetchProductData();
     fetchTableData();
@@ -35,7 +38,7 @@ const KitchenOrders = ({
   // function to display Orders for the current employee
   const displayOrders = () => {
     // Filter orders based on the logged-in employee's ID
-    return orderData;
+    return orderData.filter((order) => order.status != "Completed");
   };
 
   return (
