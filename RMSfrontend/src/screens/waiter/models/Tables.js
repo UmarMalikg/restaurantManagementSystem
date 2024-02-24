@@ -43,7 +43,7 @@ const Tables = ({ tableData, fetchTableData }) => {
       <View style={waiterStyles.tableBox}>
         <View style={waiterStyles.cancelButtonPosition}>
           <Pressable
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("WaiterHome")}
             style={waiterStyles.cancelButton}
           >
             <Text style={{ fontSize: 19 }}>X</Text>
