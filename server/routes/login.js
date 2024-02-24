@@ -5,8 +5,6 @@ const User = require("../models/userModel");
 
 const router = express.Router();
 
-// post new Table
-
 // JWT_REF_SECRET
 // JWT_SECRET
 
