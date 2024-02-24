@@ -6,6 +6,7 @@ const {
   getOrderById,
   addOrder,
   deleteOrder,
+  updateOrder,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -13,7 +14,11 @@ const router = express.Router();
 router.route("/").get(getOrders).post(addOrder);
 
 // getting the single order
-router.route("/:orderId").get(getOrderById).delete(deleteOrder);
+router
+  .route("/:orderId")
+  .get(getOrderById)
+  .delete(deleteOrder)
+  .put(updateOrder);
 
 // deleting the order
 
