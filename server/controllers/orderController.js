@@ -119,19 +119,19 @@ const updateOrderStatus = async (req, res) => {
       (item) => item.itemStatus === "Completed"
     );
 
-    const allItemsDelivered = order.orderItems.some(
+    const allItemsDelivered = order.orderItems.every(
       (item) =>
         item.itemStatus === "Delivered" || item.itemStatus === "Completed"
     );
 
-    const allItemsPreparing = order.orderItems.some(
+    const allItemsPreparing = order.orderItems.every(
       (item) =>
         item.itemStatus === "Prepared" ||
         item.itemStatus === "Delivered" ||
         item.itemStatus === "Completed"
     );
 
-    const allItmesReady = order.orderItems.some(
+    const allItemsReady = order.orderItems.every(
       (item) =>
         item.itemStatus === "Ready" ||
         item.itemStatus === "Prepared" ||
@@ -147,7 +147,7 @@ const updateOrderStatus = async (req, res) => {
       } else {
         order.status = "Delivered";
       }
-    } else if (allItmesReady) {
+    } else if (allItemsReady) {
       if (newStatus === "Completed" || newStatus === "Delivered") {
         order.status = newStatus;
       } else {
