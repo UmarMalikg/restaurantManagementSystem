@@ -46,14 +46,6 @@ const KitchenOrders = ({
   };
 
   const changeItemsStatus = (orderId, itemId, newStatus) => {
-    console.log(
-      "orderId:",
-      orderId,
-      "itemId:",
-      itemId,
-      "newStatus:",
-      newStatus
-    );
     return updateOrderItemStatus(orderId, itemId, newStatus);
   };
 
@@ -140,7 +132,7 @@ const KitchenOrders = ({
                             ]}
                           >
                             <Picker
-                              selectedValue={null}
+                              selectedValue={item.itemStatus}
                               onValueChange={(newStatus) => {
                                 changeItemsStatus(
                                   order._id,
@@ -149,16 +141,53 @@ const KitchenOrders = ({
                                 );
                               }}
                             >
-                              <Picker.Item label="Pending" value="Pending" />
-                              <Picker.Item
-                                label="Preparing"
-                                value="Preparing"
-                              />
-                              <Picker.Item label="Ready" value="Ready" />
-                              <Picker.Item
-                                label="Delivered"
-                                value="Delivered"
-                              />
+                              {item.itemStatus === "Pending" && (
+                                <>
+                                  <Picker.Item
+                                    label="Pending"
+                                    value="Pending"
+                                  />
+                                  <Picker.Item
+                                    label="Preparing"
+                                    value="Preparing"
+                                  />
+                                  <Picker.Item label="Ready" value="Ready" />
+                                  <Picker.Item
+                                    label="Delivered"
+                                    value="Delivered"
+                                  />
+                                </>
+                              )}
+                              {item.itemStatus === "Preparing" && (
+                                <>
+                                  <Picker.Item
+                                    label="Preparing"
+                                    value="Preparing"
+                                  />
+                                  <Picker.Item label="Ready" value="Ready" />
+                                  <Picker.Item
+                                    label="Delivered"
+                                    value="Delivered"
+                                  />
+                                </>
+                              )}
+                              {item.itemStatus === "Ready" && (
+                                <>
+                                  <Picker.Item label="Ready" value="Ready" />
+                                  <Picker.Item
+                                    label="Delivered"
+                                    value="Delivered"
+                                  />
+                                </>
+                              )}
+                              {item.itemStatus === "Delivered" && (
+                                <>
+                                  <Picker.Item
+                                    label="Delivered"
+                                    value="Delivered"
+                                  />
+                                </>
+                              )}
                             </Picker>
                           </View>
                         </View>
