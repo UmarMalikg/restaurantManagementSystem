@@ -127,7 +127,7 @@ router.post("/", async (req, res) => {
 
       // if theres Incorrect Password then login credentials set to be false
       else {
-        return res.json(
+        return res.status(400).json(
           {
             Login: false,
             Admin: false,
@@ -142,7 +142,7 @@ router.post("/", async (req, res) => {
     }
     // and if no user or employee exists then also login credentials set to be false
     else {
-      return res.json(
+      return res.status(404).json(
         {
           Login: false,
           Admin: false,
@@ -151,7 +151,9 @@ router.post("/", async (req, res) => {
           KitchenManager: false,
           Receptionist: false,
         },
-        `No record found`
+        {
+          message: "No record found",
+        }
       );
     }
   } catch (error) {

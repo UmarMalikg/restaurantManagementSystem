@@ -1,9 +1,10 @@
 import {
-  SET_ORDER_DATA,
-  ADD_ORDER,
-  DELETE_ORDER,
-  GET_ORDER_BY_ID,
-  SET_TOTAL_SALES_COUNT,
+  GET_ORDERS_REQUEST_SUCCESS,
+  ADD_ORDER_REQUEST_SUCCESS,
+  DELETE_ORDER_REQUEST_SUCCESS,
+  GET_ORDER_BY_ID_REQUEST_SUCCESS,
+  TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
+  UPDATE_ORDER_REQUEST_SUCCESS,
 } from "../../constants/orderConstants";
 
 const initialState = {
@@ -13,33 +14,35 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ORDER_DATA:
+    case GET_ORDERS_REQUEST_SUCCESS:
       return {
         ...state,
         orderData: action.payload,
       };
-    case ADD_ORDER:
+    case ADD_ORDER_REQUEST_SUCCESS:
       return {
         ...state,
         orderData: [...state.orderData, action.payload],
       };
-    case DELETE_ORDER:
+    case DELETE_ORDER_REQUEST_SUCCESS:
       return {
         ...state,
         orderData: state.orderData.filter(
           (order) => order._id !== action.payload
         ),
       };
-    case GET_ORDER_BY_ID:
+    case GET_ORDER_BY_ID_REQUEST_SUCCESS:
       return {
         ...state,
         selectedOrder: action.payload,
       };
-    case SET_TOTAL_SALES_COUNT:
+    case TOTAL_ORDERS_COUNT_REQUEST_SUCCESS:
       return {
         ...state,
         totalSalesCount: action.payload,
       };
+    case UPDATE_ORDER_REQUEST_SUCCESS:
+      return state;
     default:
       return state;
   }
