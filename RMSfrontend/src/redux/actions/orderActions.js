@@ -3,21 +3,37 @@ import { api } from "../../api/api";
 
 // Importing action constants
 import {
+  // add order contants
   ADD_ORDER_REQUEST,
   ADD_ORDER_REQUEST_FAILURE,
   ADD_ORDER_REQUEST_SUCCESS,
+
+  // get all order constants
   GET_ORDERS_REQUEST,
   GET_ORDERS_REQUEST_FAILURE,
   GET_ORDERS_REQUEST_SUCCESS,
+
+  // get single order constants
   GET_ORDER_BY_ID_REQUEST,
   GET_ORDER_BY_ID_REQUEST_FAILURE,
   GET_ORDER_BY_ID_REQUEST_SUCCESS,
+
+  // delete constants
   DELETE_ORDER_REQUEST,
   DELETE_ORDER_REQUEST_FAILURE,
   DELETE_ORDER_REQUEST_SUCCESS,
+
+  //update constants
   UPDATE_ORDER_REQUEST,
   UPDATE_ORDER_REQUEST_FAILURE,
   UPDATE_ORDER_REQUEST_SUCCESS,
+
+  // items status update constants
+  UPDATE_ORDER_ITEM_STATUS_REQUEST,
+  UPDATE_ORDER_ITEM_STATUS_REQUEST_FAILURE,
+  UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
+
+  //counting constants
   TOTAL_ORDERS_COUNT_REQUEST,
   TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
   TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
@@ -34,12 +50,12 @@ export const addOrderToStore = (order) => ({
   payload: order,
 });
 
-export const deleteOrder = (orderId) => ({
+export const deleteOrderRequest = (orderId) => ({
   type: DELETE_ORDER_REQUEST_SUCCESS,
   payload: orderId,
 });
 
-export const getOrderById = (orderId) => ({
+export const getOrderByIdRequest = (orderId) => ({
   type: GET_ORDER_BY_ID_REQUEST_SUCCESS,
   payload: orderId,
 });
@@ -47,6 +63,11 @@ export const getOrderById = (orderId) => ({
 export const updateOrder = (order) => ({
   type: UPDATE_ORDER_REQUEST_SUCCESS,
   payload: order,
+});
+
+export const updateOrderItemStatusRequest = (orderId, itemId, newStatus) => ({
+  type: UPDATE_ORDER_ITEM_STATUS_REQUEST,
+  payload: { orderId, itemId, newStatus },
 });
 
 export const setTotalSalesCount = (count) => ({
@@ -72,6 +93,7 @@ export const fetchOrderData = () => {
 // Thunk Action to Add an Order
 export const addOrder = (order) => {
   return async (dispatch) => {
+    dispatch({ type: ADD_ORDER_REQUEST });
     try {
       const response = await axios.post(`${api}/orders`, order);
       dispatch(addOrderToStore(response.data));
@@ -85,11 +107,12 @@ export const addOrder = (order) => {
 };
 
 // Thunk Action to Delete an Order
-export const deleteOrderRequest = (orderId) => {
+export const deleteOrder = (orderId) => {
   return async (dispatch) => {
+    dispatch({ type: DELETE_ORDER_REQUEST });
     try {
       await axios.delete(`${api}/orders/${orderId}`);
-      dispatch(deleteOrder(orderId));
+      dispatch(deleteOrderRequest(orderId));
       dispatch({ type: DELETE_ORDER_REQUEST_SUCCESS }); // Dispatching success action
     } catch (error) {
       console.error("Error deleting Order:", error);
@@ -99,13 +122,13 @@ export const deleteOrderRequest = (orderId) => {
 };
 
 // Thunk Action to Get Order by ID
-export const getOrderByIdRequest = (orderId) => {
+export const getOrderById = (orderId) => {
   return async (dispatch) => {
     dispatch({ type: GET_ORDER_BY_ID_REQUEST }); // Dispatching request action
     try {
       const response = await axios.get(`${api}/orders/${orderId}`);
       dispatch({ type: GET_ORDER_BY_ID_REQUEST_SUCCESS }); // Dispatching success action
-      dispatch(getOrderById(response.data));
+      dispatch(getOrderByIdRequest(response.data));
     } catch (error) {
       console.error("Error getting Order by ID:", error);
       dispatch({
@@ -122,8 +145,8 @@ export const updateOrderData = (orderId, updatedData) => {
     dispatch({ type: UPDATE_ORDER_REQUEST }); // Dispatching request action
     try {
       const response = await axios.put(`${api}/orders/${orderId}`, updatedData);
-      dispatch({ type: UPDATE_ORDER_REQUEST_SUCCESS }); // Dispatching success action
       dispatch(updateOrder(response.data));
+      dispatch({ type: UPDATE_ORDER_REQUEST_SUCCESS }); // Dispatching success action
     } catch (error) {
       console.error("Error updating Order data:", error);
       dispatch({ type: UPDATE_ORDER_REQUEST_FAILURE, payload: error.message }); // Dispatching failure action with error message
@@ -131,15 +154,45 @@ export const updateOrderData = (orderId, updatedData) => {
   };
 };
 
+// Thunk Action to Update Order's Item Status
+export const updateOrderItemStatus = (orderId, itemId, newStatus) => {
+  // Dispatch the updateOrderItemStatusRequest action with the provided orderId, itemId, and newStatus
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_ORDER_ITEM_STATUS_REQUEST }); // Dispatching request action
+    try {
+      // Assuming there's an API endpoint to update the item status
+      const response = await axios.put(
+        `${api}/orders/${orderId}/items/${itemId}/status`,
+        { newStatus: newStatus }
+      );
+      dispatch({
+        type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
+        payload: { orderId, itemId, newStatus },
+      }); // Dispatching success action with orderId, itemId, and newStatus
+    } catch (error) {
+      console.error("Error updating item status:", error);
+      dispatch({
+        type: UPDATE_ORDER_ITEM_STATUS_REQUEST_FAILURE,
+        payload: error.message,
+      }); // Dispatching failure action with error message
+    }
+  };
+};
+
 // Thunk Action to Calculate Total Sales
 export const totalSales = () => {
   return async (dispatch) => {
+    dispatch({ type: TOTAL_ORDERS_COUNT_REQUEST });
     try {
       const response = await axios.get(`${api}/orders`);
       const salesCount = response.data.length; // Assuming the response is an array of orders
       dispatch(setTotalSalesCount(salesCount));
     } catch (error) {
       console.error("Error fetching sales Count data:", error);
+      dispatch({
+        type: TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
+        payload: error.message,
+      }); // Dispatching failure action with error message
     }
   };
 };

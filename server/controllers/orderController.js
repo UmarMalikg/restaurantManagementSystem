@@ -75,10 +75,42 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const updateOrderItemStatus = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const itemId = req.params.itemId;
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    const itemIndex = order.orderItems.findIndex(
+      (item) => item._id.toString() === itemId
+    );
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item in this order not found" });
+    }
+
+    // Assuming newStatus is received from the request body or query parameters
+    const newStatus = req.body.newStatus; // Adjust this according to your request format
+
+    order.orderItems[itemIndex].itemStatus = newStatus;
+    await order.save();
+
+    return res.status(200).json(order);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Error updating the order item status", error: err });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrderById,
   addOrder,
   deleteOrder,
   updateOrder,
+  updateOrderItemStatus,
 };

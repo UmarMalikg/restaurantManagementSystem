@@ -5,7 +5,10 @@ import defaultStyles from "../../../defaultStyles";
 
 import { connect } from "react-redux";
 
-import { fetchOrderData } from "../../../redux/actions/orderActions";
+import {
+  fetchOrderData,
+  updateOrderItemStatus,
+} from "../../../redux/actions/orderActions";
 import { fetchProductData } from "../../../redux/actions/productAction";
 import { fetchTableData } from "../../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../../redux/actions/employeeActions";
@@ -16,6 +19,7 @@ import { useAppContext } from "../../../context/States";
 
 const KitchenOrders = ({
   fetchOrderData,
+  updateOrderItemStatus,
   orderData,
   fetchProductData,
   productData,
@@ -39,6 +43,18 @@ const KitchenOrders = ({
   const displayOrders = () => {
     // Filter orders based on the logged-in employee's ID
     return orderData.filter((order) => order.status != "Completed");
+  };
+
+  const changeItemsStatus = (orderId, itemId, newStatus) => {
+    console.log(
+      "orderId:",
+      orderId,
+      "itemId:",
+      itemId,
+      "newStatus:",
+      newStatus
+    );
+    return updateOrderItemStatus(orderId, itemId, newStatus);
   };
 
   return (
@@ -123,7 +139,16 @@ const KitchenOrders = ({
                               defaultStyles.mrgV8,
                             ]}
                           >
-                            <Picker selectedValue={null}>
+                            <Picker
+                              selectedValue={null}
+                              onValueChange={(newStatus) => {
+                                changeItemsStatus(
+                                  order._id,
+                                  item._id,
+                                  newStatus
+                                );
+                              }}
+                            >
                               <Picker.Item label="Pending" value="Pending" />
                               <Picker.Item
                                 label="Preparing"
@@ -162,6 +187,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchOrderData,
+  updateOrderItemStatus,
   fetchProductData,
   fetchTableData,
   fetchEmployeeData,

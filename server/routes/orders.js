@@ -7,19 +7,19 @@ const {
   addOrder,
   deleteOrder,
   updateOrder,
+  updateOrderItemStatus,
 } = require("../controllers/orderController");
 
 const router = express.Router();
 
 router.route("/").get(getOrders).post(addOrder);
 
-// getting the single order
 router
   .route("/:orderId")
   .get(getOrderById)
   .delete(deleteOrder)
   .put(updateOrder);
 
-// deleting the order
+router.route("/:orderId/items/:itemId/status").put(updateOrderItemStatus);
 
 module.exports = router;
