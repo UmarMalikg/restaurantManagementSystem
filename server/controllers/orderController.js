@@ -106,6 +106,74 @@ const updateOrderItemStatus = async (req, res) => {
   }
 };
 
+const updateOrderStatus = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    const newStatus = req.body.newStatus;
+
+    const allItemsCompleted = order.orderItems.every(
+      (item) => item.itemStatus === "Completed"
+    );
+
+    const allItemsDelivered = order.orderItems.some(
+      (item) =>
+        item.itemStatus === "Delivered" || item.itemStatus === "Completed"
+    );
+
+    const allItemsPreparing = order.orderItems.some(
+      (item) =>
+        item.itemStatus === "Prepared" ||
+        item.itemStatus === "Delivered" ||
+        item.itemStatus === "Completed"
+    );
+
+    const allItmesReady = order.orderItems.some(
+      (item) =>
+        item.itemStatus === "Ready" ||
+        item.itemStatus === "Prepared" ||
+        item.itemStatus === "Delivered" ||
+        item.itemStatus === "Completed"
+    );
+
+    if (allItemsCompleted) {
+      order.status = "Completed";
+    } else if (allItemsDelivered) {
+      if (newStatus === "Completed") {
+        order.status = "Completed";
+      } else {
+        order.status = "Delivered";
+      }
+    } else if (allItmesReady) {
+      if (newStatus === "Completed" || newStatus === "Delivered") {
+        order.status = newStatus;
+      } else {
+        order.status = "Ready";
+      }
+    } else if (allItemsPreparing) {
+      if (
+        newStatus === "Completed" ||
+        newStatus === "Delivered" ||
+        newStatus === "Ready"
+      ) {
+        order.status = newStatus;
+      } else {
+        order.status = "Preparing";
+      }
+    } else {
+      order.status = newStatus;
+    }
+    await order.save();
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Error updating the order's' status", error: err });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrderById,
@@ -113,4 +181,5 @@ module.exports = {
   deleteOrder,
   updateOrder,
   updateOrderItemStatus,
+  updateOrderStatus,
 };
