@@ -1,11 +1,14 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import waiterStyles from "./styles/style";
 import defaultStyles from "../../defaultStyles";
 
 import { connect } from "react-redux";
 
-import { fetchOrderData } from "../../redux/actions/orderActions";
+import {
+  fetchOrderData,
+  updateOrderItemStatus,
+} from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
@@ -16,6 +19,7 @@ import { useAppContext } from "../../context/States";
 
 const Orders = ({
   fetchOrderData,
+  updateOrderItemStatus,
   orderData,
   fetchProductData,
   productData,
@@ -39,6 +43,10 @@ const Orders = ({
   const displayOrders = () => {
     // Filter orders based on the logged-in employee's ID
     return orderData.filter((order) => order.orderTaker === employee._id);
+  };
+
+  const changeItemsStatus = (orderId, itemId, newStatus) => {
+    return updateOrderItemStatus(orderId, itemId, newStatus);
   };
 
   return (
@@ -121,7 +129,17 @@ const Orders = ({
                             defaultStyles.mrgV8,
                           ]}
                         >
-                          <Text>Picker for changing the status</Text>
+                          <Pressable
+                            onPress={() =>
+                              changeItemsStatus(
+                                order._id,
+                                item._id,
+                                "Completed"
+                              )
+                            }
+                          >
+                            Completed
+                          </Pressable>
                         </View>
                       </View>
                     );
@@ -149,6 +167,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchOrderData,
+  updateOrderItemStatus,
   fetchProductData,
   fetchTableData,
   fetchEmployeeData,
