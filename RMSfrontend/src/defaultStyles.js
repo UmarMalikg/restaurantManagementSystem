@@ -2,6 +2,12 @@ import { StyleSheet } from "react-native";
 import { isWeb } from "./constants/stylesConstants";
 
 const defaultStyles = StyleSheet.create({
+  // container
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   //    flexes
   rowFlex: {
     display: "flex",

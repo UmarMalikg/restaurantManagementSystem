@@ -11,7 +11,8 @@ import { api } from "../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../context/States";
-import loginFormStyles from "./loginFormStyle";
+import defaultStyles from "../defaultStyles";
+import loginRegisterFormStyles from "./loginRegisterPageStyle";
 
 let isWeb = Platform.OS === "web";
 
@@ -67,57 +68,41 @@ const SignIn = () => {
   return (
     <ImageBackground
       source={require("../../assets/images/background.jpg")}
-      style={{
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-      }}
+      style={loginRegisterFormStyles.backgroundImage}
     >
-      <View style={loginFormStyles.container}>
-        <View style={loginFormStyles.loginBox}>
-          <View style={loginFormStyles.loginTitle}>
-            <Text style={loginFormStyles.loginTitleText}>Sign In</Text>
+      <View style={defaultStyles.container}>
+        <View style={loginRegisterFormStyles.loginBox}>
+          <View style={loginRegisterFormStyles.formHeader}>
+            <Text style={loginRegisterFormStyles.TitleText}>Sign In</Text>
           </View>
-          <View
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              marginBottom: 30,
-            }}
-          >
+          <View style={loginRegisterFormStyles.quote}>
             <Text>Welcome back! Login to access the RMS</Text>
           </View>
           <TextInput
             placeholder="Enter ID..."
             value={userName}
             onChangeText={(text) => setUserName(text)}
-            style={loginFormStyles.loginInput}
+            style={loginRegisterFormStyles.inputfield}
           />
           <TextInput
             placeholder="Enter Password..."
             value={pswrd}
             onChangeText={(text) => setPswrd(text)}
             secureTextEntry
-            style={loginFormStyles.loginInput}
+            style={loginRegisterFormStyles.inputfield}
           />
-          <Pressable onPress={handleLogin} style={loginFormStyles.loginButton}>
-            <Text style={{ fontWeight: "bold", fontSize: 22, color: "#fff" }}>
+          <Pressable
+            onPress={handleLogin}
+            style={loginRegisterFormStyles.loginRegisterButton}
+          >
+            <Text style={loginRegisterFormStyles.loginRegisterButtonText}>
               Sign In
             </Text>
           </Pressable>
           {/* <Pressable onPress={() => navigation.navigate("Home")}>
           <Text>Go back to Home</Text>
         </Pressable> */}
-          <View
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
+          <View style={defaultStyles.rowCenteredFlex}>
             <Text>Don't have account? </Text>
             <Pressable onPress={() => navigation.navigate("Register")}>
               <Text style={{ fontWeight: "bold", color: "#00f" }}>Sign Up</Text>
