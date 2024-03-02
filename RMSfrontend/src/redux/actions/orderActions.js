@@ -33,6 +33,11 @@ import {
   UPDATE_ORDER_ITEM_STATUS_REQUEST_FAILURE,
   UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
 
+  // order's status update constants
+  UPDATE_ORDER_STATUS_REQUEST,
+  UPDATE_ORDER_STATUS_REQUEST_FAILURE,
+  UPDATE_ORDER_STATUS_REQUEST_SUCCESS,
+
   //counting constants
   TOTAL_ORDERS_COUNT_REQUEST,
   TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
@@ -66,8 +71,13 @@ export const updateOrder = (order) => ({
 });
 
 export const updateOrderItemStatusRequest = (orderId, itemId, newStatus) => ({
-  type: UPDATE_ORDER_ITEM_STATUS_REQUEST,
+  type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
   payload: { orderId, itemId, newStatus },
+});
+
+export const updateOrderStatusRequest = (orderId, newStatus) => ({
+  type: UPDATE_ORDER_STATUS_REQUEST_SUCCESS,
+  payload: { orderId, newStatus },
 });
 
 export const setTotalSalesCount = (count) => ({
@@ -83,9 +93,9 @@ export const fetchOrderData = () => {
       const response = await axios.get(`${api}/orders`);
       dispatch({ type: GET_ORDERS_REQUEST_SUCCESS }); // Dispatching success action
       dispatch(setOrderData(response.data));
-    } catch (error) {
-      console.error("Error fetching Order data:", error);
-      dispatch({ type: GET_ORDERS_REQUEST_FAILURE, payload: error.message }); // Dispatching failure action with error message
+    } catch (err) {
+      console.error("Error fetching Order data:", err);
+      dispatch({ type: GET_ORDERS_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message
     }
   };
 };
@@ -98,10 +108,10 @@ export const addOrder = (order) => {
       const response = await axios.post(`${api}/orders`, order);
       dispatch(addOrderToStore(response.data));
       dispatch({ type: ADD_ORDER_REQUEST_SUCCESS }); // Dispatching success action
-    } catch (error) {
-      console.error("Error adding Order:", error);
-      dispatch({ type: ADD_ORDER_REQUEST_FAILURE, payload: error.message }); // Dispatching failure action with error message
-      throw error;
+    } catch (err) {
+      console.error("Error adding Order:", err);
+      dispatch({ type: ADD_ORDER_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message
+      throw err;
     }
   };
 };
@@ -114,9 +124,9 @@ export const deleteOrder = (orderId) => {
       await axios.delete(`${api}/orders/${orderId}`);
       dispatch(deleteOrderRequest(orderId));
       dispatch({ type: DELETE_ORDER_REQUEST_SUCCESS }); // Dispatching success action
-    } catch (error) {
-      console.error("Error deleting Order:", error);
-      dispatch({ type: DELETE_ORDER_REQUEST_FAILURE, payload: error.message }); // Dispatching failure action with error message
+    } catch (err) {
+      console.error("Error deleting Order:", err);
+      dispatch({ type: DELETE_ORDER_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message
     }
   };
 };
@@ -129,11 +139,11 @@ export const getOrderById = (orderId) => {
       const response = await axios.get(`${api}/orders/${orderId}`);
       dispatch({ type: GET_ORDER_BY_ID_REQUEST_SUCCESS }); // Dispatching success action
       dispatch(getOrderByIdRequest(response.data));
-    } catch (error) {
-      console.error("Error getting Order by ID:", error);
+    } catch (err) {
+      console.error("Error getting Order by ID:", err);
       dispatch({
         type: GET_ORDER_BY_ID_REQUEST_FAILURE,
-        payload: error.message,
+        payload: err.message,
       }); // Dispatching failure action with error message
     }
   };
@@ -147,9 +157,9 @@ export const updateOrderData = (orderId, updatedData) => {
       const response = await axios.put(`${api}/orders/${orderId}`, updatedData);
       dispatch(updateOrder(response.data));
       dispatch({ type: UPDATE_ORDER_REQUEST_SUCCESS }); // Dispatching success action
-    } catch (error) {
-      console.error("Error updating Order data:", error);
-      dispatch({ type: UPDATE_ORDER_REQUEST_FAILURE, payload: error.message }); // Dispatching failure action with error message
+    } catch (err) {
+      console.error("Error updating Order data:", err);
+      dispatch({ type: UPDATE_ORDER_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message
     }
   };
 };
@@ -169,11 +179,33 @@ export const updateOrderItemStatus = (orderId, itemId, newStatus) => {
         type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
         payload: { orderId, itemId, newStatus },
       }); // Dispatching success action with orderId, itemId, and newStatus
-    } catch (error) {
-      console.error("Error updating item status:", error);
+    } catch (err) {
+      console.error("Error updating item status:", err);
       dispatch({
         type: UPDATE_ORDER_ITEM_STATUS_REQUEST_FAILURE,
-        payload: error.message,
+        payload: err.message,
+      }); // Dispatching failure action with error message
+    }
+  };
+};
+
+// Thunk Action to Update Order's Item Status
+export const updateOrderStatus = (orderId, newStatus) => {
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_ORDER_STATUS_REQUEST });
+    try {
+      const response = await axios.put(`${api}/orders/${orderId}/status`, {
+        newStatus: newStatus,
+      });
+      dispatch({
+        type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
+        payload: { orderId, newStatus },
+      }); // Dispatching success action with orderId, itemId, and newStatus
+    } catch (err) {
+      console.error(`Error updating order's status:`, err);
+      dispatch({
+        type: UPDATE_ORDER_STATUS_REQUEST_FAILURE,
+        payload: err.message,
       }); // Dispatching failure action with error message
     }
   };
@@ -187,11 +219,11 @@ export const totalSales = () => {
       const response = await axios.get(`${api}/orders`);
       const salesCount = response.data.length; // Assuming the response is an array of orders
       dispatch(setTotalSalesCount(salesCount));
-    } catch (error) {
-      console.error("Error fetching sales Count data:", error);
+    } catch (err) {
+      console.error("Error fetching sales Count data:", err);
       dispatch({
         type: TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
-        payload: error.message,
+        payload: err.message,
       }); // Dispatching failure action with error message
     }
   };

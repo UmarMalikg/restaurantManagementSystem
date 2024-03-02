@@ -47,6 +47,7 @@ const getOrderById = async (req, res) => {
   }
 };
 
+// delete single order
 const deleteOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -61,6 +62,7 @@ const deleteOrder = async (req, res) => {
   }
 };
 
+// update single order
 const updateOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -75,6 +77,7 @@ const updateOrder = async (req, res) => {
   }
 };
 
+// update single item's status
 const updateOrderItemStatus = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -106,6 +109,7 @@ const updateOrderItemStatus = async (req, res) => {
   }
 };
 
+// update order's status
 const updateOrderStatus = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -126,7 +130,7 @@ const updateOrderStatus = async (req, res) => {
 
     const allItemsPreparing = order.orderItems.every(
       (item) =>
-        item.itemStatus === "Prepared" ||
+        item.itemStatus === "Preparing" ||
         item.itemStatus === "Delivered" ||
         item.itemStatus === "Completed"
     );
@@ -134,38 +138,36 @@ const updateOrderStatus = async (req, res) => {
     const allItemsReady = order.orderItems.every(
       (item) =>
         item.itemStatus === "Ready" ||
-        item.itemStatus === "Prepared" ||
+        item.itemStatus === "Preparing" ||
         item.itemStatus === "Delivered" ||
         item.itemStatus === "Completed"
     );
 
     if (allItemsCompleted) {
-      order.status = "Completed";
+      newStatus = "Completed";
     } else if (allItemsDelivered) {
-      if (newStatus === "Completed") {
-        order.status = "Completed";
-      } else {
-        order.status = "Delivered";
+      if (newStatus !== "Completed" || newStatus !== "Delivered") {
+        newStatus = "Delivered";
       }
     } else if (allItemsReady) {
-      if (newStatus === "Completed" || newStatus === "Delivered") {
-        order.status = newStatus;
-      } else {
-        order.status = "Ready";
+      if (
+        newStatus !== "Completed" ||
+        newStatus !== "Delivered" ||
+        newStatus !== "Ready"
+      ) {
+        newStatus = "Ready";
       }
     } else if (allItemsPreparing) {
       if (
-        newStatus === "Completed" ||
-        newStatus === "Delivered" ||
-        newStatus === "Ready"
+        newStatus !== "Completed" ||
+        newStatus !== "Delivered" ||
+        newStatus !== "Ready" ||
+        newStatus !== "Preparing"
       ) {
-        order.status = newStatus;
-      } else {
-        order.status = "Preparing";
+        newStatus = "Preparing";
       }
-    } else {
-      order.status = newStatus;
     }
+    order.status = newStatus;
     await order.save();
   } catch (err) {
     return res

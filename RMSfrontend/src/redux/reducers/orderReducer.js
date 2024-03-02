@@ -5,7 +5,8 @@ import {
   GET_ORDER_BY_ID_REQUEST_SUCCESS,
   TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
   UPDATE_ORDER_REQUEST_SUCCESS,
-  UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS, // New constant for updating item status
+  UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
+  UPDATE_ORDER_STATUS_REQUEST_SUCCESS, // New constant for updating item status
 } from "../../constants/orderConstants";
 
 const initialState = {
@@ -62,6 +63,15 @@ const orderReducer = (state = initialState, action) => {
                     : item
                 ),
               }
+            : order
+        ),
+      };
+    case UPDATE_ORDER_STATUS_REQUEST_SUCCESS: // Handling item status update
+      return {
+        ...state,
+        orderData: state.orderData.map((order) =>
+          order._id === action.payload.orderId
+            ? { ...order, status: action.payload.newStatus }
             : order
         ),
       };
