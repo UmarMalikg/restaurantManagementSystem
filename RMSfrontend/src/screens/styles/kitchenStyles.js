@@ -1,4 +1,4 @@
-import { navBarHeight } from "../../../constants/stylesConstants";
+import { navBarHeight } from "../../constants/stylesConstants";
 import { StyleSheet } from "react-native";
 let totalHeight = `100%-${navBarHeight}`;
 

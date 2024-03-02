@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 import {
   isWeb,
   fullLightGreen,
-  navBarHeight,
   fullDarkgreen,
   darkGreen,
   lightGreen,
   darkBlueGreen,
-} from "../../../constants/stylesConstants";
+} from "../../constants/stylesConstants";
+import defaultStyles from "../../defaultStyles";
 
 const waiterStyles = StyleSheet.create({
   // styles for sideBar
@@ -15,33 +15,10 @@ const waiterStyles = StyleSheet.create({
     flex: 1,
   },
   // styles for Header
-  header: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: navBarHeight,
-    backgroundColor: fullDarkgreen,
-    zIndex: 10000,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingHorizontal: 20,
-  },
+  header: [defaultStyles.navBar, { backgroundColor: fullDarkgreen }],
+  headerEmployeeAction: [defaultStyles.rowFlex],
 
-  headerEmployeeAction: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  headerEmployeeInfo: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
+  headerEmployeeInfo: [defaultStyles.rowCenteredFlex],
   headerEmployeeImgBox: {
     height: 50,
     width: 50,
@@ -71,11 +48,7 @@ const waiterStyles = StyleSheet.create({
   },
 
   // styles for sideBar
-  tables: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  tables: [defaultStyles.container],
   tableBox: {
     position: "absolute",
     top: 70,
@@ -136,13 +109,7 @@ const waiterStyles = StyleSheet.create({
     // borderBottomRightRadius: 20,
     // backgroundColor: "#d00",
   },
-  orderActionButtons: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    padding: 10,
-  },
+  orderActionButtons: [defaultStyles.rowSpacingFlex, defaultStyles.pad10],
   orderButtons: {
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -162,16 +129,15 @@ const waiterStyles = StyleSheet.create({
     backgroundColor: "#ff0",
   },
 
-  orderTotal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginHorizontal: 10,
-    marginBottom: 15,
-    borderTopWidth: 1,
-    paddingTop: 7,
-  },
+  orderTotal: [
+    defaultStyles.rowSpacingFlex,
+    {
+      marginHorizontal: 10,
+      marginBottom: 15,
+      borderTopWidth: 1,
+      paddingTop: 7,
+    },
+  ],
   orderTotalDesText: {
     fontWeight: "bold",
     fontSize: 18,
@@ -189,12 +155,7 @@ const waiterStyles = StyleSheet.create({
     borderStyle: "dashed",
     // borderColor: "#fff",
   },
-  singleOrderCharge: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
+  singleOrderCharge: [defaultStyles.rowSpacingFlex],
   orderChargesDesText: {
     fontWeight: "bold",
     fontSize: 15,
@@ -204,24 +165,16 @@ const waiterStyles = StyleSheet.create({
     fontSize: 13,
   },
 
-  orderLeftCircle: {
+  orderCircles: {
     position: "absolute",
-    left: -12.5,
     top: -3,
     height: 25,
     width: 25,
     backgroundColor: fullLightGreen,
     borderRadius: 25,
   },
-  orderRightCircle: {
-    position: "absolute",
-    right: -12.5,
-    top: -3,
-    height: 25,
-    width: 25,
-    backgroundColor: fullLightGreen,
-    borderRadius: 25,
-  },
+  orderLeftCircle: [orderCircles, { left: -12.5 }],
+  orderRightCircle: [orderCircles, { right: -12.5 }],
 
   // styling for order menu
   orderMenuBox: {
@@ -229,11 +182,7 @@ const waiterStyles = StyleSheet.create({
     // borderTopWidth: 1,
     // paddingTop: 10,
   },
-  singleOrderMenuBox: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  singleOrderMenuBox: [defaultStyles.rowFlex],
   orderMenuImgBox: {
     height: 50,
     width: 50,
@@ -243,15 +192,15 @@ const waiterStyles = StyleSheet.create({
     width: 50,
     borderRadius: 50,
   },
-  orderMenuDetailsAndActionsBox: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
-    paddingVertical: 10,
-  },
+  orderMenuDetailsAndActionsBox: [
+    defaultStyles.rowSpacingFlex,
+    {
+      flex: 1,
+      justifyContent: "space-between",
+      borderBottomWidth: 1,
+      paddingVertical: 10,
+    },
+  ],
   orderMenuDesBox: {
     marginLeft: 20,
   },
@@ -264,11 +213,7 @@ const waiterStyles = StyleSheet.create({
   orderMenuPriceText: {
     fontSize: 15,
   },
-  orderMenuQty: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-  },
+  orderMenuQty: [defaultStyles.rowFlex],
   orderMenuQtyActionBox: {
     backgroundColor: "#004346",
     paddingHorizontal: 10,
@@ -351,13 +296,12 @@ const waiterStyles = StyleSheet.create({
     elevation: 2,
     borderRadius: 10,
   },
-  productImage: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
+  productImage: [
+    defaultStyles.rowCenteredFlex,
+    {
+      width: "100%",
+    },
+  ],
   productDetail: {},
   productDetail: {},
 

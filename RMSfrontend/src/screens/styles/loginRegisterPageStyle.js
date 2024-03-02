@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
-import { isWeb } from "../constants/stylesConstants";
-import defaultStyles from "../defaultStyles";
+import { isWeb } from "../../constants/stylesConstants";
+import defaultStyles from "../../defaultStyles";
 
 const loginRegisterFormStyles = StyleSheet.create({
   // both

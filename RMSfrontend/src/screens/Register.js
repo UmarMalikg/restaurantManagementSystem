@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { addUser } from "../redux/actions/userActions";
 import { isWeb } from "../constants/stylesConstants";
-import loginRegisterFormStyles from "./loginRegisterPageStyle";
+import loginRegisterFormStyles from "./styles/loginRegisterPageStyle";
 import defaultStyles from "../defaultStyles";
 
 const Register = ({ addUser }) => {

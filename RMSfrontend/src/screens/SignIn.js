@@ -12,7 +12,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../context/States";
 import defaultStyles from "../defaultStyles";
-import loginRegisterFormStyles from "./loginRegisterPageStyle";
+import loginRegisterFormStyles from "./styles/loginRegisterPageStyle";
 
 let isWeb = Platform.OS === "web";
 

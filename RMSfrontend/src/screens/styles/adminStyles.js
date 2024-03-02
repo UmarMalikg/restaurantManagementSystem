@@ -13,7 +13,8 @@ import {
   dashboardIconsWidth,
   chartBoxHeight,
   chartBoxWidth,
-} from "../../../constants/stylesConstants";
+} from "../../constants/stylesConstants";
+import defaultStyles from "../../defaultStyles";
 
 const adminStyles = StyleSheet.create({
   // styles for sideBar
@@ -21,21 +22,12 @@ const adminStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  navBar: {
-    position: "absolute",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    height: navBarHeight,
-    backgroundColor: darkGreen,
-    zIndex: 1000,
-    top: 0,
-    left: 0,
-    right: 0,
-    paddingHorizontal: 25,
-  },
+  navBar: [
+    defaultStyles.navBar,
+    {
+      backgroundColor: darkGreen,
+    },
+  ],
   // styles for sideBar
   sideBar: {
     zIndex: 2,
@@ -90,14 +82,13 @@ const adminStyles = StyleSheet.create({
   tablePosition: {
     margin: 30,
   },
-  dataViewerHeader: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginHorizontal: 30,
-    marginTop: 20,
-  },
+  dataViewerHeader: [
+    defaultStyles.rowSpacingFlex,
+    {
+      marginHorizontal: 30,
+      marginTop: 20,
+    },
+  ],
   goToModelButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -273,19 +264,14 @@ const adminStyles = StyleSheet.create({
   },
 
   //styles for orders list page
-  orderFilter: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginHorizontal: 30,
-    marginVertical: 20,
-  },
-  orderTypeFilter: {
-    display: "flex",
-    flexDirection: "row",
-    alignContent: "center",
-  },
+  orderFilter: [
+    defaultStyles.rowSpacingFlex,
+    {
+      marginHorizontal: 30,
+      marginVertical: 20,
+    },
+  ],
+  orderTypeFilter: [defaultStyles.rowFlex],
   filterButtons: {
     marginHorizontal: 10,
     paddingHorizontal: 10,
@@ -301,14 +287,13 @@ const adminStyles = StyleSheet.create({
     marginHorizontal: 30,
   },
   singleOrder: { marginVertical: 20 },
-  orderHeader: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    backgroundColor: fullDarkBlue,
-    padding: 10,
-  },
+  orderHeader: [
+    defaultStyles.rowSpacingFlex,
+    {
+      backgroundColor: fullDarkBlue,
+      padding: 10,
+    },
+  ],
   orderHeaderBorder: {
     borderWidth: 1,
     borderColor: lightBlue,
@@ -319,13 +304,12 @@ const adminStyles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
   },
-  orderData: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    backgroundColor: "#fff",
-  },
+  orderData: [
+    defaultStyles.rowSpacingFlex,
+    {
+      backgroundColor: "#fff",
+    },
+  ],
   orderTableNo: {
     // flex: 1,
   },
@@ -335,14 +319,13 @@ const adminStyles = StyleSheet.create({
   orderMenuDetails: {
     // flex: 5,
   },
-  orderSingleMenuStyle: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 10,
-    flex: 1,
-  },
+  orderSingleMenuStyle: [
+    defaultStyles.rowSpacingFlex,
+    {
+      marginVertical: 10,
+      flex: 1,
+    },
+  ],
   orderTypeStyle: {
     // flex: 1,
   },
@@ -350,12 +333,7 @@ const adminStyles = StyleSheet.create({
     // flex: 3,
     paddingHorizontal: 8,
   },
-  orderTotalPriceStyling: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
+  orderTotalPriceStyling: [defaultStyles.rowSpacingFlex],
   orderTotalPriceTitle: {
     fontWeight: "bold",
     fontSize: 18,
@@ -375,13 +353,12 @@ const adminStyles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "#0f0",
   },
-  pagination: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    marginBottom: 15,
-  },
+  pagination: [
+    defaultStyles.rowCenteredFlex,
+    {
+      marginBottom: 15,
+    },
+  ],
   paginationButtons: {
     marginHorizontal: 20,
     backgroundColor: "#00f",
@@ -389,12 +366,7 @@ const adminStyles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 30,
   },
-  rowCentered: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
+  rowCentered: [defaultStyles.rowCenteredFlex],
 
   catTabPosition: {
     margin: 30,
