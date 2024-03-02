@@ -6,7 +6,7 @@ import {
   TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
   UPDATE_ORDER_REQUEST_SUCCESS,
   UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
-  UPDATE_ORDER_STATUS_REQUEST_SUCCESS, // New constant for updating item status
+  UPDATE_ORDER_STATUS_REQUEST_SUCCESS,
 } from "../../constants/orderConstants";
 
 const initialState = {

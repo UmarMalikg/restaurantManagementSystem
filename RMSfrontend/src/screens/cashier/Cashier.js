@@ -3,6 +3,12 @@ import React, { useEffect } from "react";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import waiterStyles from "../waiter/styles/style";
+import Header from "./components/Header";
+import CachierOrders from "./CachierOrders";
+
+const Stack = createNativeStackNavigator();
 
 const Cashier = () => {
   const navigation = useNavigation();
@@ -24,8 +30,16 @@ const Cashier = () => {
     fetchToken();
   }, [navigation]);
   return (
-    <View>
-      <Text>Cashier</Text>
+    <View style={waiterStyles.container}>
+      <Header />
+      <Stack.Navigator
+        initialRouteName="CachierOrders"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Group>
+          <Stack.Screen name="CachierOrders" component={CachierOrders} />
+        </Stack.Group>
+      </Stack.Navigator>
     </View>
   );
 };
