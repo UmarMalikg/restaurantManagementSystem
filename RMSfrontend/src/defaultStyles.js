@@ -8,6 +8,21 @@ const defaultStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  // navbar
+  navBar: {
+    position: "absolute",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    height: navBarHeight,
+    zIndex: 1000,
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 20,
+  },
   //    flexes
   rowFlex: {
     display: "flex",
