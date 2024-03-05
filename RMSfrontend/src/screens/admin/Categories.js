@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import React from "react";
-import adminStyles from "./styles/style";
+import adminStyles from "../styles/adminStyles";
 
 const Categories = () => {
   return (

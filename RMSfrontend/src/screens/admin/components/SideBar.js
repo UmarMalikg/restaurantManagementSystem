@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import React from "react";
-import adminStyles from "../styles/style";
+import adminStyles from "../../styles/adminStyles";
 import SideBarLinks from "./elements/SideBarLinks";
 
 const SideBar = () => {

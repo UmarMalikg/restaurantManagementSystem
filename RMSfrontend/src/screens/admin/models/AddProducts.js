@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { addProduct } from "../../../redux/actions/productAction";
 import { fetchCategoryData } from "../../../redux/actions/categoryActions";
 import { useNavigation } from "@react-navigation/native";
-import adminStyles from "../styles/style";
+import adminStyles from "../../styles/waiterStyles";
 
 const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   const navigation = useNavigation();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Image, ScrollView, Text, Pressable, View } from "react-native";
-import waiterStyles from "../styles/style";
+import waiterStyles from "../../styles/waiterStyles";
 import { useAppContext } from "../../../context/States";
 import { connect } from "react-redux";
 import { fetchProductData } from "../../../redux/actions/productAction";

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
-import waiterStyles from "../../waiter/styles/style";
+import waiterStyles from "../../styles/waiterStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 

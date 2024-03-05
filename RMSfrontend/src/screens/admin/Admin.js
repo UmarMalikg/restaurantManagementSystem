@@ -2,7 +2,7 @@ import { Pressable, View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SideBar from "./components/SideBar";
-import adminStyles from "./styles/style";
+import adminStyles from "../styles/adminStyles";
 import Dashboard from "./Dashboard";
 import NavBar from "./components/NavBar";
 import Products from "./Products";

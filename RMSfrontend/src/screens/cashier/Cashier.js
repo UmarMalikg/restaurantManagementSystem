@@ -4,7 +4,7 @@ import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import waiterStyles from "../waiter/styles/style";
+import waiterStyles from "../styles/waiterStyles";
 import Header from "./components/Header";
 import CachierOrders from "./CachierOrders";
 

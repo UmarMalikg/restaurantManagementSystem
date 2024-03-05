@@ -12,7 +12,7 @@ import {
 import { connect } from "react-redux";
 import { addEmployee } from "../../../redux/actions/employeeActions";
 import { useNavigation } from "@react-navigation/native";
-import adminStyles from "../styles/style";
+import adminStyles from "../../styles/adminStyles";
 import { RadioButton } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 let isWeb = Platform.OS === "web";

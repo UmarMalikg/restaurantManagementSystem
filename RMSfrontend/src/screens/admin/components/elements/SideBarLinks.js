@@ -1,7 +1,7 @@
 import { Text, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import adminStyles from "../../styles/style";
+import adminStyles from "../../../styles/adminStyles";
 import { useAppContext } from "../../../../context/States";
 
 const SideBarLinks = ({ text, icon, link }) => {

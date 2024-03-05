@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import OrderPlacement from "./components/OrderPlacement";
-import waiterStyles from "./styles/style";
+import waiterStyles from "../styles/waiterStyles";
 import HomeSection from "./components/HomeSection";
 
 const Home = () => {

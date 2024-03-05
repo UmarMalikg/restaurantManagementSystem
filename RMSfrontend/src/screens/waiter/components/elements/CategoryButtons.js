@@ -5,7 +5,7 @@ import {
   fetchCategoryData,
   selectCategory,
 } from "../../../../redux/actions/categoryActions";
-import waiterStyles from "../../styles/style"; // Adjust import path as needed
+import waiterStyles from "../../../styles/waiterStyles"; // Adjust import path as needed
 
 const CategoryButtons = ({
   categoryData,

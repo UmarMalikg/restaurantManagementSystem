@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import React, { useEffect } from "react";
-import waiterStyles from "./styles/style";
+import waiterStyles from "../styles/waiterStyles";
 import defaultStyles from "../../defaultStyles";
 
 import { connect } from "react-redux";

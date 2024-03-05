@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import adminStyles from "../styles/style";
+import adminStyles from "../../styles/adminStyles";
 import { useAppContext } from "../../../context/States";
 
 const RecordOverview = ({

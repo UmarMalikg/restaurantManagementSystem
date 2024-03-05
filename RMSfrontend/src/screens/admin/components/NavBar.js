@@ -1,9 +1,9 @@
 import { View, Text, Pressable, Image } from "react-native";
 import React from "react";
-import adminStyles from "../styles/style";
+import adminStyles from "../../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
-import waiterStyles from "../../waiter/styles/style";
+import waiterStyles from "../../styles/waiterStyles";
 
 const NavBar = () => {
   const navigation = useNavigation();

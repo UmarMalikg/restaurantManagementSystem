@@ -7,7 +7,7 @@ import {
   decreaseQuantity,
 } from "../../../../redux/actions/quantityActions";
 import { Text, View, FlatList, Image, Pressable } from "react-native";
-import waiterStyles from "../../styles/style";
+import waiterStyles from "../../../styles/waiterStyles";
 import { useAppContext } from "../../../../context/States";
 
 const numColumns = 5; // Number of columns

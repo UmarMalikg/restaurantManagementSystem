@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Home";
 import { View } from "react-native";
-import waiterStyles from "./styles/style";
+import waiterStyles from "../styles/waiterStyles";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";

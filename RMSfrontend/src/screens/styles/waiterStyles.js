@@ -165,16 +165,8 @@ const waiterStyles = StyleSheet.create({
     fontSize: 13,
   },
 
-  orderCircles: {
-    position: "absolute",
-    top: -3,
-    height: 25,
-    width: 25,
-    backgroundColor: fullLightGreen,
-    borderRadius: 25,
-  },
-  orderLeftCircle: [orderCircles, { left: -12.5 }],
-  orderRightCircle: [orderCircles, { right: -12.5 }],
+  orderLeftCircle: [defaultStyles.orderCircles, { left: -12.5 }],
+  orderRightCircle: [defaultStyles.orderCircles, { right: -12.5 }],
 
   // styling for order menu
   orderMenuBox: {

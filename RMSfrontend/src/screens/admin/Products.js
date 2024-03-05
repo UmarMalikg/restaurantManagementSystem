@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import adminStyles from "./styles/style";
+import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { Table, Row } from "react-native-table-component";
 import { connect } from "react-redux";

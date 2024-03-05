@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import adminStyles from "./styles/style";
+import adminStyles from "../styles/adminStyles";
 import { fetchOrderData } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";

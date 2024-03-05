@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
-import { isWeb } from "./constants/stylesConstants";
+import {
+  isWeb,
+  navBarHeight,
+  fullLightGreen,
+} from "./constants/stylesConstants";
 
 const defaultStyles = StyleSheet.create({
   // container
@@ -559,6 +563,15 @@ const defaultStyles = StyleSheet.create({
   fs38: { fontSize: 38 },
   fs39: { fontSize: 39 },
   fs40: { fontSize: 40 },
+
+  orderCircles: {
+    position: "absolute",
+    top: -3,
+    height: 25,
+    width: 25,
+    backgroundColor: fullLightGreen,
+    borderRadius: 25,
+  },
 });
 
 export default defaultStyles;

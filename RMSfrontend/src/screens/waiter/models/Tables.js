@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Pressable, Platform } from "react-native";
-import waiterStyles from "../styles/style";
+import waiterStyles from "../../styles/waiterStyles";
 import { useNavigation } from "@react-navigation/native";
 import { SearchBar } from "react-native-elements";
 

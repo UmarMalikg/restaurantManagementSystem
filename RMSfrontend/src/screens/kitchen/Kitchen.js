@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View } from "react-native";
-import waiterStyles from "../waiter/styles/style";
+import waiterStyles from "../styles/waiterStyles";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";

@@ -1,6 +1,6 @@
 import { ScrollView, View } from "react-native";
 import React, { useEffect } from "react";
-import adminStyles from "./styles/style";
+import adminStyles from "../styles/adminStyles";
 import RecordOverview from "./components/RecordOverview";
 import SalesDetail from "./components/SalesDetail";
 import OrderChart from "./components/OrderChart";
