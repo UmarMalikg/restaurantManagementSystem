@@ -11,6 +11,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import adminStyles from "../styles/adminStyles";
 import cachierStyles from "../styles/cachierStyles";
+
+import { useNavigation } from "@react-navigation/native";
+
 import { fetchOrderData } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
@@ -26,6 +29,7 @@ const CachierOrders = ({
   fetchEmployeeData,
   employeeData,
 }) => {
+  const navigation = useNavigation();
   // getting all the orders Data
   useEffect(() => {
     fetchOrderData();
@@ -59,6 +63,10 @@ const CachierOrders = ({
       );
     })
     .slice(startIndex, endIndex);
+
+  const getReciept = (orderId) => {
+    navigation.navigate("PrintSlip", { orderId });
+  };
 
   // Handle next and previous page navigation
   const nextPage = () => {
@@ -372,7 +380,11 @@ const CachierOrders = ({
                         </Text>
                       </View>
                     </View>
-                    <Pressable>
+                    <Pressable
+                      onPress={() => {
+                        getReciept(order._id);
+                      }}
+                    >
                       <Text>Print</Text>
                     </Pressable>
                   </View>

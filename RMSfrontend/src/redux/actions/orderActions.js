@@ -137,8 +137,10 @@ export const getOrderById = (orderId) => {
     dispatch({ type: GET_ORDER_BY_ID_REQUEST }); // Dispatching request action
     try {
       const response = await axios.get(`${api}/orders/${orderId}`);
-      dispatch({ type: GET_ORDER_BY_ID_REQUEST_SUCCESS }); // Dispatching success action
-      dispatch(getOrderByIdRequest(response.data));
+      dispatch({
+        type: GET_ORDER_BY_ID_REQUEST_SUCCESS,
+        payload: response.data,
+      }); // Dispatching success action with order data
     } catch (err) {
       console.error("Error getting Order by ID:", err);
       dispatch({

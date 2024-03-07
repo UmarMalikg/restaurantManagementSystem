@@ -564,6 +564,11 @@ const defaultStyles = StyleSheet.create({
   fs39: { fontSize: 39 },
   fs40: { fontSize: 40 },
 
+  // fontWeight
+  fWB: {
+    fontWeight: "bold",
+  },
+
   orderCircles: {
     position: "absolute",
     top: -3,

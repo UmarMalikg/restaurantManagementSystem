@@ -29,9 +29,7 @@ const orderReducer = (state = initialState, action) => {
     case DELETE_ORDER_REQUEST_SUCCESS:
       return {
         ...state,
-        orderData: state.orderData.filter(
-          (order) => order._id !== action.payload
-        ),
+        orderData: action.payload,
       };
     case GET_ORDER_BY_ID_REQUEST_SUCCESS:
       return {

@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import waiterStyles from "../styles/waiterStyles";
 import Header from "./components/Header";
 import CachierOrders from "./CachierOrders";
+import PrintSlip from "./PrintSlip";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ const Cashier = () => {
       >
         <Stack.Group>
           <Stack.Screen name="CachierOrders" component={CachierOrders} />
+          <Stack.Screen name="PrintSlip" component={PrintSlip} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

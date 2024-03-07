@@ -10,6 +10,23 @@ const cachierStyles = StyleSheet.create({
     right: 0,
     backgroundColor: fullLightGreen,
   },
+
+  //   print stlip design
+  print: {
+    position: "absolute",
+    right: 30,
+    top: navBarHeight + 20,
+    bottom: 20,
+    width: 400,
+  },
+  printHeader: {},
+  printOrderDetail: {
+    borderWidth: 2,
+    borderBottomWidth: 0,
+  },
+  singleLine: {
+    borderBottomWidth: 2,
+  },
 });
 
 export default cachierStyles;
