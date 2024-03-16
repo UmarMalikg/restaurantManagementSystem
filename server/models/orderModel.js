@@ -16,8 +16,8 @@ const orderItemSchema = mongoose.Schema({
   itemStatus: {
     type: String,
     enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
-    default: "Pending",
     required: true,
+    default: "Pending",
   },
 });
 
@@ -43,8 +43,8 @@ const orderSchema = mongoose.Schema(
     status: {
       type: String,
       enum: ["Pending", "Preparing", "Ready", "Delivered", "Completed"],
-      default: "Pending",
       required: true,
+      default: "Pending",
     },
     isPaid: {
       type: Boolean,
@@ -102,6 +102,38 @@ orderSchema.pre("save", async function (next) {
     let totalPrice = 0;
     const orderItems = this.orderItems;
 
+    let status;
+
+    if (orderItems.every((item) => item.itemStatus === "Completed")) {
+      status = "Completed";
+    } else if (
+      orderItems.every(
+        (item) =>
+          item.itemStatus === "Completed" || item.itemStatus === "Delivered"
+      )
+    ) {
+      status = "Delivered";
+    } else if (
+      orderItems.every(
+        (item) =>
+          item.itemStatus === "Ready" ||
+          item.itemStatus === "Delivered" ||
+          item.itemStatus === "Completed"
+      )
+    ) {
+      status = "Ready";
+    } else if (
+      orderItems.every(
+        (item) =>
+          item.itemStatus === "Preparing" ||
+          item.itemStatus === "Delivered" ||
+          item.itemStatus === "Ready" ||
+          item.itemStatus === "Completed"
+      )
+    ) {
+      status = "Preparing";
+    }
+
     // Calculate the total price from order items
     for (const i of orderItems) {
       const item = await Product.findById(i.item);
@@ -114,6 +146,7 @@ orderSchema.pre("save", async function (next) {
 
     // Ensure total price is non-negative
     this.totalPrice = Math.max(totalPrice, 0);
+    this.status = status;
 
     next();
   } catch (error) {

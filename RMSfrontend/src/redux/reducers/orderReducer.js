@@ -45,7 +45,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderData: state.orderData.map((order) =>
-          order._id === action.payload._id ? action.payload : order
+          order._id === action.payload.orderId ? action.payload : order
         ),
       };
     case UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS: // Handling item status update

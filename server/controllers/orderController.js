@@ -132,13 +132,13 @@ const updateOrderStatus = async (req, res) => {
       (item) =>
         item.itemStatus === "Preparing" ||
         item.itemStatus === "Delivered" ||
+        item.itemStatus === "Ready" ||
         item.itemStatus === "Completed"
     );
 
     const allItemsReady = order.orderItems.every(
       (item) =>
         item.itemStatus === "Ready" ||
-        item.itemStatus === "Preparing" ||
         item.itemStatus === "Delivered" ||
         item.itemStatus === "Completed"
     );

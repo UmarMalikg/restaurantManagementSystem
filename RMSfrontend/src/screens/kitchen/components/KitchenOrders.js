@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import {
   fetchOrderData,
   updateOrderItemStatus,
+  updateOrderStatus,
 } from "../../../redux/actions/orderActions";
 import { fetchProductData } from "../../../redux/actions/productAction";
 import { fetchTableData } from "../../../redux/actions/tableActions";
@@ -217,6 +218,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchOrderData,
   updateOrderItemStatus,
+  updateOrderStatus,
   fetchProductData,
   fetchTableData,
   fetchEmployeeData,
