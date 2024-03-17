@@ -21,6 +21,7 @@ const loginRoute = require(`./routes/login`);
 const userAuthRoute = require(`./routes/userAuth`);
 const userRoute = require(`./routes/users`);
 const orderRoute = require(`./routes/orders`);
+const floorRoute = require(`./routes/floors`);
 
 dotenv.config();
 app.use(cookieParser());
@@ -41,6 +42,7 @@ app.use(`/login`, loginRoute);
 app.use(`/userAuth`, userAuthRoute);
 app.use(`/users`, userRoute);
 app.use(`/orders`, orderRoute);
+app.use(`/floors`, floorRoute);
 
 app.listen(port, () => {
   console.log("app works");
