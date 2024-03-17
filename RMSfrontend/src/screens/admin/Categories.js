@@ -1,10 +1,22 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
+import { connect } from "react-redux";
+import defaultStyles from "../../defaultStyles";
+import { fetchCategoryData } from "../../redux/actions/categoryActions";
 
-const Categories = () => {
+const Categories = ({ fetchCategoryData, categoryData }) => {
+  useEffect(() => {
+    fetchCategoryData();
+  }, [fetchCategoryData]);
   const navigation = useNavigation();
+
+  const [searchText, setSearchText] = useState("");
+
+  const filteredCategories = categoryData.filter((category) =>
+    category.name.toLowerCase().includes(searchText.toLowerCase())
+  );
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -26,18 +38,52 @@ const Categories = () => {
         ></TextInput>
       </View>
       <ScrollView>
-        <View>
-          <View>
-            <View>name</View>
-            <View>
-              <View>110</View>
-              <View>actions</View>
+        <View style={adminStyles.catTabPosition}>
+          {filteredCategories?.map((category) => (
+            <View style={adminStyles.catTabBox} key={category._id}>
+              <View>
+                <View>
+                  <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                    {category.name}
+                  </Text>
+                </View>
+                <View>
+                  <View>
+                    <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
+                      110
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Pressable>
+                      <Text>edit</Text>
+                    </Pressable>
+                    <Pressable>
+                      <Text>delete</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
             </View>
-          </View>
+          ))}
         </View>
       </ScrollView>
     </View>
   );
 };
 
-export default Categories;
+const mapStateToProps = (state) => {
+  return {
+    categoryData: state.categories.categoryData,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchCategoryData,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

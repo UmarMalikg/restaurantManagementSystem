@@ -372,15 +372,16 @@ const adminStyles = StyleSheet.create({
     margin: 30,
     ...(isWeb && {
       display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+      gridTemplateColumns: `repeat(5, 1fr)`,
       gridColumnGap: 16,
       gridRowGap: 16,
+      gap: 15,
     }),
   },
   catTabBox: {
-    height: 50,
-    padding: 20,
+    padding: 10,
     borderRadius: 15,
+    backgroundColor: `#ddd`,
   },
   catTabNameText: {
     fontWeight: "bold",
@@ -389,6 +390,8 @@ const adminStyles = StyleSheet.create({
   catProductNumText: {
     fontSize: 23,
   },
+
+  // category page design
 });
 
 export default adminStyles;
