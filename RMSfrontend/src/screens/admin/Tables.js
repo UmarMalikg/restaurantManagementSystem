@@ -1,67 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Pressable, Platform } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
-import { SearchBar } from "react-native-elements";
-
 import { connect } from "react-redux";
+import defaultStyles from "../../defaultStyles";
 import { fetchTableData } from "../../redux/actions/tableActions";
-let isWeb = Platform.OS === "web";
 
-// setSelectedTable
-
-const Tables = ({ tableData, fetchTableData }) => {
-  const [search, setSearch] = useState("");
-
+const Tables = ({ fetchTableData, tableData }) => {
   useEffect(() => {
     fetchTableData();
   }, [fetchTableData]);
-
   const navigation = useNavigation();
 
-  const filteredData = search
-    ? tableData.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
-      )
-    : tableData;
+  const [searchText, setSearchText] = useState("");
 
-  const updateSearch = (text) => {
-    setSearch(text);
-  };
-
+  const filteredTables = tableData.filter((table) =>
+    table.name.toLowerCase().includes(searchText.toLowerCase())
+  );
   return (
-    <View>
-      <View>
-        <View></View>
-
-        <View style={{ marginTop: 45 }}>
-          <SearchBar
-            inputStyle={{ fontSize: 16 }}
-            placeholder="Search..."
-            onChangeText={updateSearch}
-            value={search}
-          />
-          <ScrollView>
-            <View
-              style={{
-                ...(isWeb && {
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-                  padding: 20,
-                }),
-              }}
-            >
-              {filteredData.map((table) => (
-                <Pressable
-                  key={table._id}
-                  onPress={() => selectTable(table._id)}
-                >
-                  <Text key={table._id}>{table.name}</Text>
-                </Pressable>
-              ))}
-            </View>
-          </ScrollView>
+    <View style={adminStyles.theScreen}>
+      <View style={adminStyles.dataViewerHeader}>
+        <View>
+          <Text style={adminStyles.dataTitle}>All Tables</Text>
         </View>
+        <Pressable
+          onPress={() => navigation.navigate("Add Table")}
+          style={adminStyles.goToModelButton}
+        >
+          <Text style={adminStyles.goToModelButtonText}>Add Tables</Text>
+        </Pressable>
       </View>
+      <View>
+        <TextInput
+          style={adminStyles.dataSearcher}
+          placeholder="Search..."
+          onChangeText={(text) => setSearchText(text)}
+        ></TextInput>
+      </View>
+      <ScrollView>
+        <View style={adminStyles.catTabPosition}>
+          {filteredTables?.map((table) => (
+            <View style={adminStyles.catTabBox} key={table._id}>
+              <View>
+                <View>
+                  <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                    {table.name}
+                  </Text>
+                </View>
+                <View>
+                  <View>
+                    <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
+                      Floor
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Pressable>
+                      <Text>edit</Text>
+                    </Pressable>
+                    <Pressable>
+                      <Text>delete</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -75,5 +86,4 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchTableData,
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Tables);
