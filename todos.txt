@@ -1,4 +1,4 @@
-categories and tables pages add in admin
+add categories and tables pages in admin
 updating the data
 style kitchen
 

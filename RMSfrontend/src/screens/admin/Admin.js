@@ -1,6 +1,13 @@
+// some necessary imports for use
 import { Pressable, View, Text } from "react-native";
+
+// react and useeffect to use the React
 import React, { useEffect } from "react";
+
+// import for creating the routes for different pages
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// imported components for admin
 import SideBar from "./components/SideBar";
 import adminStyles from "../styles/adminStyles";
 import Dashboard from "./Dashboard";
@@ -14,17 +21,31 @@ import Tables from "./Tables";
 import Categories from "./Categories";
 import AddCategories from "./models/AddCategories";
 import AddTables from "./models/AddTables";
+
+// imported api
 import { api } from "../../api/api";
+
+// imprted axios to fetch the api
 import axios from "axios";
+
+// imported useNavigation to navigate between pages
 import { useNavigation } from "@react-navigation/native";
+
+// imported context to fetch the data required data
 import { useAppContext } from "../../context/States";
 
+// created stack variable for putting the pages in a stack
 const Stack = createNativeStackNavigator();
 
+// component stated
 const Admin = () => {
+  // fetched the logind employee
   const { employee } = useAppContext();
+
+  // navigation variable to navigate between screens
   const navigation = useNavigation();
 
+  // a check if the user is logined or not
   axios.defaults.withCredentials = true;
   useEffect(() => {
     const fetchToken = async () => {
@@ -42,14 +63,19 @@ const Admin = () => {
     fetchToken();
   }, [navigation]);
 
+  // returning the component
   return (
     <View style={adminStyles.container}>
+      {/* navbar and sideBar will be rendered outside the stack as they required in every screen */}
       <NavBar />
       <SideBar />
+
+      {/* stack container */}
       <Stack.Navigator
         initialRouteName="Dashboard"
         screenOptions={{ headerShown: false }}
       >
+        {/* a stack group fo pages */}
         <Stack.Group>
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Employees" component={Employees} />
@@ -58,6 +84,8 @@ const Admin = () => {
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Tables" component={Tables} />
         </Stack.Group>
+
+        {/* a stack group for modals */}
         <Stack.Group
           screenOptions={{
             presentation: "transparentModal",
@@ -65,8 +93,8 @@ const Admin = () => {
         >
           <Stack.Screen name="Add Product" component={AddProducts} />
           <Stack.Screen name="Add Employee" component={AddEmployees} />
-          <Stack.Screen name="Add Categories" component={AddCategories} />
-          <Stack.Screen name="Add Tables" component={AddTables} />
+          <Stack.Screen name="Add Category" component={AddCategories} />
+          <Stack.Screen name="Add Table" component={AddTables} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

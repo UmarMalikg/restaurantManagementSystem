@@ -1,6 +1,13 @@
 import {
-  SET_CATEGORY_DATA,
-  SELECT_CATEGORY,
+  ADD_CATEGORY_REQUEST,
+  ADD_CATEGORY_REQUEST_SUCCESS,
+  ADD_CATEGORY_REQUEST_FAILURE,
+  GET_CATEGORY_REQUEST,
+  GET_CATEGORY_REQUEST_SUCCESS,
+  GET_CATEGORY_REQUEST_FAILURE,
+  GET_CATEGORY_BY_ID_REQUEST,
+  GET_CATEGORY_BY_ID_REQUEST_SUCCESS,
+  GET_CATEGORY_BY_ID_REQUEST_FAILURE,
 } from "../../constants/categotyConstants";
 
 const initialState = {
@@ -10,13 +17,18 @@ const initialState = {
 
 const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CATEGORY_DATA:
+    case GET_CATEGORY_REQUEST_SUCCESS:
       return {
         ...state,
         categoryData: action.payload,
       };
-    case SELECT_CATEGORY:
+    case GET_CATEGORY_BY_ID_REQUEST_SUCCESS:
       return { ...state, selectedCategory: action.payload };
+    case ADD_CATEGORY_REQUEST_SUCCESS:
+      return {
+        ...state,
+        categoryData: [...state.categoryData, action.payload],
+      };
     default:
       return state;
   }

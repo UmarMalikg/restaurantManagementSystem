@@ -1,8 +1,10 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import React from "react";
 import adminStyles from "../styles/adminStyles";
+import { useNavigation } from "@react-navigation/native";
 
 const Categories = () => {
+  const navigation = useNavigation();
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
