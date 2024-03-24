@@ -51,7 +51,7 @@ const AddCategories = ({ addCategory }) => {
 
   return (
     <View style={adminStyles.model}>
-      <Text style={adminStyles.modelHeader}>Add New Product</Text>
+      <Text style={adminStyles.modelHeader}>Add New Category</Text>
       <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Categories")}
