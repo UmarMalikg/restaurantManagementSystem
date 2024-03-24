@@ -3,6 +3,7 @@ import {
   SET_RESERVED_TABLES,
   MADE_TABLE_RESERVED,
   MADE_TABLE_AVAILABLE,
+  ADD_TABLE_REQUEST_SUCCESS,
 } from "../../constants/tableConstants";
 
 const initialState = {
@@ -16,6 +17,11 @@ const tableReducer = (state = initialState, action) => {
       return {
         ...state,
         tableData: action.payload,
+      };
+    case ADD_TABLE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        tableData: [...state.tableData, action.payload],
       };
     case SET_RESERVED_TABLES:
       return {

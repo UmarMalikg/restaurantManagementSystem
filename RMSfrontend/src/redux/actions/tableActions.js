@@ -6,6 +6,7 @@ import {
   SET_RESERVED_TABLES,
   MADE_TABLE_AVAILABLE,
   MADE_TABLE_RESERVED,
+  ADD_TABLE_REQUEST_SUCCESS,
 } from "../../constants/tableConstants";
 
 export const setTableData = (tableData) => ({
@@ -25,7 +26,22 @@ export const setTableAvailable = (tableId) => ({
   type: MADE_TABLE_AVAILABLE,
   tableId,
 });
+export const addTableToStore = (table) => ({
+  type: ADD_TABLE_REQUEST_SUCCESS,
+  payload: table,
+});
 
+export const addTable = (table) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${api}/tables`, table);
+      dispatch(addTableToStore(response.data));
+      dispatch({ type: ADD_TABLE_REQUEST_SUCCESS });
+    } catch (err) {
+      console.error("Error fetching table data:", err);
+    }
+  };
+};
 export const fetchTableData = () => {
   return async (dispatch) => {
     try {
