@@ -5,11 +5,14 @@ import {
   MADE_TABLE_AVAILABLE,
   ADD_TABLE_REQUEST_SUCCESS,
   DELETE_TABLE_REQUEST_SUCCESS,
+  UPDATE_TABLE_REQUEST_SUCCESS,
+  GET_TABLE_BY_ID_REQUEST_SUCCESS,
 } from "../../constants/tableConstants";
 
 const initialState = {
   tableData: [],
   reservedTables: [],
+  selectedTable: null,
 };
 
 const tableReducer = (state = initialState, action) => {
@@ -53,6 +56,29 @@ const tableReducer = (state = initialState, action) => {
           (table) => table._id !== action.payload
         ),
       };
+
+    case UPDATE_TABLE_REQUEST_SUCCESS:
+      const updatedIndex = state.tableData.findIndex(
+        (table) => table && action.payload && table._id === action.payload._id
+      );
+
+      if (updatedIndex !== -1) {
+        const updatedTableData = [...state.tableData];
+        updatedTableData[updatedIndex];
+        return {
+          ...state,
+          tableData: updatedTableData,
+        };
+      } else {
+        return state;
+      }
+
+    case GET_TABLE_BY_ID_REQUEST_SUCCESS:
+      return {
+        ...state,
+        selectedTable: action.payload,
+      };
+
     default:
       return state;
   }

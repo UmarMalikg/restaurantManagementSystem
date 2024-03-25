@@ -29,6 +29,10 @@ const Tables = ({
       table.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const goToUpdate = (tableId) => {
+    navigation.navigate("Update Table", { tableId });
+  };
+
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -74,7 +78,11 @@ const Tables = ({
                         justifyContent: "flex-end",
                       }}
                     >
-                      <Pressable>
+                      <Pressable
+                        onPress={() => {
+                          goToUpdate(table._id);
+                        }}
+                      >
                         <Text>edit</Text>
                       </Pressable>
                       <Pressable onPress={() => deleteTable(table._id)}>

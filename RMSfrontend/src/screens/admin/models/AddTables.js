@@ -121,7 +121,6 @@ const AddTables = ({ addTable, fetchFloorData, floorData }) => {
           value={formData.seats}
           placeholder="Table Seats..."
           onChangeText={(text) => handleChange("seats", text, true)}
-          min={1}
           required
         />
 
