@@ -17,6 +17,11 @@ const Categories = ({ fetchCategoryData, categoryData }) => {
   const filteredCategories = categoryData.filter((category) =>
     category.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const goToUpdate = (categoryId) => {
+    navigation.navigate("Update Category", { categoryId });
+  };
+
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -60,7 +65,11 @@ const Categories = ({ fetchCategoryData, categoryData }) => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Pressable>
+                    <Pressable
+                      onPress={() => {
+                        goToUpdate(category._id);
+                      }}
+                    >
                       <Text>edit</Text>
                     </Pressable>
                     <Pressable>

@@ -21,6 +21,7 @@ import Tables from "./Tables";
 import Categories from "./Categories";
 import AddCategories from "./models/AddCategories";
 import AddTables from "./models/AddTables";
+import UpdateCategories from "./models/UpdateCategories";
 
 // imported api
 import { api } from "../../api/api";
@@ -95,6 +96,7 @@ const Admin = () => {
           <Stack.Screen name="Add Employee" component={AddEmployees} />
           <Stack.Screen name="Add Category" component={AddCategories} />
           <Stack.Screen name="Add Table" component={AddTables} />
+          <Stack.Screen name="Update Category" component={UpdateCategories} />
         </Stack.Group>
       </Stack.Navigator>
     </View>
