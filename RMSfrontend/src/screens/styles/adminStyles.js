@@ -58,6 +58,83 @@ const adminStyles = StyleSheet.create({
   hoverSideBarLinks: {
     backgroundColor: lightGreen,
   },
+
+  ///commented
+  hoverSideBarLinksBefore: {
+    position: "absolute",
+    top: -25,
+    right: -1,
+    height: 25,
+    width: 25,
+    backgroundColor: "#000",
+    backgroundColor: "#f00",
+    borderBottomRightRadius: 20,
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowColor: fullLightGreen, // Update this with your desired color
+    // Update this with your desired opacity
+
+    backgroundColor: "transparent",
+  },
+  activeSideBarLinksBefore: {
+    position: "absolute",
+    top: -25,
+    right: -1,
+    height: 25,
+    width: 25,
+    backgroundColor: "#000",
+    backgroundColor: "#f00",
+    borderBottomRightRadius: 20,
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowColor: fullLightGreen, // Update this with your desired color
+    // Update this with your desired opacity
+
+    backgroundColor: "transparent",
+  },
+  hoverSideBarLinksAfter: {
+    position: "absolute",
+    bottom: -25,
+    right: -1,
+    height: 25,
+    width: 25,
+    backgroundColor: "#000",
+    backgroundColor: "#f00",
+    borderTopRightRadius: 20,
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowColor: fullLightGreen, // Update this with your desired color
+    // Update this with your desired opacity
+
+    backgroundColor: "transparent",
+  },
+  activeSideBarLinksAfter: {
+    position: "absolute",
+    bottom: -25,
+    right: -1,
+    height: 25,
+    width: 25,
+    backgroundColor: "#000",
+    backgroundColor: "#f00",
+    borderTopRightRadius: 20,
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowColor: fullLightGreen, // Update this with your desired color
+    // Update this with your desired opacity
+
+    backgroundColor: "transparent",
+  },
+
+  ///commented
+
   sideBarLinkIcon: {
     height: 20,
     width: 20,

@@ -17,6 +17,7 @@ import { fetchEmployeeData } from "../../../redux/actions/employeeActions";
 import { useNavigation } from "@react-navigation/native";
 
 import { useAppContext } from "../../../context/States";
+import { lightGreen } from "../../../constants/stylesConstants";
 
 const KitchenOrders = ({
   fetchOrderData,
@@ -38,7 +39,13 @@ const KitchenOrders = ({
     fetchProductData();
     fetchTableData();
     fetchEmployeeData();
-  }, [fetchOrderData, fetchProductData, fetchTableData, fetchEmployeeData]);
+  }, [
+    fetchOrderData,
+    fetchProductData,
+    fetchTableData,
+    fetchEmployeeData,
+    changeItemsStatus,
+  ]);
 
   // function to display Orders for the current employee
   const displayOrders = () => {
@@ -112,7 +119,11 @@ const KitchenOrders = ({
                           </View>
                           <View style={defaultStyles.rowCenteredFlex}>
                             <Text
-                              style={[defaultStyles.fs18, defaultStyles.bold]}
+                              style={[
+                                defaultStyles.fs18,
+                                defaultStyles.bold,
+                                { textAlign: "center" },
+                              ]}
                             >
                               {product?.name || "NA"}
                             </Text>
@@ -133,6 +144,7 @@ const KitchenOrders = ({
                             ]}
                           >
                             <Picker
+                              style={{ backgroundColor: lightGreen }}
                               selectedValue={item.itemStatus}
                               onValueChange={(newStatus) => {
                                 changeItemsStatus(

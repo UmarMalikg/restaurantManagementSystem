@@ -350,10 +350,11 @@ const waiterStyles = StyleSheet.create({
     flexDirection: "row",
   },
   singleItem: {
-    backgroundColor: "#f00",
+    backgroundColor: darkGreen,
     width: 120,
     borderRadius: 10,
     margin: 10,
+    paddingHorizontal: 10,
   },
   orderedImage: {
     width: "60%",

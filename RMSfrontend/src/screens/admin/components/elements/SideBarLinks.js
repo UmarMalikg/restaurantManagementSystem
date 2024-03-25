@@ -1,4 +1,4 @@
-import { Text, Pressable, Image } from "react-native";
+import { Text, Pressable, Image, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../../styles/adminStyles";
@@ -44,6 +44,18 @@ const SideBarLinks = ({ text, icon, link }) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
+      {/* <View
+        style={[
+          (isHovered || isPressed) && adminStyles.hoverSideBarLinksBefore,
+          isActive && adminStyles.activeSideBarLinksBefore,
+        ]}
+      ></View>
+      <View
+        style={[
+          (isHovered || isPressed) && adminStyles.hoverSideBarLinksAfter,
+          isActive && adminStyles.activeSideBarLinksAfter,
+        ]}
+      ></View> */}
       <Image
         style={[
           adminStyles.sideBarLinkIcon,
