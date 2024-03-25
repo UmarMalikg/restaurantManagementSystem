@@ -7,6 +7,9 @@ import {
   MADE_TABLE_AVAILABLE,
   MADE_TABLE_RESERVED,
   ADD_TABLE_REQUEST_SUCCESS,
+  DELETE_TABLE_REQUEST,
+  DELETE_TABLE_REQUEST_FAILURE,
+  DELETE_TABLE_REQUEST_SUCCESS,
 } from "../../constants/tableConstants";
 
 export const setTableData = (tableData) => ({
@@ -29,6 +32,11 @@ export const setTableAvailable = (tableId) => ({
 export const addTableToStore = (table) => ({
   type: ADD_TABLE_REQUEST_SUCCESS,
   payload: table,
+});
+
+export const deletTableRequest = (tableId) => ({
+  type: DELETE_TABLE_REQUEST_SUCCESS,
+  payload: tableId,
 });
 
 export const addTable = (table) => {
@@ -97,6 +105,20 @@ export const makeTableAvailable = (tableId) => {
       dispatch(setTableAvailable(tableId));
     } catch (error) {
       console.error("Error making the table available:", error);
+    }
+  };
+};
+
+export const deleteTable = (tableId) => {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_TABLE_REQUEST });
+    try {
+      await axios.delete(`${api}/tables/${tableId}`);
+      dispatch({ type: DELETE_TABLE_REQUEST_SUCCESS });
+      dispatch(deletTableRequest(tableId));
+    } catch (err) {
+      dispatch({ type: DELETE_TABLE_REQUEST_FAILURE });
+      console.error("Error Deletint=g the table:", err);
     }
   };
 };

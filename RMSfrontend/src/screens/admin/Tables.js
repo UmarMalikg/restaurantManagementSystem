@@ -4,10 +4,16 @@ import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import defaultStyles from "../../defaultStyles";
-import { fetchTableData } from "../../redux/actions/tableActions";
+import { fetchTableData, deleteTable } from "../../redux/actions/tableActions";
 import { fetchFloorData } from "../../redux/actions/floorActions";
 
-const Tables = ({ fetchTableData, tableData, fetchFloorData, floorData }) => {
+const Tables = ({
+  fetchTableData,
+  tableData,
+  fetchFloorData,
+  floorData,
+  deleteTable,
+}) => {
   useEffect(() => {
     fetchTableData();
     fetchFloorData();
@@ -22,6 +28,7 @@ const Tables = ({ fetchTableData, tableData, fetchFloorData, floorData }) => {
       table.name &&
       table.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -70,7 +77,7 @@ const Tables = ({ fetchTableData, tableData, fetchFloorData, floorData }) => {
                       <Pressable>
                         <Text>edit</Text>
                       </Pressable>
-                      <Pressable>
+                      <Pressable onPress={() => deleteTable(table._id)}>
                         <Text>delete</Text>
                       </Pressable>
                     </View>
@@ -95,5 +102,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchTableData,
   fetchFloorData,
+  deleteTable,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Tables);

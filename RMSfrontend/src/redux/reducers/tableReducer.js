@@ -4,6 +4,7 @@ import {
   MADE_TABLE_RESERVED,
   MADE_TABLE_AVAILABLE,
   ADD_TABLE_REQUEST_SUCCESS,
+  DELETE_TABLE_REQUEST_SUCCESS,
 } from "../../constants/tableConstants";
 
 const initialState = {
@@ -44,6 +45,13 @@ const tableReducer = (state = initialState, action) => {
       return {
         ...state,
         reservedTables: updatedReservedTablesAvailable,
+      };
+    case DELETE_TABLE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        tableData: state.tableData.filter(
+          (table) => table._id !== action.payload
+        ),
       };
     default:
       return state;
