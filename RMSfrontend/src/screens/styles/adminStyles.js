@@ -13,6 +13,7 @@ import {
   dashboardIconsWidth,
   chartBoxHeight,
   chartBoxWidth,
+  lightGreen,
 } from "../../constants/stylesConstants";
 import defaultStyles from "../../defaultStyles";
 
@@ -52,12 +53,10 @@ const adminStyles = StyleSheet.create({
     borderBottomRightRadius: -50,
   },
   activeSideBarLinks: {
-    backgroundColor: fullDarkBlue,
-    color: "#fff",
+    backgroundColor: fullLightGreen,
   },
   hoverSideBarLinks: {
-    backgroundColor: lightBlue,
-    color: "#fff",
+    backgroundColor: lightGreen,
   },
   sideBarLinkIcon: {
     height: 20,
