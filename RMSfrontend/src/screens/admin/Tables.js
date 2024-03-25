@@ -14,8 +14,11 @@ const Tables = ({ fetchTableData, tableData }) => {
 
   const [searchText, setSearchText] = useState("");
 
-  const filteredTables = tableData.filter((table) =>
-    table.name.toLowerCase().includes(searchText.toLowerCase())
+  const filteredTables = tableData.filter(
+    (table) =>
+      table &&
+      table.name &&
+      table.name.toLowerCase().includes(searchText.toLowerCase())
   );
   return (
     <View style={adminStyles.theScreen}>
