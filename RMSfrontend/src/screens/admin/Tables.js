@@ -5,11 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import defaultStyles from "../../defaultStyles";
 import { fetchTableData } from "../../redux/actions/tableActions";
+import { fetchFloorData } from "../../redux/actions/floorActions";
 
-const Tables = ({ fetchTableData, tableData }) => {
+const Tables = ({ fetchTableData, tableData, fetchFloorData, floorData }) => {
   useEffect(() => {
     fetchTableData();
-  }, [fetchTableData]);
+    fetchFloorData();
+  }, [fetchTableData, fetchFloorData]);
   const navigation = useNavigation();
 
   const [searchText, setSearchText] = useState("");
@@ -42,38 +44,41 @@ const Tables = ({ fetchTableData, tableData }) => {
       </View>
       <ScrollView>
         <View style={adminStyles.catTabPosition}>
-          {filteredTables?.map((table) => (
-            <View style={adminStyles.catTabBox} key={table._id}>
-              <View>
-                <View>
-                  <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
-                    {table.name}
-                  </Text>
-                </View>
+          {filteredTables?.map((table) => {
+            const floor = floorData.find((floor) => floor._id === table.floor);
+            return (
+              <View style={adminStyles.catTabBox} key={table._id}>
                 <View>
                   <View>
-                    <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
-                      Floor
+                    <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                      {table.name}
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <Pressable>
-                      <Text>edit</Text>
-                    </Pressable>
-                    <Pressable>
-                      <Text>delete</Text>
-                    </Pressable>
+                  <View>
+                    <View>
+                      <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
+                        {floor ? floor.name : "NA"}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <Pressable>
+                        <Text>edit</Text>
+                      </Pressable>
+                      <Pressable>
+                        <Text>delete</Text>
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       </ScrollView>
     </View>
@@ -83,10 +88,12 @@ const Tables = ({ fetchTableData, tableData }) => {
 const mapStateToProps = (state) => {
   return {
     tableData: state.tables.tableData,
+    floorData: state.floors.floorData,
   };
 };
 
 const mapDispatchToProps = {
   fetchTableData,
+  fetchFloorData,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Tables);
