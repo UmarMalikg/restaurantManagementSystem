@@ -103,7 +103,7 @@ const UpdateTables = ({
 
   return (
     <View style={adminStyles.model}>
-      <Text style={adminStyles.modelHeader}>Add New Table</Text>
+      <Text style={adminStyles.modelHeader}>Edit Table</Text>
       <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Tables")}
@@ -127,7 +127,7 @@ const UpdateTables = ({
         />
 
         <Text style={adminStyles.modelLabel}>
-          Select Floor<Text style={adminStyles.requiredStar}>*</Text>
+          Change Floor<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
 
         <Picker
@@ -153,7 +153,7 @@ const UpdateTables = ({
         />
 
         <Pressable onPress={submitForm} style={adminStyles.modelButton}>
-          <Text style={adminStyles.modelButtonText}>Add Table</Text>
+          <Text style={adminStyles.modelButtonText}>Update Table</Text>
         </Pressable>
       </ScrollView>
     </View>

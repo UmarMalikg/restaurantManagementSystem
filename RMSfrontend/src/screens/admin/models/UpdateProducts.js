@@ -129,7 +129,7 @@ const UpdateProducts = ({
 
   return (
     <View style={adminStyles.model}>
-      <Text style={adminStyles.modelHeader}>Add New Product</Text>
+      <Text style={adminStyles.modelHeader}>Edit Product</Text>
       <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Products")}
@@ -161,7 +161,7 @@ const UpdateProducts = ({
           onChangeText={(text) => handleChange("description", text)}
         />
         <Text style={adminStyles.modelLabel}>
-          Product Image<Text style={adminStyles.requiredStar}>*</Text>
+          Change Product Photo<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
         <input
           style={adminStyles.modelInput}
@@ -223,7 +223,7 @@ const UpdateProducts = ({
           keyboardType="numeric" // Assuming price is a numeric value
         />
         <Pressable onPress={submitForm} style={adminStyles.modelButton}>
-          <Text style={adminStyles.modelButtonText}>Add Product</Text>
+          <Text style={adminStyles.modelButtonText}>Update Product</Text>
         </Pressable>
       </ScrollView>
     </View>

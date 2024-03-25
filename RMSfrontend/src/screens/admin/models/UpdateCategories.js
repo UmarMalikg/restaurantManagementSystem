@@ -81,7 +81,7 @@ const UpdateCategories = ({
   }
   return (
     <View style={adminStyles.model}>
-      <Text style={adminStyles.modelHeader}>Update Category</Text>
+      <Text style={adminStyles.modelHeader}>Edit Category</Text>
       <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Categories")}
@@ -106,9 +106,6 @@ const UpdateCategories = ({
 
         <Pressable onPress={submitForm} style={adminStyles.modelButton}>
           <Text style={adminStyles.modelButtonText}>Update Category</Text>
-        </Pressable>
-        <Pressable onPress={consoleLog} style={adminStyles.modelButton}>
-          <Text style={adminStyles.modelButtonText}>ConsoleLog</Text>
         </Pressable>
       </ScrollView>
     </View>

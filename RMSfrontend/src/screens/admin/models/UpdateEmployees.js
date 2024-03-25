@@ -215,7 +215,7 @@ const UpdateEmployees = ({
   //Component
   return (
     <View style={adminStyles.model}>
-      <Text style={adminStyles.modelHeader}>Add New Employee</Text>
+      <Text style={adminStyles.modelHeader}>Edit Employee</Text>
       <Pressable
         style={adminStyles.modelCloser}
         onPress={() => navigation.navigate("Employees")}
@@ -251,11 +251,7 @@ const UpdateEmployees = ({
         />
 
         <Text style={adminStyles.modelLabel}>
-          Date of Birth<Text style={adminStyles.requiredStar}>*</Text>
-        </Text>
-
-        <Text style={adminStyles.modelLabel}>
-          Photo<Text style={adminStyles.requiredStar}>*</Text>
+          Change Photo<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
         <input
           style={adminStyles.modelInput}
@@ -391,7 +387,7 @@ const UpdateEmployees = ({
           keyboardType="numeric"
         />
         <Pressable onPress={submitForm} style={adminStyles.modelButton}>
-          <Text style={adminStyles.modelButtonText}>Add Employee</Text>
+          <Text style={adminStyles.modelButtonText}>Update Employee</Text>
         </Pressable>
       </ScrollView>
     </View>
