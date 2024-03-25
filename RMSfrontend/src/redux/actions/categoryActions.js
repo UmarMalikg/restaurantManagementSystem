@@ -16,12 +16,19 @@ import {
   UPDATE_CATEGORY_REQUEST_SUCCESS,
   UPDATE_CATEGORY_REQUEST,
   UPDATE_CATEGORY_REQUEST_FAILURE,
+  DELETE_CATEGORY_REQUEST,
+  DELETE_CATEGORY_REQUEST_FAILURE,
+  DELETE_CATEGORY_REQUEST_SUCCESS,
 } from "../../constants/categotyConstants";
 
 // Action Creators
 export const setCategoryData = (categoryData) => ({
   type: GET_CATEGORY_REQUEST_SUCCESS,
   payload: categoryData,
+});
+export const deleteCategoryRequest = (categoryId) => ({
+  type: DELETE_CATEGORY_REQUEST_SUCCESS,
+  payload: categoryId,
 });
 
 export const selectCategory = (categoryId) => ({
@@ -102,6 +109,25 @@ export const getCategoryById = (categoryId) => {
         type: GET_CATEGORY_BY_ID_REQUEST_FAILURE,
         payload: err.message,
       }); // Dispatching failure action with error message
+    }
+  };
+};
+
+export const deleteCategory = (categoryId) => {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_CATEGORY_REQUEST });
+    try {
+      await axios.delete(`${api}/categories/${categoryId}`);
+      dispatch({
+        type: DELETE_CATEGORY_REQUEST_SUCCESS,
+      });
+      dispatch(deleteCategoryRequest(categoryId));
+    } catch (err) {
+      console.error("Error Deleting Category by ID:", err);
+      dispatch({
+        type: DELETE_CATEGORY_REQUEST_FAILURE,
+        payload: err.message,
+      });
     }
   };
 };

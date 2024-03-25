@@ -4,9 +4,12 @@ import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import defaultStyles from "../../defaultStyles";
-import { fetchCategoryData } from "../../redux/actions/categoryActions";
+import {
+  fetchCategoryData,
+  deleteCategory,
+} from "../../redux/actions/categoryActions";
 
-const Categories = ({ fetchCategoryData, categoryData }) => {
+const Categories = ({ fetchCategoryData, categoryData, deleteCategory }) => {
   useEffect(() => {
     fetchCategoryData();
   }, [fetchCategoryData]);
@@ -72,7 +75,7 @@ const Categories = ({ fetchCategoryData, categoryData }) => {
                     >
                       <Text>edit</Text>
                     </Pressable>
-                    <Pressable>
+                    <Pressable onPress={() => deleteCategory(category._id)}>
                       <Text>delete</Text>
                     </Pressable>
                   </View>
@@ -94,5 +97,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchCategoryData,
+  deleteCategory,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

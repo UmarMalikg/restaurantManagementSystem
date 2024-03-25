@@ -9,6 +9,7 @@ import {
   GET_CATEGORY_BY_ID_REQUEST_SUCCESS,
   GET_CATEGORY_BY_ID_REQUEST_FAILURE,
   UPDATE_CATEGORY_REQUEST_SUCCESS,
+  DELETE_CATEGORY_REQUEST_SUCCESS,
 } from "../../constants/categotyConstants";
 
 const initialState = {
@@ -50,6 +51,14 @@ const categoryReducer = (state = initialState, action) => {
         // If the category is not found, return the state as it is
         return state;
       }
+
+    case DELETE_CATEGORY_REQUEST_SUCCESS:
+      return {
+        ...state,
+        categoryData: state.categoryData.filter(
+          (category) => category._id !== action.payload
+        ),
+      };
 
     default:
       return state;
