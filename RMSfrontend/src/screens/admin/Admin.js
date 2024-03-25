@@ -35,6 +35,7 @@ import { useNavigation } from "@react-navigation/native";
 
 // imported context to fetch the data required data
 import { useAppContext } from "../../context/States";
+import UpdateProducts from "./models/UpdateProducts";
 
 // created stack variable for putting the pages in a stack
 const Stack = createNativeStackNavigator();
@@ -99,6 +100,7 @@ const Admin = () => {
           <Stack.Screen name="Add Table" component={AddTables} />
           <Stack.Screen name="Update Category" component={UpdateCategories} />
           <Stack.Screen name="Update Table" component={UpdateTables} />
+          <Stack.Screen name="Update Product" component={UpdateProducts} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

@@ -29,10 +29,10 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-const renewToken = (req, res, callback) => {
+const renewToken = (req, res, next) => {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
-    return callback(false); // No refresh token
+    return res.json({ valid: false, message: "No tokens available" });
   }
 
   jwt.verify(refreshToken, process.env.JWT_REF_SECRET, (err, decoded) => {
@@ -45,7 +45,9 @@ const renewToken = (req, res, callback) => {
         { expiresIn: "1m" }
       );
       res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
-      callback(true); // Token renewed successfully
+      if (next) {
+        next(); // Token renewed successfully
+      }
     }
   });
 };

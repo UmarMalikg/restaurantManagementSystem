@@ -41,6 +41,10 @@ const Products = ({
 
   let serialNo = 1;
 
+  const goToUpdate = (productId) => {
+    navigation.navigate("Update Product", { productId });
+  };
+
   const tableHead = ["Sr#No", "Image", "Name", "Category", "Price", "Actions"];
   const tableData = filteredProductData.map((product) => [
     serialNo++,
@@ -64,7 +68,11 @@ const Products = ({
       <Pressable onPress={() => deleteProduct(product._id)}>
         <Text>delete</Text>
       </Pressable>
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          goToUpdate(product._id);
+        }}
+      >
         <Text>edit</Text>
       </Pressable>
     </View>,

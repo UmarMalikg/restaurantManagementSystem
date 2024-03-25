@@ -26,6 +26,7 @@ const UpdateCategories = ({
       getCategoryById(categoryId);
     }
   }, [getCategoryById, categoryId]);
+
   useEffect(() => {
     if (selectedCategory) {
       // Update formData state with selectedCategory's name
@@ -35,10 +36,6 @@ const UpdateCategories = ({
       }));
     }
   }, [selectedCategory]);
-
-  const consoleLog = () => {
-    console.log("Selected Category", selectedCategory);
-  };
 
   //definig the function resposible for chang of values in the fields
   // here isNumeric is defined for those fields that can only accepts the numeric value
