@@ -9,21 +9,27 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // imported components for admin
 import SideBar from "./components/SideBar";
-import adminStyles from "../styles/adminStyles";
-import Dashboard from "./Dashboard";
 import NavBar from "./components/NavBar";
+
+// imported admin screens
+import Dashboard from "./Dashboard";
 import Products from "./Products";
 import Employees from "./Employees";
 import OrderLists from "./OrderLists";
-import AddProducts from "./models/AddProducts";
-import AddEmployees from "./models/AddEmployees";
 import Tables from "./Tables";
 import Categories from "./Categories";
+// imported add models
 import AddCategories from "./models/AddCategories";
 import AddTables from "./models/AddTables";
+import AddEmployees from "./models/AddEmployees";
+import AddProducts from "./models/AddProducts";
+// imported update modals
 import UpdateCategories from "./models/UpdateCategories";
 import UpdateTables from "./models/UpdateTables";
+import UpdateEmployees from "./models/UpdateEmployees";
+import UpdateProducts from "./models/UpdateProducts";
 
+import adminStyles from "../styles/adminStyles";
 // imported api
 import { api } from "../../api/api";
 
@@ -35,7 +41,6 @@ import { useNavigation } from "@react-navigation/native";
 
 // imported context to fetch the data required data
 import { useAppContext } from "../../context/States";
-import UpdateProducts from "./models/UpdateProducts";
 
 // created stack variable for putting the pages in a stack
 const Stack = createNativeStackNavigator();
@@ -101,6 +106,7 @@ const Admin = () => {
           <Stack.Screen name="Update Category" component={UpdateCategories} />
           <Stack.Screen name="Update Table" component={UpdateTables} />
           <Stack.Screen name="Update Product" component={UpdateProducts} />
+          <Stack.Screen name="Update Employee" component={UpdateEmployees} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

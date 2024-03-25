@@ -3,10 +3,13 @@ import {
   ADD_EMPLOYEE,
   DELETE_EMPLOYEE,
   SET_TOTAL_EMPLOYEES_COUNT,
+  GET_EMPLOYEE_BY_ID_REQUEST_SUCCESS,
+  UPDATE_EMPLOYEE_REQUEST_SUCCESS,
 } from "../../constants/employeeConstants";
 
 const initialState = {
   employeeData: [],
+  selectedEmployee: null,
 };
 
 const employeeReducer = (state = initialState, action) => {
@@ -33,6 +36,28 @@ const employeeReducer = (state = initialState, action) => {
         ...state,
         totalEmployeesCount: action.payload,
       };
+
+    case GET_EMPLOYEE_BY_ID_REQUEST_SUCCESS:
+      return {
+        ...state,
+        selectedEmployee: action.payload,
+      };
+
+    case UPDATE_EMPLOYEE_REQUEST_SUCCESS:
+      const updatedIndex = state.employeeData.findIndex(
+        (employee) =>
+          employee && action.payload && employee._id === action.payload._id
+      );
+
+      if (updatedIndex !== -1) {
+        const updatedEmployeeData = [...state.employeeData];
+        updatedEmployeeData[updatedIndex] = action.payload;
+        return {
+          ...state,
+          employeeData: updatedEmployeeData,
+        };
+      }
+
     default:
       return state;
   }

@@ -28,6 +28,10 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
     employee.userName.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const goToUpdate = (employeeId) => {
+    navigation.navigate("Update Employee", { employeeId });
+  };
+
   let serialNo = 1;
 
   const tableHead = [
@@ -63,7 +67,11 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
       <Pressable onPress={() => deleteEmployee(employee._id)}>
         <Text>delete</Text>
       </Pressable>
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          goToUpdate(employee._id);
+        }}
+      >
         <Text>edit</Text>
       </Pressable>
     </View>,
