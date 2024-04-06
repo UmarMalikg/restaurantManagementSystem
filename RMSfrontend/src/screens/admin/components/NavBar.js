@@ -1,9 +1,11 @@
 import { View, Text, Pressable, Image } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import adminStyles from "../../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
-import { useAppContext } from "../../../context/States";
 import waiterStyles from "../../styles/waiterStyles";
+import HeaderLogoutButton from "../../common/HeaderLogoutButton";
+
+import { useAppContext } from "../../../context/States";
 
 const NavBar = () => {
   const navigation = useNavigation();
@@ -22,12 +24,8 @@ const NavBar = () => {
           <View>
             <Text>Notifications</Text>
           </View>
-          <View>
-            <Pressable onPress={() => navigation.navigate("SignIn")}>
-              <Text>Log Out</Text>
-            </Pressable>
-          </View>
 
+          <HeaderLogoutButton />
           <View style={waiterStyles.headerEmployeeInfo}>
             <View style={waiterStyles.headerEmployeeImgBox}>
               <Image

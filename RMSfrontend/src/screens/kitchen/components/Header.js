@@ -3,6 +3,7 @@ import { View, Text, Pressable, Image } from "react-native";
 import waiterStyles from "../../styles/waiterStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
+import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -31,11 +32,7 @@ const Header = () => {
           <View>
             <Text>Notifications</Text>
           </View>
-          <View>
-            <Pressable onPress={() => navigation.navigate("SignIn")}>
-              <Text>Log Out</Text>
-            </Pressable>
-          </View>
+          <HeaderLogoutButton />
 
           <View style={waiterStyles.headerEmployeeInfo}>
             <View style={waiterStyles.headerEmployeeImgBox}>
