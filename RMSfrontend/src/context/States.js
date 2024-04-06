@@ -3,8 +3,10 @@ import React, { createContext, useContext, useState } from "react";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const storedEmployee = localStorage.getItem("employee");
+  const initialEmployee = storedEmployee ? JSON.parse(storedEmployee) : null;
   // state that keep track of logined employee
-  const [employee, setEmployee] = useState(null);
+  const [employee, setEmployee] = useState(initialEmployee);
   const updateEmployee = (newEmployee) => {
     setEmployee(newEmployee);
   };
