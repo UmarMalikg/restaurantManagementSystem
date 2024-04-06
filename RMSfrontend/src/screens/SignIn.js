@@ -35,6 +35,7 @@ const SignIn = () => {
       if (res.data.Login) {
         if (res.data.employee) {
           updateEmployee(res.data.employee);
+          localStorage.setItem("employee", JSON.stringify(res.data.employee));
           switch (true) {
             case res.data.Admin:
               navigation.navigate("Admin");

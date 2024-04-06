@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   Platform,
+  Image,
   ImageBackground,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
