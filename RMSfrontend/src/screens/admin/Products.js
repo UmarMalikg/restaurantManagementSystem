@@ -50,7 +50,7 @@ const Products = ({
     serialNo++,
     <Image
       source={{
-        uri: `http://localhost:8080/${product.img.replace(/\\/g, "/")}`,
+        uri: `${product.img}`,
       }}
       style={{ width: 50, height: 50, borderRadius: 50 }}
     />,

@@ -99,11 +99,7 @@ export const addProduct = (productData) => {
     console.log(productData);
     try {
       // Send a POST request to your server's API endpoint to add the product
-      const response = await axios.post(`${api}/products`, productData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
-        },
-      });
+      const response = await axios.post(`${api}/products`, productData);
 
       dispatch(addProductToStore(response.data));
     } catch (error) {

@@ -60,7 +60,7 @@ const Products = ({
             <View style={waiterStyles.productImage}>
               <Image
                 source={{
-                  uri: `http://localhost:8080/${item.img.replace(/\\/g, "/")}`,
+                  uri: `${item.img}`,
                 }}
                 style={{ width: "100%", aspectRatio: 1, borderRadius: 10 }}
                 onError={(error) =>

@@ -153,9 +153,9 @@ const OrderPlacement = ({
                       <Image
                         style={waiterStyles.orderMenuImg}
                         source={{
-                          uri: `http://localhost:8080/${productData
-                            .find((p) => p._id === item.item)
-                            .img.replace(/\\/g, "/")}`,
+                          uri: `${
+                            productData.find((p) => p._id === item.item).img
+                          }`,
                         }}
                       />
                     ) : (

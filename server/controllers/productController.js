@@ -25,8 +25,7 @@ const getProducts = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     // Extract data from the request body
-    const { name, description, price, qty, category } = req.body;
-    const img = req.file.path;
+    const { name, description, price, qty, category, img } = req.body;
     // Check if all required fields are provided
     if (!name || !description || !price || !img) {
       return res.status(400).json({

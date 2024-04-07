@@ -105,10 +105,7 @@ const KitchenOrders = ({
                               <Image
                                 style={waiterStyles.orderedImage}
                                 source={{
-                                  uri: `http://localhost:8080/${product.img.replace(
-                                    /\\/g,
-                                    "/"
-                                  )}`,
+                                  uri: `${product.img}`,
                                 }}
                               />
                             ) : (
