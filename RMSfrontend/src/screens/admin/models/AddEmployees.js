@@ -80,9 +80,6 @@ const AddEmployee = ({ addEmployee }) => {
         photo: result.assets[0].uri,
       });
     }
-    console.log("result", result);
-    console.log(3 * 4);
-    console.log("photo", formData.photo);
   };
 
   // defining the states resonsible for picking the date in android
@@ -136,7 +133,7 @@ const AddEmployee = ({ addEmployee }) => {
     }));
   };
 
-  // console.log(image);
+  console.log(image);
 
   // defining the for submission function
   const submitForm = () => {

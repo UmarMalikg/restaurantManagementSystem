@@ -4,6 +4,7 @@ import waiterStyles from "../../styles/waiterStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 import HeaderLogoutButton from "../../common/HeaderLogoutButton";
+import HeaderImage from "../../common/HeaderImage";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -48,17 +49,7 @@ const Header = () => {
           <HeaderLogoutButton />
 
           <View style={waiterStyles.headerEmployeeInfo}>
-            <View style={waiterStyles.headerEmployeeImgBox}>
-              <Image
-                source={{
-                  uri: `http://localhost:8080/${employee.photo.replace(
-                    /\\/g,
-                    "/"
-                  )}`,
-                }}
-                style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
-              />
-            </View>
+            <HeaderImage imageUrl={employee.photo} />
 
             <View style={waiterStyles.headerEmployeeNameAndRole}>
               <View style={waiterStyles.headerEmployeeName}>
