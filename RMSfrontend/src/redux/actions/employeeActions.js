@@ -61,11 +61,7 @@ export const addEmployee = (employeeData) => {
     console.log(employeeData);
     try {
       // Send a POST request to your server's API endpoint to add the employee
-      const response = await axios.post(`${api}/employees`, employeeData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
-        },
-      });
+      const response = await axios.post(`${api}/employees`, employeeData);
 
       dispatch(addEmployeeToStore(response.data));
     } catch (error) {

@@ -41,9 +41,9 @@ router.post("/", async (req, res) => {
           res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
           res.cookie(`refreshToken`, refreshToken, {
             maxAge: 600000,
-            httpOnly: true,
+            // httpOnly: true,
             secure: true,
-            sameSite: "strict",
+            // sameSite: "strict",
           });
 
           //Checking for the employee roles to grant access based on their roles.
@@ -112,9 +112,9 @@ router.post("/", async (req, res) => {
           res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
           res.cookie(`refreshToken`, refreshToken, {
             maxAge: 600000,
-            httpOnly: true,
+            // httpOnly: true,
             secure: true,
-            sameSite: "strict",
+            // sameSite: "strict",
           });
 
           //Checking for the employee roles to grant access based on their roles.

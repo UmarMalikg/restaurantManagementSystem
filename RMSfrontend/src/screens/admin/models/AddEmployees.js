@@ -8,6 +8,7 @@ import {
   Platform,
   Picker,
   ScrollView,
+  Button,
 } from "react-native";
 import { connect } from "react-redux";
 import { addEmployee } from "../../../redux/actions/employeeActions";
@@ -16,9 +17,12 @@ import adminStyles from "../../styles/adminStyles";
 import { RadioButton } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 let isWeb = Platform.OS === "web";
+import * as ImagePicker from "expo-image-picker";
 
 const AddEmployee = ({ addEmployee }) => {
   const navigation = useNavigation();
+
+  const [image, setImage] = useState(null);
 
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
@@ -58,6 +62,27 @@ const AddEmployee = ({ addEmployee }) => {
   const handleGenderChange = (value) => {
     setGender(value);
     setFormData({ ...formData, gender: value });
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setFormData({
+        ...formData,
+        photo: result.assets[0].uri,
+      });
+    }
+    console.log("result", result);
+    console.log(3 * 4);
+    console.log("photo", formData.photo);
   };
 
   // defining the states resonsible for picking the date in android
@@ -111,21 +136,12 @@ const AddEmployee = ({ addEmployee }) => {
     }));
   };
 
-  // defining the field that handles the change of selection of image
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      setFormData({
-        ...formData,
-        photo: file,
-      });
-    }
-  };
+  // console.log(image);
 
   // defining the for submission function
   const submitForm = () => {
     // Check if all required fields are filled
+    // console.log(formData.photo);
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -154,7 +170,7 @@ const AddEmployee = ({ addEmployee }) => {
         phone: formData.phone,
       },
       pswrd: formData.pswrd,
-      photo: formData.photo,
+      photo: image,
       salary: formData.salary,
       userName: formData.userName,
       address: {
@@ -347,18 +363,9 @@ const AddEmployee = ({ addEmployee }) => {
         <Text style={adminStyles.modelLabel}>
           Photo<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <input
-          style={adminStyles.modelInput}
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          required
-        />
-        {formData.photo && (
-          <Image
-            source={{ uri: URL.createObjectURL(formData.photo) }}
-            style={{ width: 100, height: 100 }}
-          />
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        {image && formData.photo && (
+          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}
 
         <Text style={adminStyles.modelLabel}>

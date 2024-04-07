@@ -30,10 +30,7 @@ const NavBar = () => {
             <View style={waiterStyles.headerEmployeeImgBox}>
               <Image
                 source={{
-                  uri: `http://localhost:8080/${employee.photo.replace(
-                    /\\/g,
-                    "/"
-                  )}`,
+                  uri: `${employee.photo}`,
                 }}
                 style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
               />

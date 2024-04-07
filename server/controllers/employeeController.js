@@ -87,8 +87,8 @@ const addEmployee = async (req, res) => {
       isCachier,
       isKitchenManager,
       isReceptionist,
+      photo,
     } = req.body;
-    const photo = req.file.path;
     if (
       !salary ||
       !userName ||

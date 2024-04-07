@@ -48,7 +48,7 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
     serialNo++,
     <Image
       source={{
-        uri: `http://localhost:8080/${employee.photo.replace(/\\/g, "/")}`,
+        uri: `${employee.photo}`,
       }}
       style={{ width: 50, height: 50, borderRadius: 50 }}
     />,

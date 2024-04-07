@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../middleware/uploadingEmployeePhoto");
+// const uploadToCloudinary = require("../middleware/upload");
 const {
   getEmployees,
   getEmployeeById,
@@ -9,7 +9,7 @@ const {
   addEmployee,
 } = require("../controllers/employeeController");
 
-router.route("/").post(upload.single("photo"), addEmployee).get(getEmployees);
+router.route("/").post(addEmployee).get(getEmployees);
 
 router
   .route("/:id")
