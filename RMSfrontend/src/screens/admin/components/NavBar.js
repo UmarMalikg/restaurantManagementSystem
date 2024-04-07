@@ -6,6 +6,7 @@ import waiterStyles from "../../styles/waiterStyles";
 import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 
 import { useAppContext } from "../../../context/States";
+import HeaderImage from "../../common/HeaderImage";
 
 const NavBar = () => {
   const navigation = useNavigation();
@@ -27,14 +28,7 @@ const NavBar = () => {
 
           <HeaderLogoutButton />
           <View style={waiterStyles.headerEmployeeInfo}>
-            <View style={waiterStyles.headerEmployeeImgBox}>
-              <Image
-                source={{
-                  uri: `${employee.photo}`,
-                }}
-                style={waiterStyles.headerEmployeeImg} // Adjust width and height as needed
-              />
-            </View>
+            <HeaderImage imageUrl={employee.photo} />
 
             <View style={waiterStyles.headerEmployeeNameAndRole}>
               <View style={waiterStyles.headerEmployeeName}>
