@@ -8,7 +8,6 @@ import {
   Platform,
   Picker,
   ScrollView,
-  Button,
 } from "react-native";
 import { connect } from "react-redux";
 import { addEmployee } from "../../../redux/actions/employeeActions";
@@ -360,7 +359,9 @@ const AddEmployee = ({ addEmployee }) => {
         <Text style={adminStyles.modelLabel}>
           Photo<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        <Pressable onPress={pickImage}>
+          <Text>Select Photo</Text>
+        </Pressable>
         {image && formData.photo && (
           <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}

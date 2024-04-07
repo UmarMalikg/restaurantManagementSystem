@@ -7,7 +7,6 @@ import {
   Image,
   Picker,
   ScrollView,
-  Button,
 } from "react-native";
 import { connect } from "react-redux";
 import { addProduct } from "../../../redux/actions/productAction";
@@ -139,7 +138,9 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
         <Text style={adminStyles.modelLabel}>
           Product Image<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        <Pressable onPress={pickImage}>
+          <Text>Select Image</Text>
+        </Pressable>
         {image && formData.img && (
           <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}
