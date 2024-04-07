@@ -7,15 +7,18 @@ import {
   Image,
   Picker,
   ScrollView,
+  Button,
 } from "react-native";
 import { connect } from "react-redux";
 import { addProduct } from "../../../redux/actions/productAction";
 import { fetchCategoryData } from "../../../redux/actions/categoryActions";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/adminStyles";
+import * as ImagePicker from "expo-image-picker";
 
 const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   const navigation = useNavigation();
+  const [image, setImage] = useState(null);
 
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
@@ -33,6 +36,24 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
     fetchCategoryData();
   }, [fetchCategoryData]);
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setFormData({
+        ...formData,
+        img: result.assets[0].uri,
+      });
+    }
+  };
+
   //definig the function resposible for chang of values in the fields
   // here isNumeric is defined for those fields that can only accepts the numeric value
   const handleChange = (fieldName, value, isNumeric) => {
@@ -42,18 +63,6 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
       ...prevFormData,
       [fieldName]: cleanedValue,
     }));
-  };
-
-  // defining the field that handles the change of selection of image
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      setFormData({
-        ...formData,
-        img: file,
-      });
-    }
   };
 
   // defining the for submission function
@@ -74,7 +83,7 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
     const productData = {
       name: formData.name,
       description: formData.description,
-      img: formData.img,
+      img: image,
       price: formData.price,
       category: formData.category,
       qty: formData.qty,
@@ -130,20 +139,9 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
         <Text style={adminStyles.modelLabel}>
           Product Image<Text style={adminStyles.requiredStar}>*</Text>
         </Text>
-        <input
-          style={adminStyles.modelInput}
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          required
-        />
-        {formData.img && (
-          <>
-            <Image
-              source={{ uri: URL.createObjectURL(formData.img) }}
-              style={{ width: 100, height: 100 }}
-            />
-          </>
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        {image && formData.img && (
+          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}
         <Text style={adminStyles.modelLabel}>Product Category</Text>
         <Picker
