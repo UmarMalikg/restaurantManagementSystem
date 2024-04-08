@@ -1,10 +1,8 @@
 import { View, Text, ScrollView, Image, Picker } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import waiterStyles from "../../styles/waiterStyles";
 import defaultStyles from "../../../defaultStyles";
-
 import { connect } from "react-redux";
-
 import {
   fetchOrderData,
   updateOrderItemStatus,
@@ -19,9 +17,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 import { lightGreen } from "../../../constants/stylesConstants";
 
+import SocketContext from "../../../context/socketContext";
+
 const KitchenOrders = ({
   fetchOrderData,
   updateOrderItemStatus,
+  updateOrderStatus,
   orderData,
   fetchProductData,
   productData,
@@ -31,7 +32,7 @@ const KitchenOrders = ({
   employeeData,
 }) => {
   const navigation = useNavigation();
-
+  const socket = useContext(SocketContext);
   const { employee } = useAppContext();
   // getting all the orders Data
   useEffect(() => {
@@ -46,6 +47,20 @@ const KitchenOrders = ({
     fetchEmployeeData,
     changeItemsStatus,
   ]);
+  const handleOrderChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Order data fetched successfully");
+  };
+  useEffect(() => {
+    if (socket) {
+      socket.on("orderChanged", handleOrderChanged);
+    }
+    return () => {
+      if (socket) {
+        socket.off("orderChanged", handleOrderChanged);
+      }
+    };
+  }, [socket]);
 
   // function to display Orders for the current employee
   const displayOrders = () => {
@@ -53,8 +68,15 @@ const KitchenOrders = ({
     return orderData.filter((order) => order.status != "Completed");
   };
 
-  const changeItemsStatus = (orderId, itemId, newStatus) => {
-    return updateOrderItemStatus(orderId, itemId, newStatus);
+  const changeItemsStatus = async (orderId, itemId, newStatus) => {
+    try {
+      await updateOrderItemStatus(orderId, itemId, newStatus);
+      if (socket) {
+        socket.emit("orderChanged");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -228,8 +250,13 @@ const mapDispatchToProps = {
   fetchOrderData,
   updateOrderItemStatus,
   updateOrderStatus,
+  updateOrderStatus,
   fetchProductData,
   fetchTableData,
   fetchEmployeeData,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(KitchenOrders);
+
+// Jennifer Aniston
+// Little Women/Actresses
+// Brooklyn

@@ -93,6 +93,7 @@ export const fetchOrderData = () => {
       const response = await axios.get(`${api}/orders`);
       dispatch({ type: GET_ORDERS_REQUEST_SUCCESS }); // Dispatching success action
       dispatch(setOrderData(response.data));
+      console.log("function works", response.data);
     } catch (err) {
       console.error("Error fetching Order data:", err);
       dispatch({ type: GET_ORDERS_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message

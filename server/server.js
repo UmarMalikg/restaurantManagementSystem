@@ -1,4 +1,6 @@
 const express = require("express");
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
 const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -8,10 +10,22 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/config");
 
 const app = express();
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+  next();
+});
+
+const server = createServer(app);
+const io = new Server(server);
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(bodyParser.json());
-app.use("/uploads", express.static(process.cwd() + "/uploads"));
+
+// app.use("/uploads", express.static(process.cwd() + "/uploads"));
 // importing routes
 const tableRoute = require(`./routes/tables`);
 const categoryRoute = require(`./routes/categories`);
@@ -27,7 +41,7 @@ dotenv.config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:19006"],
+    origin: "http://localhost:19006",
     credentials: true,
   })
 );
@@ -44,6 +58,20 @@ app.use(`/users`, userRoute);
 app.use(`/orders`, orderRoute);
 app.use(`/floors`, floorRoute);
 
-app.listen(port, () => {
+io.on("connection", (socket) => {
+  console.log("Client connected");
+
+  // Emitting event when there's a  change in order
+  socket.on("orderChanged", () => {
+    console.log("Order added event received");
+    io.emit("orderChanged");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
+
+server.listen(port, () => {
   console.log("app works");
 });
