@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { AppProvider } from "./src/context/States";
 import store from "./src/redux/store/store";
 import Navigation from "./Navigation";
-import { SocketProvider } from "./src/context/socketContext";
+import { SocketProvider } from "./src/context/States/";
 import { api } from "./src/api/api";
 import io from "socket.io-client";
 

@@ -18,6 +18,10 @@ import { useAppContext } from "../../../context/States";
 import { lightGreen } from "../../../constants/stylesConstants";
 
 import SocketContext from "../../../context/socketContext";
+import {
+  emitOrderChange,
+  changeViaSocket,
+} from "../../../socketConfig/socketFunctions";
 
 const KitchenOrders = ({
   fetchOrderData,
@@ -52,14 +56,7 @@ const KitchenOrders = ({
     console.log("Order data fetched successfully");
   };
   useEffect(() => {
-    if (socket) {
-      socket.on("orderChanged", handleOrderChanged);
-    }
-    return () => {
-      if (socket) {
-        socket.off("orderChanged", handleOrderChanged);
-      }
-    };
+    changeViaSocket(socket, "orderChanged", handleOrderChanged);
   }, [socket]);
 
   // function to display Orders for the current employee
@@ -71,9 +68,7 @@ const KitchenOrders = ({
   const changeItemsStatus = async (orderId, itemId, newStatus) => {
     try {
       await updateOrderItemStatus(orderId, itemId, newStatus);
-      if (socket) {
-        socket.emit("orderChanged");
-      }
+      emitOrderChange(socket);
     } catch (err) {
       console.error(err);
     }
