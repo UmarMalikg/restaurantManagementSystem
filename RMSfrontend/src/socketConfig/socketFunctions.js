@@ -1,6 +1,6 @@
-export const emitOrderChange = (socket) => {
+export const emitSocket = (socket, emitMessage) => {
   if (socket) {
-    socket.emit("orderChanged");
+    socket.emit(`${emitMessage}`);
   }
 };
 

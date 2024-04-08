@@ -19,7 +19,7 @@ import { lightGreen } from "../../../constants/stylesConstants";
 
 import SocketContext from "../../../context/socketContext";
 import {
-  emitOrderChange,
+  emitSocket,
   changeViaSocket,
 } from "../../../socketConfig/socketFunctions";
 
@@ -68,7 +68,7 @@ const KitchenOrders = ({
   const changeItemsStatus = async (orderId, itemId, newStatus) => {
     try {
       await updateOrderItemStatus(orderId, itemId, newStatus);
-      emitOrderChange(socket);
+      emitSocket(socket, "orderChanged");
     } catch (err) {
       console.error(err);
     }

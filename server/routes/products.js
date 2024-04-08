@@ -8,11 +8,9 @@ const {
   updateProduct,
 } = require("../controllers/productController");
 
-const upload = require("../middleware/uploadProductImg");
-
 const router = express.Router();
 
-router.route("/").post(upload.single("img"), addProduct).get(getProducts);
+router.route("/").post(addProduct).get(getProducts);
 
 router
   .route("/:productId")
