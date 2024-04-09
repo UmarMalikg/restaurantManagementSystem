@@ -28,3 +28,12 @@ export const lightBlue = "#7978e9";
 export const lightOrange = "#f3797e";
 
 export const darkBlueGreen = "#004346";
+
+export const successAlertBackground = "#d4edda";
+export const successAlertMessage = "#155724";
+export const dangerAlertMessage = "#721c24";
+export const dangerAlertBackground = "#f8d7da";
+export const warningAertBackground = "#fff3cd";
+export const warningAertMessage = "#856404";
+export const infoAlertMessage = "#0c5460";
+export const infoAlertBackground = "#d1ecf1";

@@ -253,5 +253,6 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(KitchenOrders);
 
 // Jennifer Aniston
-// Little Women/Actresses
+// Little Women
 // Brooklyn
+// Abbie Cornish

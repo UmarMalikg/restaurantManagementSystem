@@ -7,6 +7,14 @@ import { fetchProductData } from "../../../redux/actions/productAction";
 import { addOrder } from "../../../redux/actions/orderActions";
 import { useNavigation } from "@react-navigation/native";
 import { fetchTableData } from "../../../redux/actions/tableActions";
+import {
+  successAlertBackground,
+  successAlertMessage,
+  dangerAlertBackground,
+  dangerAlertMessage,
+  warningAertBackground,
+  warningAertMessage,
+} from "../../../constants/stylesConstants";
 
 const OrderPlacement = ({
   fetchProductData,
@@ -30,6 +38,19 @@ const OrderPlacement = ({
     setAddedItemsforOrder,
     setSelectedTable,
   } = useAppContext();
+
+  const [popUpMessage, setPopUpMessage] = useState("");
+  const [isOrdered, setIsOrdered] = useState(false);
+  const [isOrderCancelled, setIsOrderCancelled] = useState(false);
+  const [isDrafted, setIsDrafted] = useState(false);
+
+  const showPopUp = (set) => {
+    set(true);
+    setTimeout(() => {
+      set(false);
+      setPopUpMessage("");
+    }, 1000);
+  };
 
   const emptyItemIndex = addedItemsForOrder.find(
     (item) => item.item === "" && item.qty === ""
@@ -105,10 +126,20 @@ const OrderPlacement = ({
     addOrder(newOrder);
     setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
     setSelectedTable(null);
+    setPopUpMessage("Successfully ordered!");
+    showPopUp(setIsOrdered);
   };
+
   const cancelOrder = () => {
     setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
     setSelectedTable(null);
+    setPopUpMessage("Order Canelled!");
+    showPopUp(setIsOrderCancelled);
+  };
+
+  const draftOrder = () => {
+    setPopUpMessage("Order Drafted!");
+    showPopUp(setIsDrafted);
   };
 
   const deleteListedItem = (productId) => {
@@ -248,28 +279,104 @@ const OrderPlacement = ({
           </View>
         </View>
         <View style={waiterStyles.orderActionButtons}>
-          <Pressable
-            style={[waiterStyles.orderButtons, waiterStyles.orderPlaceButton]}
-            onPress={() => submitOrderform()}
-          >
-            <Text style={waiterStyles.orderButtonsText}>Order</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => cancelOrder()}
-            style={[waiterStyles.orderButtons, waiterStyles.orderCancelButton]}
-          >
-            <Text style={waiterStyles.orderButtonsText}>Cancel</Text>
-          </Pressable>
-          <Pressable
-            style={[waiterStyles.orderButtons, waiterStyles.orderDraftButton]}
-          >
-            <Text
-              style={waiterStyles.orderButtonsText}
-              onPress={() => console.log(employee._id)}
+          <View style={{ position: "relative" }}>
+            <Pressable
+              style={[waiterStyles.orderButtons, waiterStyles.orderPlaceButton]}
+              onPress={() => submitOrderform()}
             >
-              Draft
-            </Text>
-          </Pressable>
+              <Text style={waiterStyles.orderButtonsText}>Order</Text>
+            </Pressable>
+            {isOrdered && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: -25,
+                  display: "flex",
+                  borderRadius: 5,
+                  zIndex: 1, // Set the maximum width to 400% of its parent
+                  width: "230%",
+                  backgroundColor: successAlertBackground,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: successAlertMessage,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {popUpMessage}
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={{ position: "relative" }}>
+            <Pressable
+              onPress={() => cancelOrder()}
+              style={[
+                waiterStyles.orderButtons,
+                waiterStyles.orderCancelButton,
+              ]}
+            >
+              <Text style={waiterStyles.orderButtonsText}>Cancel</Text>
+            </Pressable>
+            {isOrderCancelled && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: -30,
+                  left: "50%", // Center the text horizontally
+                  transform: [{ translateX: "-50%" }], // Move the text back half of its width to center it
+                  borderRadius: 5,
+                  zIndex: 1,
+                  width: "200%",
+                  backgroundColor: dangerAlertBackground,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: dangerAlertMessage,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {popUpMessage}
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={{ position: "relative" }}>
+            <Pressable
+              style={[waiterStyles.orderButtons, waiterStyles.orderDraftButton]}
+              onPress={draftOrder}
+            >
+              <Text style={waiterStyles.orderButtonsText}>Draft</Text>
+            </Pressable>
+            {isDrafted && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: -25,
+                  display: "flex",
+                  right: 0,
+                  borderRadius: 5,
+                  zIndex: 1, // Set the maximum width to 400% of its parent
+                  width: "200%",
+                  backgroundColor: warningAertBackground,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: warningAertMessage,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {popUpMessage}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
       </View>
     </View>
