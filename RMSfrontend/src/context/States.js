@@ -27,12 +27,6 @@ export const AppProvider = ({ children }) => {
       (addedItemsForOrder) => addedItemsForOrder.item === item
     );
 
-    // If the item already exists, show an alert message and return
-    if (existingItemIndex !== -1) {
-      alert("Item already added");
-      return;
-    }
-
     // Find if there's an empty item index in addedItemsForOrder
     const emptyItemIndex = addedItemsForOrder.findIndex(
       (addedItemsForOrder) =>
@@ -44,6 +38,11 @@ export const AppProvider = ({ children }) => {
       const addFirstItem = [{ item, qty, itemStatus }];
       setAddedItemsforOrder(addFirstItem);
       console.log("first item", addFirstItem);
+    } else if (existingItemIndex !== -1) {
+      const updatedOrderItems = [...addedItemsForOrder];
+      updatedOrderItems[existingItemIndex].qty = qty;
+      setAddedItemsforOrder(updatedOrderItems);
+      console.log("Item updated:", updatedOrderItems);
     } else {
       // If the item doesn't exist, add it to orderItems
       setAddedItemsforOrder([...addedItemsForOrder, { item, qty, itemStatus }]);

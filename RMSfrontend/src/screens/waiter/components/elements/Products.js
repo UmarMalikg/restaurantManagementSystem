@@ -20,7 +20,7 @@ const Products = ({
   decreaseQuantity,
   quantity,
 }) => {
-  const { employee, updateItemsForOrder } = useAppContext();
+  const { employee, updateItemsForOrder, addedItemsForOrder } = useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -40,7 +40,16 @@ const Products = ({
     }
   }, [selectedCategory, productData]);
 
-  const handleAddItemsToOrder = (item, qty) => {
+  const handleAddItemsToOrder = (item, qty, productId) => {
+    const existingItem = addedItemsForOrder.find(
+      (item) => item.item === productId
+    );
+
+    if (existingItem) {
+      alert(`Item already added`);
+      return;
+    }
+
     if (employee) {
       updateItemsForOrder(item, qty); // Call the updateOrderItems function with item and qty
     } else {
@@ -127,7 +136,11 @@ const Products = ({
             <View style={waiterStyles.productCartButton}>
               <Pressable
                 onPress={() =>
-                  handleAddItemsToOrder(item._id, quantity[item._id] || 1)
+                  handleAddItemsToOrder(
+                    item._id,
+                    quantity[item._id] || 1,
+                    item._id
+                  )
                 }
               >
                 <Text style={waiterStyles.colorWhite}>Add</Text>
