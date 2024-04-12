@@ -51,6 +51,7 @@ const KitchenOrders = ({
     fetchEmployeeData,
     changeItemsStatus,
   ]);
+
   const handleOrderChanged = () => {
     fetchOrderData(); // Wait for the data to be fetched
     console.log("Order data fetched successfully");

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import waiterStyles from "../styles/waiterStyles";
 import defaultStyles from "../../defaultStyles";
 
@@ -15,7 +15,14 @@ import { fetchEmployeeData } from "../../redux/actions/employeeActions";
 
 import { useNavigation } from "@react-navigation/native";
 
+import SocketContext from "../../context/socketContext";
+
 import { useAppContext } from "../../context/States";
+
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../socketConfig/socketFunctions";
 
 const Orders = ({
   fetchOrderData,
@@ -29,6 +36,7 @@ const Orders = ({
   employeeData,
 }) => {
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   const { employee } = useAppContext();
   // getting all the orders Data
@@ -39,14 +47,28 @@ const Orders = ({
     fetchEmployeeData();
   }, [fetchOrderData, fetchProductData, fetchTableData, fetchEmployeeData]);
 
+  const handleOrderChange = () => {
+    fetchOrderData();
+    console.log(`Order Data Fetched`);
+  };
+
+  useEffect(() => {
+    changeViaSocket(socket, "orderChanged", handleOrderChange);
+  }, [socket]);
+
   // function to display Orders for the current employee
   const displayOrders = () => {
     // Filter orders based on the logged-in employee's ID
     return orderData.filter((order) => order.orderTaker === employee._id);
   };
 
-  const changeItemsStatus = (orderId, itemId, newStatus) => {
-    return updateOrderItemStatus(orderId, itemId, newStatus);
+  const changeItemsStatus = async (orderId, itemId, newStatus) => {
+    try {
+      await updateOrderItemStatus(orderId, itemId, newStatus);
+      emitSocket(socket, "orderChanged");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

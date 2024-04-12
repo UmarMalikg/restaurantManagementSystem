@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Image, ScrollView, Text, Pressable, View } from "react-native";
 import waiterStyles from "../../styles/waiterStyles";
 import { useAppContext } from "../../../context/States";
@@ -16,6 +16,10 @@ import {
   warningAertMessage,
 } from "../../../constants/stylesConstants";
 
+import SocketContext from "../../../context/socketContext";
+
+import { emitSocket } from "../../../socketConfig/socketFunctions";
+
 const OrderPlacement = ({
   fetchProductData,
   fetchTableData,
@@ -29,6 +33,7 @@ const OrderPlacement = ({
   }, [fetchProductData, fetchTableData]);
 
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   const {
     addedItemsForOrder,
@@ -109,25 +114,30 @@ const OrderPlacement = ({
     employee ? navigation.navigate("Tables") : alert("Login first");
   };
 
-  const submitOrderform = () => {
-    if (emptyItemIndex) {
-      return alert("please select an item for taking the order");
-    } else if (!employee) {
-      return alert("Please Login first");
-    } else if (!selectedTable) {
-      return alert("please select the table before taking order");
+  const submitOrderform = async () => {
+    try {
+      if (emptyItemIndex) {
+        return alert("please select an item for taking the order");
+      } else if (!employee) {
+        return alert("Please Login first");
+      } else if (!selectedTable) {
+        return alert("please select the table before taking order");
+      }
+      // console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
+      const newOrder = {
+        tableNo: selectedTable,
+        orderItems: addedItemsForOrder,
+        orderTaker: employee._id,
+      };
+      await addOrder(newOrder);
+      setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
+      setSelectedTable(null);
+      setPopUpMessage("Successfully ordered!");
+      showPopUp(setIsOrdered);
+      emitSocket(socket, "orderChanged");
+    } catch (err) {
+      console.error(err);
     }
-    console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
-    const newOrder = {
-      tableNo: selectedTable,
-      orderItems: addedItemsForOrder,
-      orderTaker: employee._id,
-    };
-    addOrder(newOrder);
-    setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
-    setSelectedTable(null);
-    setPopUpMessage("Successfully ordered!");
-    showPopUp(setIsOrdered);
   };
 
   const cancelOrder = () => {
