@@ -4,7 +4,7 @@ import defaultStyles from "../defaultStyles";
 
 const Loader = () => {
   return (
-    <View style={defaultStyles.container}>
+    <View style={[defaultStyles.container, { backgroundColor: "transparent" }]}>
       <Text style={[defaultStyles.fWB, defaultStyles.fs25]}>Loading....</Text>
     </View>
   );

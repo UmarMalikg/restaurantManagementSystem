@@ -93,7 +93,7 @@ const Orders = ({
 
   if (isError) {
     <View style={defaultStyles.container}>
-      <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>Error</Text>
+      <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>Error...</Text>
     </View>;
   }
 
