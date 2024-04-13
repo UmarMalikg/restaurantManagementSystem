@@ -26,6 +26,7 @@ const Dashboard = ({
   isLoading,
   isError,
 }) => {
+  const socket = useContext(SocketContext);
   useEffect(() => {
     // Fetch total employees when the component mounts
     totalEmployees();
