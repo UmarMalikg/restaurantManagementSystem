@@ -83,6 +83,15 @@ const Orders = ({
       console.error(err);
     }
   };
+  if (displayOrders().length === 0) {
+    return (
+      <View style={defaultStyles.container}>
+        <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>
+          There's No Order...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={waiterStyles.orders}>
@@ -97,24 +106,48 @@ const Orders = ({
             >
               {/* single order */}
               <View>
-                <View>
-                  <Text>{order.status}</Text>
+                <View style={defaultStyles.rowSpacingFlex}>
+                  <View style={[defaultStyles.rowFlex]}>
+                    <View style={[defaultStyles.rowFlex, defaultStyles.mrgH15]}>
+                      <View>
+                        <Text style={[defaultStyles.fWB, defaultStyles.fs22]}>
+                          Table No:{" "}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={[defaultStyles.fs22]}>{table.name}</Text>
+                      </View>
+                    </View>
+                    <View style={[defaultStyles.rowFlex, defaultStyles.mrgH15]}>
+                      <View>
+                        <Text style={[defaultStyles.fWB, defaultStyles.fs22]}>
+                          Order Status:{" "}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={[defaultStyles.fs22]}>{order.status}</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={defaultStyles.mrgH15}>
+                    <Pressable
+                      onPress={() => {
+                        changeOrderStatus(order._id);
+                      }}
+                      style={[
+                        {
+                          padding: 10,
+                          borderRadius: 4,
+                          backgroundColor: "#0ff",
+                        },
+                        defaultStyles.mrgH20,
+                      ]}
+                    >
+                      <Text>Completed ?</Text>
+                    </Pressable>
+                  </View>
                 </View>
-                <View>
-                  <Text>{table.name}</Text>
-                </View>
-                <View>
-                  <Text>{order.status}</Text>
-                </View>
-                <View>
-                  <Pressable
-                    onPress={() => {
-                      changeOrderStatus(order._id);
-                    }}
-                  >
-                    <Text>Completed</Text>
-                  </Pressable>
-                </View>
+
                 <ScrollView showsHorizontalScrollIndicator={false}>
                   {/* single Item */}
                   <View style={waiterStyles.allItems}>
