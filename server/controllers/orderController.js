@@ -117,7 +117,7 @@ const updateOrderStatus = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
-    const newStatus = req.body.newStatus;
+    let newStatus = req.body.newStatus;
 
     const allItemsCompleted = order.orderItems.every(
       (item) => item.itemStatus === "Completed"
@@ -143,32 +143,40 @@ const updateOrderStatus = async (req, res) => {
         item.itemStatus === "Completed"
     );
 
-    if (allItemsCompleted) {
-      newStatus = "Completed";
-    } else if (allItemsDelivered) {
-      if (newStatus !== "Completed" || newStatus !== "Delivered") {
-        newStatus = "Delivered";
-      }
-    } else if (allItemsReady) {
-      if (
-        newStatus !== "Completed" ||
-        newStatus !== "Delivered" ||
-        newStatus !== "Ready"
-      ) {
-        newStatus = "Ready";
-      }
-    } else if (allItemsPreparing) {
-      if (
-        newStatus !== "Completed" ||
-        newStatus !== "Delivered" ||
-        newStatus !== "Ready" ||
-        newStatus !== "Preparing"
-      ) {
-        newStatus = "Preparing";
-      }
+    if (newStatus === "Completed" && !allItemsCompleted) {
+      order.orderItems.forEach((item) => {
+        item.itemStatus = "Completed";
+      });
+    } else if (newStatus === "Delivered" && !allItemsDelivered) {
+      order.orderItems.forEach((item) => {
+        if (item.itemStatus !== "Completed") {
+          item.itemStatus = "Delivered";
+        }
+      });
+    } else if (newStatus === "Ready" && !allItemsReady) {
+      order.orderItems.forEach((item) => {
+        if (
+          item.itemStatus !== "Completed" &&
+          item.itemStatus !== "Delivered"
+        ) {
+          item.itemStatus = "Ready";
+        }
+      });
+    } else if (newStatus === "Preparing" && !allItemsPreparing) {
+      order.orderItems.forEach((item) => {
+        if (
+          (item.itemStatus !== "Completed" &&
+            item.itemStatus !== "Delivered") ||
+          item.itemStatus === "Ready"
+        ) {
+          item.itemStatus = "Preparing";
+        }
+      });
     }
-    order.status = newStatus;
     await order.save();
+    return res
+      .status(200)
+      .json({ message: `Status Updated successfully`, order });
   } catch (err) {
     return res
       .status(500)

@@ -93,7 +93,7 @@ export const fetchOrderData = () => {
       const response = await axios.get(`${api}/orders`);
       dispatch({ type: GET_ORDERS_REQUEST_SUCCESS }); // Dispatching success action
       dispatch(setOrderData(response.data));
-      console.log("function works", response.data);
+      // console.log("function works", response.data);
     } catch (err) {
       console.error("Error fetching Order data:", err);
       dispatch({ type: GET_ORDERS_REQUEST_FAILURE, payload: err.message }); // Dispatching failure action with error message
@@ -174,14 +174,18 @@ export const updateOrderItemStatus = (orderId, itemId, newStatus) => {
     dispatch({ type: UPDATE_ORDER_ITEM_STATUS_REQUEST }); // Dispatching request action
     try {
       // Assuming there's an API endpoint to update the item status
+      console.log(`in action try`);
       const response = await axios.put(
         `${api}/orders/${orderId}/items/${itemId}/status`,
         { newStatus: newStatus }
       );
+      console.log(`after request in try`);
       dispatch({
         type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
         payload: { orderId, itemId, newStatus },
       }); // Dispatching success action with orderId, itemId, and newStatus
+
+      console.log(`after dispatch in try`);
     } catch (err) {
       console.error("Error updating item status:", err);
       dispatch({
