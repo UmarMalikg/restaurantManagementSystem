@@ -2,11 +2,15 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 import {
-  SET_TABLE_DATA,
+  GET_TABLE_REQUEST,
+  GET_TABLE_REQUEST_SUCCESS,
+  GET_TABLE_REQUEST_FAILURE,
   SET_RESERVED_TABLES,
   MADE_TABLE_AVAILABLE,
   MADE_TABLE_RESERVED,
   ADD_TABLE_REQUEST_SUCCESS,
+  ADD_TABLE_REQUEST,
+  ADD_TABLE_REQUEST_FAILURE,
   DELETE_TABLE_REQUEST,
   DELETE_TABLE_REQUEST_FAILURE,
   DELETE_TABLE_REQUEST_SUCCESS,
@@ -19,7 +23,7 @@ import {
 } from "../../constants/tableConstants";
 
 export const setTableData = (tableData) => ({
-  type: SET_TABLE_DATA,
+  type: GET_TABLE_REQUEST_SUCCESS,
   payload: tableData,
 });
 
@@ -76,26 +80,30 @@ export const updateTable = (tableId, updatedData) => {
 
 export const addTable = (table) => {
   return async (dispatch) => {
+    dispatch({ type: ADD_TABLE_REQUEST });
     try {
       const response = await axios.post(`${api}/tables`, table);
-      dispatch(addTableToStore(response.data));
       dispatch({ type: ADD_TABLE_REQUEST_SUCCESS });
+      dispatch(addTableToStore(response.data));
     } catch (err) {
       console.error("Error fetching table data:", err);
+      dispatch({ type: ADD_TABLE_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
 export const fetchTableData = () => {
   return async (dispatch) => {
+    dispatch({ type: GET_TABLE_REQUEST });
     try {
       const response = await axios.get(`${api}/tables`);
       const allTables = response.data;
       const reservedTables = allTables.filter((table) => table.isReserved);
-
+      dispatch({ type: GET_TABLE_REQUEST_SUCCESS });
       dispatch(setTableData(allTables));
       dispatch(setReservedTables(reservedTables));
-    } catch (error) {
-      console.error("Error fetching table data:", error);
+    } catch (err) {
+      console.error("Error fetching table data:", err);
+      dispatch({ type: GET_TABLE_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
@@ -152,8 +160,8 @@ export const deleteTable = (tableId) => {
       dispatch({ type: DELETE_TABLE_REQUEST_SUCCESS });
       dispatch(deletTableRequest(tableId));
     } catch (err) {
-      dispatch({ type: DELETE_TABLE_REQUEST_FAILURE });
       console.error("Error Deletint=g the table:", err);
+      dispatch({ type: DELETE_TABLE_REQUEST_FAILURE, payload: err.message });
     }
   };
 };

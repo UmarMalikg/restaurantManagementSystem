@@ -1,9 +1,9 @@
 import {
-  SET_PRODUCT_DATA,
-  ADD_PRODUCT,
-  DELETE_PRODUCT,
-  SET_TOTAL_PRODUCTS_COUNT,
-  SET_FILTERED_PRODUCT_DATA,
+  GET_PRODUCT_REQUEST_SUCCESS,
+  ADD_PRODUCT_REQUEST_SUCCESS,
+  DELETE_PRODUCT_REQUEST_SUCCESS,
+  TOTAL_PRODUCT_COUNT_REQUEST_SUCCESS,
+  GET_FILTERED_PREODUCT_REQUEST_SUCCESS,
   GET_PRODUCT_BY_ID_REQUEST_SUCCESS,
   UPDATE_PRODUCT_REQUEST_SUCCESS,
 } from "../../constants/productConstants";
@@ -17,29 +17,29 @@ const initialState = {
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_PRODUCT_DATA:
+    case GET_PRODUCT_REQUEST_SUCCESS:
       return {
         ...state,
         productData: action.payload,
       };
-    case SET_FILTERED_PRODUCT_DATA: // Add this case
+    case GET_FILTERED_PREODUCT_REQUEST_SUCCESS: // Add this case
       return {
         ...state,
         filteredProductData: action.payload,
       };
-    case ADD_PRODUCT:
+    case ADD_PRODUCT_REQUEST_SUCCESS:
       return {
         ...state,
         productData: [...state.productData, action.payload],
       };
-    case DELETE_PRODUCT:
+    case DELETE_PRODUCT_REQUEST_SUCCESS:
       return {
         ...state,
         productData: state.productData.filter(
           (product) => product._id !== action.payload
         ),
       };
-    case SET_TOTAL_PRODUCTS_COUNT:
+    case TOTAL_PRODUCT_COUNT_REQUEST_SUCCESS:
       return {
         ...state,
         totalProductsCount: action.payload,

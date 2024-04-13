@@ -3,10 +3,18 @@ import { api } from "../../api/api";
 
 // action types
 import {
-  SET_PRODUCT_DATA,
-  ADD_PRODUCT,
-  DELETE_PRODUCT,
-  SET_TOTAL_PRODUCTS_COUNT,
+  GET_PRODUCT_REQUEST,
+  GET_PRODUCT_REQUEST_SUCCESS,
+  GET_PRODUCT_REQUEST_FAILURE,
+  ADD_PRODUCT_REQUEST,
+  ADD_PRODUCT_REQUEST_SUCCESS,
+  ADD_PRODUCT_REQUEST_FAILURE,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_REQUEST_SUCCESS,
+  DELETE_PRODUCT_REQUEST_FAILURE,
+  TOTAL_PRODUCT_COUNT_REQUEST,
+  TOTAL_PRODUCT_COUNT_REQUEST_SUCCESS,
+  TOTAL_PRODUCT_COUNT_REQUEST_FAILURE,
   GET_PRODUCT_BY_ID_REQUEST,
   GET_PRODUCT_BY_ID_REQUEST_SUCCESS,
   GET_PRODUCT_BY_ID_REQUEST_FAILURE,
@@ -16,21 +24,21 @@ import {
 } from "../../constants/productConstants";
 
 export const setProductData = (productData) => ({
-  type: SET_PRODUCT_DATA,
+  type: GET_PRODUCT_REQUEST_SUCCESS,
   payload: productData,
 });
 // productActions.js
 export const addProductToStore = (productData) => ({
-  type: ADD_PRODUCT,
+  type: ADD_PRODUCT_REQUEST_SUCCESS,
   payload: productData,
 });
 export const deleteProductFromStore = (productId) => ({
-  type: DELETE_PRODUCT,
+  type: DELETE_PRODUCT_REQUEST_SUCCESS,
   payload: productId,
 });
 
 export const setProductsCount = (count) => ({
-  type: SET_TOTAL_PRODUCTS_COUNT,
+  type: TOTAL_PRODUCT_COUNT_REQUEST_SUCCESS,
   payload: count,
 });
 
@@ -46,6 +54,7 @@ export const updateProductRequest = (product) => ({
 
 export const updateProduct = (productId, updatedData) => {
   return async (dispatch) => {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST });
     try {
       const response = await axios.put(
         `${api}/products/${productId}`,
@@ -85,51 +94,63 @@ export const getProductById = (productId) => {
 
 export const fetchProductData = () => {
   return async (dispatch) => {
+    dispatch({ type: GET_PRODUCT_REQUEST });
     try {
       const response = await axios.get(`${api}/products`);
+      dispatch({ type: GET_PRODUCT_REQUEST_SUCCESS });
       dispatch(setProductData(response.data));
-    } catch (error) {
-      console.error("Error fetching Products data:", error);
+    } catch (err) {
+      console.error("Error fetching Products data:", err);
+      dispatch({ type: GET_PRODUCT_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
 
 export const addProduct = (productData) => {
   return async (dispatch) => {
-    console.log(productData);
+    dispatch({ type: ADD_PRODUCT_REQUEST });
     try {
       // Send a POST request to your server's API endpoint to add the product
       const response = await axios.post(`${api}/products`, productData);
-
+      dispatch({ type: ADD_PRODUCT_REQUEST_SUCCESS });
       dispatch(addProductToStore(response.data));
-    } catch (error) {
-      console.error("Error adding a product:", error);
+    } catch (err) {
+      console.error("Error adding a product:", err);
+      dispatch({ type: ADD_PRODUCT_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
 
 export const deleteProduct = (productId) => {
   return async (dispatch) => {
+    dispatch({ type: DELETE_PRODUCT_REQUEST });
     try {
       // Send a DELETE request to your server's API endpoint to delete the product
       await axios.delete(`${api}/products/${productId}`);
-
+      dispatch({ type: DELETE_PRODUCT_REQUEST_SUCCESS });
       // Dispatch the action to delete the product from the Redux store
       dispatch(deleteProductFromStore(productId));
-    } catch (error) {
-      console.error("Error deleting a product:", error);
+    } catch (err) {
+      console.error("Error deleting a product:", err);
+      dispatch({ type: DELETE_PRODUCT_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
 
 export const totalProducts = () => {
   return async (dispatch) => {
+    dispatch({ type: TOTAL_PRODUCT_COUNT_REQUEST });
     try {
       const response = await axios.get(`${api}/products`);
       const productCount = response.data.length; // Assuming the response is an array of employees
+      dispatch({ type: TOTAL_PRODUCT_COUNT_REQUEST_SUCCESS });
       dispatch(setProductsCount(productCount));
-    } catch (error) {
-      console.error("Error fetching Employees data:", error);
+    } catch (err) {
+      console.error("Error fetching Employees data:", err);
+      dispatch({
+        type: TOTAL_PRODUCT_COUNT_REQUEST_FAILURE,
+        payload: err.message,
+      });
     }
   };
 };

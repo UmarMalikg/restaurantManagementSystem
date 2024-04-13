@@ -58,7 +58,7 @@ export const updateCategory = (categoryId, updatedData) => {
       dispatch({ type: UPDATE_CATEGORY_REQUEST_SUCCESS }); // Dispatching success action
     } catch (err) {
       console.error("Error updating Categories data:", err);
-      dispatch({ type: UPDATE_CATEGORY_REQUEST_FAILURE });
+      dispatch({ type: UPDATE_CATEGORY_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
@@ -71,23 +71,23 @@ export const fetchCategoryData = () => {
       const response = await axios.get(`${api}/categories`);
       dispatch({ type: GET_CATEGORY_REQUEST_SUCCESS });
       dispatch(setCategoryData(response.data));
-    } catch (error) {
-      console.error("Error fetching Categories data:", error);
-      dispatch({ type: GET_CATEGORY_REQUEST_FAILURE });
+    } catch (err) {
+      console.error("Error fetching Categories data:", err);
+      dispatch({ type: GET_CATEGORY_REQUEST_FAILURE, payload: err.message });
     }
   };
 };
 
 export const addCategory = (category) => {
   return async (dispatch) => {
-    dispatch({ type: ADD_CATEGORY_REQUEST_SUCCESS });
+    dispatch({ type: ADD_CATEGORY_REQUEST });
     try {
       const response = await axios.post(`${api}/categories`, category);
       dispatch({ type: ADD_CATEGORY_REQUEST_SUCCESS });
       dispatch(addCategoryToStore(response.data));
     } catch (err) {
       console.error(err);
-      dispatch({ type: ADD_CATEGORY_REQUEST_FAILURE });
+      dispatch({ type: ADD_CATEGORY_REQUEST_FAILURE, payload: err.message });
       throw err;
     }
   };

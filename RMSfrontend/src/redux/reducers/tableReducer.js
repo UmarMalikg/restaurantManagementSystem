@@ -1,5 +1,5 @@
 import {
-  SET_TABLE_DATA,
+  GET_TABLE_REQUEST_SUCCESS,
   SET_RESERVED_TABLES,
   MADE_TABLE_RESERVED,
   MADE_TABLE_AVAILABLE,
@@ -17,7 +17,7 @@ const initialState = {
 
 const tableReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_TABLE_DATA:
+    case GET_TABLE_REQUEST_SUCCESS:
       return {
         ...state,
         tableData: action.payload,

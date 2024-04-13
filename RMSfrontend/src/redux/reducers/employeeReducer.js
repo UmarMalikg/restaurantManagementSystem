@@ -1,8 +1,8 @@
 import {
-  SET_EMPLOYEE_DATA,
-  ADD_EMPLOYEE,
-  DELETE_EMPLOYEE,
-  SET_TOTAL_EMPLOYEES_COUNT,
+  GET_EMPLOYEE_REQUEST_SUCCESS,
+  ADD_EMPLOYEE_REQUEST_SUCCESS,
+  DELETE_EMPLOYEE_REQUEST_SUCCESS,
+  TOTAL_EMPLOYEE_COUNT_REQUEST_SUCCESS,
   GET_EMPLOYEE_BY_ID_REQUEST_SUCCESS,
   UPDATE_EMPLOYEE_REQUEST_SUCCESS,
 } from "../../constants/employeeConstants";
@@ -14,24 +14,24 @@ const initialState = {
 
 const employeeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_EMPLOYEE_DATA:
+    case GET_EMPLOYEE_REQUEST_SUCCESS:
       return {
         ...state,
         employeeData: action.payload,
       };
-    case ADD_EMPLOYEE:
+    case ADD_EMPLOYEE_REQUEST_SUCCESS:
       return {
         ...state,
         employeeData: [...state.employeeData, action.payload],
       };
-    case DELETE_EMPLOYEE:
+    case DELETE_EMPLOYEE_REQUEST_SUCCESS:
       return {
         ...state,
         employeeData: state.employeeData.filter(
           (employee) => employee._id !== action.payload
         ),
       };
-    case SET_TOTAL_EMPLOYEES_COUNT:
+    case TOTAL_EMPLOYEE_COUNT_REQUEST_SUCCESS:
       return {
         ...state,
         totalEmployeesCount: action.payload,
