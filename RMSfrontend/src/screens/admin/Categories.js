@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -9,11 +9,35 @@ import {
   deleteCategory,
 } from "../../redux/actions/categoryActions";
 
-const Categories = ({ fetchCategoryData, categoryData, deleteCategory }) => {
+import SocketContext from "../../context/socketContext";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../socketConfig/socketFunctions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+
+const Categories = ({
+  fetchCategoryData,
+  categoryData,
+  deleteCategory,
+  isLoading,
+  isError,
+}) => {
   useEffect(() => {
     fetchCategoryData();
   }, [fetchCategoryData]);
+
+  const handleCategoryChanged = () => {
+    fetchFloorData(); // Wait for the data to be fetched
+    console.log("Category data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "categoryChanged", handleCategoryChanged);
+  }, [socket]);
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   const [searchText, setSearchText] = useState("");
 
@@ -24,6 +48,23 @@ const Categories = ({ fetchCategoryData, categoryData, deleteCategory }) => {
   const goToUpdate = (categoryId) => {
     navigation.navigate("Update Category", { categoryId });
   };
+
+  const deleteACategory = async (categoryId) => {
+    try {
+      await deleteCategory(categoryId);
+      emitSocket(socket, "categoryChanged");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <View style={adminStyles.theScreen}>
@@ -75,7 +116,7 @@ const Categories = ({ fetchCategoryData, categoryData, deleteCategory }) => {
                     >
                       <Text>edit</Text>
                     </Pressable>
-                    <Pressable onPress={() => deleteCategory(category._id)}>
+                    <Pressable onPress={() => deleteACategory(category._id)}>
                       <Text>delete</Text>
                     </Pressable>
                   </View>
@@ -92,6 +133,8 @@ const Categories = ({ fetchCategoryData, categoryData, deleteCategory }) => {
 const mapStateToProps = (state) => {
   return {
     categoryData: state.categories.categoryData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 

@@ -197,6 +197,8 @@ const mapStateToProps = (state) => {
   return {
     floorData: state.floors.floorData,
     selectedTable: state.tables.selectedTable,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
