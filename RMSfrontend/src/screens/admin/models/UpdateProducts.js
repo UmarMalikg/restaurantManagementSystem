@@ -17,7 +17,10 @@ import { fetchCategoryData } from "../../../redux/actions/categoryActions";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/adminStyles";
 import SocketContext from "../../../context/socketContext";
-import { emitSocket } from "../../../socketConfig/socketFunctions";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../../socketConfig/socketFunctions";
 
 import Loader from "../../Loader";
 import ErrorPage from "../../ErrorPage";

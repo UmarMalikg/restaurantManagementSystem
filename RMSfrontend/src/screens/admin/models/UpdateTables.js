@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,15 @@ import adminStyles from "../../styles/adminStyles";
 import { updateTable, getTableById } from "../../../redux/actions/tableActions";
 import { fetchFloorData } from "../../../redux/actions/floorActions";
 
+import SocketContext from "../../../context/socketContext";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../../socketConfig/socketFunctions";
+
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
 const UpdateTables = ({
   route,
   fetchFloorData,
@@ -20,9 +29,12 @@ const UpdateTables = ({
   selectedTable,
   getTableById,
   updateTable,
+  isLoading,
+  isError,
 }) => {
   const { tableId } = route.params;
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
@@ -35,6 +47,14 @@ const UpdateTables = ({
     // Fetch category data when the component mounts
     fetchFloorData();
   }, [fetchFloorData]);
+
+  const handleFloorChanged = () => {
+    fetchFloorData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "floorChanged", handleFloorChanged);
+  }, [socket]);
 
   useEffect(() => {
     if (tableId) {
@@ -64,41 +84,54 @@ const UpdateTables = ({
   };
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
-    if (!formData.name || !formData.floor) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
+    try {
+      if (!formData.name || !formData.floor) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
+      if (formData.seats < 1) {
+        console.log("seats can't be less than 1");
+        alert("seats can't be less than 1");
+        return;
+      }
+
+      // Pass an object with properties name, description, img, and price to addProduct
+      const tableData = {
+        name: formData.name,
+        floor: formData.floor,
+        seats: formData.seats,
+      };
+
+      // Dispatch the addProduct action
+      await updateTable(tableId, tableData);
+      console.log("updated", tableData);
+
+      // Optionally, you can reset the form after submission
+      setFormData({
+        name: "",
+        floor: "",
+        seats: 4,
+      });
+      emitSocket(socket, "tableChanged");
+      navigation.navigate("Tables");
+    } catch (err) {
+      console.error(err);
     }
-    if (formData.seats < 1) {
-      console.log("seats can't be less than 1");
-      alert("seats can't be less than 1");
-      return;
-    }
-
-    // Pass an object with properties name, description, img, and price to addProduct
-    const tableData = {
-      name: formData.name,
-      floor: formData.floor,
-      seats: formData.seats,
-    };
-
-    // Dispatch the addProduct action
-    updateTable(tableId, tableData);
-    console.log("updated", tableData);
-    navigation.navigate("Tables");
-
-    // Optionally, you can reset the form after submission
-    setFormData({
-      name: "",
-      floor: "",
-      seats: 4,
-    });
   };
 
   if (!selectedTable) {
     return <Text>Loading...</Text>;
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
   }
 
   return (
