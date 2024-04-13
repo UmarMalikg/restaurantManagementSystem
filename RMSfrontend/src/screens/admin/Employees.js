@@ -17,10 +17,7 @@ import {
 } from "../../redux/actions/employeeActions";
 
 import SocketContext from "../../context/socketContext";
-import {
-  emitSocket,
-  changeViaSocket,
-} from "../../socketConfig/socketFunctions";
+import { changeViaSocket } from "../../socketConfig/socketFunctions";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
@@ -37,7 +34,7 @@ const Employees = ({
   }, [fetchEmployeeData]);
 
   const handleEmployeeChanged = () => {
-    employeeData(); // Wait for the data to be fetched
+    fetchEmployeeData(); // Wait for the data to be fetched
     console.log("Floor data fetched successfully");
   };
   useEffect(() => {
