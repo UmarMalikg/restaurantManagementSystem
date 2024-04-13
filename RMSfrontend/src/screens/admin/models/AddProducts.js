@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -15,8 +15,18 @@ import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/adminStyles";
 import * as ImagePicker from "expo-image-picker";
 
+import SocketContext from "../../../context/socketContext";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../../socketConfig/socketFunctions";
+
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
 const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
   const [image, setImage] = useState(null);
 
   // defining the fields required for the submission of form
@@ -65,42 +75,56 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
   };
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
-    if (
-      !formData.name ||
-      !formData.description ||
-      !formData.img ||
-      !formData.price
-    ) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
+    try {
+      if (
+        !formData.name ||
+        !formData.description ||
+        !formData.img ||
+        !formData.price
+      ) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
+
+      // Pass an object with properties name, description, img, and price to addProduct
+      const productData = {
+        name: formData.name,
+        description: formData.description,
+        img: image,
+        price: formData.price,
+        category: formData.category,
+        qty: formData.qty,
+      };
+
+      // Dispatch the addProduct action
+      await addProduct(productData);
+
+      // Optionally, you can reset the form after submission
+      setFormData({
+        name: "",
+        description: "",
+        img: null,
+        price: "",
+        category: "",
+        qty: "",
+      });
+
+      emitSocket(socket, "productChanged");
+    } catch (err) {
+      console.error(err);
     }
-
-    // Pass an object with properties name, description, img, and price to addProduct
-    const productData = {
-      name: formData.name,
-      description: formData.description,
-      img: image,
-      price: formData.price,
-      category: formData.category,
-      qty: formData.qty,
-    };
-
-    // Dispatch the addProduct action
-    addProduct(productData);
-
-    // Optionally, you can reset the form after submission
-    setFormData({
-      name: "",
-      description: "",
-      img: null,
-      price: "",
-      category: "",
-      qty: "",
-    });
   };
+
+  const handleCategoryChanged = () => {
+    fetchCategoryData(); // Wait for the data to be fetched
+    console.log("Category data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "categoryChanged", handleCategoryChanged);
+  }, [socket]);
 
   return (
     <View style={adminStyles.model}>
