@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -18,8 +18,15 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 let isWeb = Platform.OS === "web";
 import * as ImagePicker from "expo-image-picker";
 
-const AddEmployee = ({ addEmployee }) => {
+import SocketContext from "../../../context/socketContext";
+import { emitSocket } from "../../../socketConfig/socketFunctions";
+
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
+const AddEmployee = ({ addEmployee, isLoading, isError }) => {
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   const [image, setImage] = useState(null);
 
@@ -135,91 +142,105 @@ const AddEmployee = ({ addEmployee }) => {
   console.log(image);
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
     // console.log(formData.photo);
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.dateOfBirth ||
-      !formData.gender ||
-      !formData.nationalID ||
-      !formData.pswrd ||
-      !formData.photo ||
-      !formData.salary ||
-      !formData.userName
-    ) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
-    }
+    try {
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.dateOfBirth ||
+        !formData.gender ||
+        !formData.nationalID ||
+        !formData.pswrd ||
+        !formData.photo ||
+        !formData.salary ||
+        !formData.userName
+      ) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
 
-    // Pass an object with properties for each employee field to addEmployee
-    const employeeData = {
-      personalInfo: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        dateOfBirth: formData.dateOfBirth,
-        gender: formData.gender,
-        nationalID: formData.nationalID,
-        email: formData.email,
-        phone: formData.phone,
-      },
-      pswrd: formData.pswrd,
-      photo: image,
-      salary: formData.salary,
-      userName: formData.userName,
-      address: {
-        street: formData.street,
-        city: formData.city,
-        state: formData.state,
-        zipCode: formData.zipCode,
-        country: formData.country,
-      },
-      position: formData.position,
-      isAdmin: formData.isAdmin,
-      isWaiter: formData.isWaiter,
-      isCachier: formData.isCachier,
-      isKitchenManager: formData.isKitchenManager,
-      isReceptionist: formData.isReceptionist,
-      joiningDate: formData.joiningDate,
-      emergencyContact: formData.emergencyContact,
-    };
+      // Pass an object with properties for each employee field to addEmployee
+      const employeeData = {
+        personalInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          dateOfBirth: formData.dateOfBirth,
+          gender: formData.gender,
+          nationalID: formData.nationalID,
+          email: formData.email,
+          phone: formData.phone,
+        },
+        pswrd: formData.pswrd,
+        photo: image,
+        salary: formData.salary,
+        userName: formData.userName,
+        address: {
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        position: formData.position,
+        isAdmin: formData.isAdmin,
+        isWaiter: formData.isWaiter,
+        isCachier: formData.isCachier,
+        isKitchenManager: formData.isKitchenManager,
+        isReceptionist: formData.isReceptionist,
+        joiningDate: formData.joiningDate,
+        emergencyContact: formData.emergencyContact,
+      };
 
-    // Dispatch the addEmployee action
-    addEmployee(employeeData);
+      // Dispatch the addEmployee action
+      await addEmployee(employeeData);
 
-    // Optionally, you can reset the form after submission
-    setFormData({
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      gender: "male",
-      nationalID: "",
-      pswrd: "",
-      photo: null,
-      salary: "",
-      userName: "",
-      street: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-      email: "",
-      phone: "",
-      isAdmin: false,
-      isWaiter: false,
-      isCachier: false,
-      isKitchenManager: false,
-      isReceptionist: false,
-      joiningDate: "",
-      emergencyContact: {
-        name: "",
-        relationship: "",
+      // Optionally, you can reset the form after submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        gender: "male",
+        nationalID: "",
+        pswrd: "",
+        photo: null,
+        salary: "",
+        userName: "",
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        email: "",
         phone: "",
-      },
-    });
+        isAdmin: false,
+        isWaiter: false,
+        isCachier: false,
+        isKitchenManager: false,
+        isReceptionist: false,
+        joiningDate: "",
+        emergencyContact: {
+          name: "",
+          relationship: "",
+          phone: "",
+        },
+      });
+
+      emitSocket(socket, "employeeChanged");
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   //Component
   return (
@@ -538,9 +559,14 @@ const AddEmployee = ({ addEmployee }) => {
     </View>
   );
 };
-
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
+  };
+};
 const mapDispatchToProps = {
   addEmployee,
 };
 
-export default connect(null, mapDispatchToProps)(AddEmployee);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEmployee);
