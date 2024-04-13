@@ -66,6 +66,26 @@ io.on("connection", (socket) => {
     console.log("Order added event received");
     io.emit("orderChanged");
   });
+  socket.on("employeeChanged", () => {
+    console.log("Employee added event received");
+    io.emit("employeeChanged");
+  });
+  socket.on("tableChanged", () => {
+    console.log("Table added event received");
+    io.emit("tableChanged");
+  });
+  socket.on("productChanged", () => {
+    console.log("Product added event received");
+    io.emit("productChanged");
+  });
+  socket.on("floorChanged", () => {
+    console.log("Floor added event received");
+    io.emit("floorChanged");
+  });
+  socket.on("categoryChanged", () => {
+    console.log("Category added event received");
+    io.emit("categoryChanged");
+  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
