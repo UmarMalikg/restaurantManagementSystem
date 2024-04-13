@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,11 @@ import {
 import { fetchCategoryData } from "../../../redux/actions/categoryActions";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/adminStyles";
+import SocketContext from "../../../context/socketContext";
+import { emitSocket } from "../../../socketConfig/socketFunctions";
+
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
 
 const UpdateProducts = ({
   route,
@@ -24,10 +29,12 @@ const UpdateProducts = ({
   getProductById,
   selectedProduct,
   updateProduct,
+  isLoading,
+  isError,
 }) => {
   const { productId } = route.params;
   const navigation = useNavigation();
-
+  const socket = useContext(SocketContext);
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
     name: "",
@@ -43,6 +50,14 @@ const UpdateProducts = ({
     // Fetch category data when the component mounts
     fetchCategoryData();
   }, [fetchCategoryData]);
+
+  const handleCategoryChanged = () => {
+    fetchCategoryData(); // Wait for the data to be fetched
+    console.log("Category data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "categoryChanged", handleCategoryChanged);
+  }, [socket]);
 
   useEffect(() => {
     if (productId) {
@@ -88,44 +103,57 @@ const UpdateProducts = ({
   };
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
-    if (
-      !formData.name ||
-      !formData.description ||
-      !formData.img ||
-      !formData.price
-    ) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
+    try {
+      if (
+        !formData.name ||
+        !formData.description ||
+        !formData.img ||
+        !formData.price
+      ) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
+
+      // Pass an object with properties name, description, img, and price to addProduct
+      const productData = {
+        name: formData.name,
+        description: formData.description,
+        img: formData.img,
+        price: formData.price,
+        category: formData.category,
+        qty: formData.qty,
+      };
+
+      // Dispatch the addProduct action
+      await updateProduct(productId, productData);
+      console.log("updated");
+
+      // Optionally, you can reset the form after submission
+      setFormData({
+        name: "",
+        description: "",
+        img: null,
+        price: "",
+        category: "",
+        qty: "",
+      });
+      emitSocket(socket, "productChanged");
+      navigation.navigate("Products");
+    } catch (err) {
+      console.error(err);
     }
-
-    // Pass an object with properties name, description, img, and price to addProduct
-    const productData = {
-      name: formData.name,
-      description: formData.description,
-      img: formData.img,
-      price: formData.price,
-      category: formData.category,
-      qty: formData.qty,
-    };
-
-    // Dispatch the addProduct action
-    updateProduct(productId, productData);
-    console.log("updated");
-
-    // Optionally, you can reset the form after submission
-    setFormData({
-      name: "",
-      description: "",
-      img: null,
-      price: "",
-      category: "",
-      qty: "",
-    });
-    navigation.navigate("Products");
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <View style={adminStyles.model}>
@@ -234,6 +262,8 @@ const mapStateToProps = (state) => {
   return {
     categoryData: state.categories.categoryData,
     selectedProduct: state.products.selectedProduct,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
