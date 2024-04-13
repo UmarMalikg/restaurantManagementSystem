@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import defaultStyles from "../defaultStyles";
 
-const Error = () => {
+const ErrorPage = () => {
   return (
     <View>
       <View
@@ -14,4 +14,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorPage;

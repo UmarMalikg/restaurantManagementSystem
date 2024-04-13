@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../styles/adminStyles";
 import { addCategory } from "../../../redux/actions/categoryActions";
+import SocketContext from "../../../context/socketContext";
+import { emitSocket } from "../../../socketConfig/socketFunctions";
 
-const AddCategories = ({ addCategory }) => {
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
+const AddCategories = ({ addCategory, isLoading, isError }) => {
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
@@ -27,27 +33,37 @@ const AddCategories = ({ addCategory }) => {
   // defining the field that handles the change of selection of image
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
-    if (!formData.name) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
+    try {
+      if (!formData.name) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
+      // Pass an object with properties name, description, img, and price to addProduct
+      const categoryData = {
+        name: formData.name,
+      };
+      // Dispatch the addProduct action
+      await addCategory(categoryData);
+      // Optionally, you can reset the form after submission
+      setFormData({
+        name: "",
+      });
+      emitSocket(socket, "categoryChanged");
+    } catch (err) {
+      console.error(err);
     }
-
-    // Pass an object with properties name, description, img, and price to addProduct
-    const categoryData = {
-      name: formData.name,
-    };
-
-    // Dispatch the addProduct action
-    addCategory(categoryData);
-
-    // Optionally, you can reset the form after submission
-    setFormData({
-      name: "",
-    });
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <View style={adminStyles.model}>
@@ -81,9 +97,14 @@ const AddCategories = ({ addCategory }) => {
     </View>
   );
 };
-
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
+  };
+};
 const mapDispatchToProps = {
   addCategory,
 };
 
-export default connect(null, mapDispatchToProps)(AddCategories);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCategories);
