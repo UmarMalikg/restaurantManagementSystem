@@ -7,7 +7,7 @@ import {
   Picker,
   Image,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 import adminStyles from "../styles/adminStyles";
 import cachierStyles from "../styles/cachierStyles";
@@ -19,6 +19,12 @@ import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
 
+import SocketContext from "../../context/socketContext";
+import { changeViaSocket } from "../../socketConfig/socketFunctions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+
 const CachierOrders = ({
   fetchOrderData,
   orderData,
@@ -28,8 +34,11 @@ const CachierOrders = ({
   tableData,
   fetchEmployeeData,
   employeeData,
+  isLoading,
+  isError,
 }) => {
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
   // getting all the orders Data
   useEffect(() => {
     fetchOrderData();
@@ -37,6 +46,28 @@ const CachierOrders = ({
     fetchTableData();
     fetchEmployeeData();
   }, [fetchOrderData, fetchProductData, fetchTableData, fetchEmployeeData]);
+  const handleOrderChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleProductChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleTableChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleEmployeeChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "employeeChanged", handleEmployeeChanged);
+    changeViaSocket(socket, "orderChanged", handleOrderChanged);
+    changeViaSocket(socket, "productChanged", handleProductChanged);
+    changeViaSocket(socket, "tableChanged", handleTableChanged);
+  }, [socket]);
 
   const [page, setPage] = useState(1); // Current page number
   const [itemsPerPage, setItemsPerPage] = useState(20); // Number of items per page
@@ -79,7 +110,13 @@ const CachierOrders = ({
 
   // logic for searching the orders
   // const [searchText, setSearchText] = useState("");
+  if (isLoading) {
+    return <Loader />;
+  }
 
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <View style={cachierStyles.screen}>
       <View>
@@ -418,6 +455,8 @@ const mapStateToProps = (state) => {
     productData: state.products.productData,
     tableData: state.tables.tableData,
     employeeData: state.employees.employeeData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
