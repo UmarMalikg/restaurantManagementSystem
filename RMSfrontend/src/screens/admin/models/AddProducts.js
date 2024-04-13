@@ -45,6 +45,14 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
     fetchCategoryData();
   }, [fetchCategoryData]);
 
+  const handleCategoryChanged = () => {
+    fetchCategoryData(); // Wait for the data to be fetched
+    console.log("Category data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "categoryChanged", handleCategoryChanged);
+  }, [socket]);
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -117,14 +125,6 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
       console.error(err);
     }
   };
-
-  const handleCategoryChanged = () => {
-    fetchCategoryData(); // Wait for the data to be fetched
-    console.log("Category data fetched successfully");
-  };
-  useEffect(() => {
-    changeViaSocket(socket, "categoryChanged", handleCategoryChanged);
-  }, [socket]);
 
   return (
     <View style={adminStyles.model}>
