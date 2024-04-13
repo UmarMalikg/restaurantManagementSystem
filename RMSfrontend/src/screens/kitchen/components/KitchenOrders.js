@@ -23,6 +23,9 @@ import {
   changeViaSocket,
 } from "../../../socketConfig/socketFunctions";
 
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
 const KitchenOrders = ({
   fetchOrderData,
   updateOrderItemStatus,
@@ -34,6 +37,8 @@ const KitchenOrders = ({
   tableData,
   fetchEmployeeData,
   employeeData,
+  isLoading,
+  isError,
 }) => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
@@ -54,10 +59,25 @@ const KitchenOrders = ({
 
   const handleOrderChanged = () => {
     fetchOrderData(); // Wait for the data to be fetched
-    console.log("Order data fetched successfully");
+    console.log("Floor data fetched successfully");
+  };
+  const handleProductChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleTableChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleEmployeeChanged = () => {
+    fetchOrderData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
   };
   useEffect(() => {
+    changeViaSocket(socket, "employeeChanged", handleEmployeeChanged);
     changeViaSocket(socket, "orderChanged", handleOrderChanged);
+    changeViaSocket(socket, "productChanged", handleProductChanged);
+    changeViaSocket(socket, "tableChanged", handleTableChanged);
   }, [socket]);
 
   // function to display Orders for the current employee
@@ -75,6 +95,13 @@ const KitchenOrders = ({
     }
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <View style={waiterStyles.orders}>
       {/* all orders */}
@@ -239,6 +266,8 @@ const mapStateToProps = (state) => {
     productData: state.products.productData,
     tableData: state.tables.tableData,
     employeeData: state.employees.employeeData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
