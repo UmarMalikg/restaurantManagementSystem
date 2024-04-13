@@ -16,10 +16,7 @@ import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
 
 import SocketContext from "../../context/socketContext";
-import {
-  emitSocket,
-  changeViaSocket,
-} from "../../socketConfig/socketFunctions";
+import { changeViaSocket } from "../../socketConfig/socketFunctions";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
@@ -36,6 +33,7 @@ const OrderLists = ({
   isLoading,
   isError,
 }) => {
+  const socket = useContext(SocketContext);
   // getting all the orders Data
   useEffect(() => {
     fetchOrderData();
