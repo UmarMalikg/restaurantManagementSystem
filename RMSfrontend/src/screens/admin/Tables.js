@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -7,18 +7,39 @@ import defaultStyles from "../../defaultStyles";
 import { fetchTableData, deleteTable } from "../../redux/actions/tableActions";
 import { fetchFloorData } from "../../redux/actions/floorActions";
 
+import SocketContext from "../../context/socketContext";
+import { changeViaSocket } from "../../socketConfig/socketFunctions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+
 const Tables = ({
   fetchTableData,
   tableData,
   fetchFloorData,
   floorData,
   deleteTable,
+  isLoading,
+  isError,
 }) => {
   useEffect(() => {
     fetchTableData();
     fetchFloorData();
   }, [fetchTableData, fetchFloorData]);
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
+  const handleTableChanged = () => {
+    fetchTableData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleFloorChanged = () => {
+    fetchFloorData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "productChanged", handleTableChanged);
+    changeViaSocket(socket, "categoryChanged", handleFloorChanged);
+  }, [socket]);
 
   const [searchText, setSearchText] = useState("");
 
@@ -32,7 +53,13 @@ const Tables = ({
   const goToUpdate = (tableId) => {
     navigation.navigate("Update Table", { tableId });
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -104,6 +131,8 @@ const mapStateToProps = (state) => {
   return {
     tableData: state.tables.tableData,
     floorData: state.floors.floorData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
