@@ -1,5 +1,5 @@
 import { ScrollView, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import adminStyles from "../styles/adminStyles";
 import RecordOverview from "./components/RecordOverview";
 import SalesDetail from "./components/SalesDetail";
@@ -10,6 +10,12 @@ import { totalEmployees } from "../../redux/actions/employeeActions";
 import { totalProducts } from "../../redux/actions/productAction";
 import { totalSales } from "../../redux/actions/orderActions";
 
+import SocketContext from "../../context/socketContext";
+import { changeViaSocket } from "../../socketConfig/socketFunctions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+
 const Dashboard = ({
   totalEmployees,
   totalEmployeesCount,
@@ -17,6 +23,8 @@ const Dashboard = ({
   totalProductsCount,
   totalSales,
   totalSalesCount,
+  isLoading,
+  isError,
 }) => {
   useEffect(() => {
     // Fetch total employees when the component mounts
@@ -24,6 +32,33 @@ const Dashboard = ({
     totalProducts();
     totalSales();
   }, [totalEmployees, totalProducts, totalSales]);
+
+  const handleEmployeeChanged = () => {
+    totalEmployees(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleProductChanged = () => {
+    totalProducts(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  const handleOrderChanged = () => {
+    totalSales(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "employeeChanged", handleEmployeeChanged);
+    changeViaSocket(socket, "productChanged", handleProductChanged);
+    changeViaSocket(socket, "orderChanged", handleOrderChanged);
+  }, [socket]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
+
   return (
     <View style={adminStyles.theScreen}>
       <ScrollView>
@@ -65,6 +100,8 @@ const mapStateToProps = (state) => ({
   totalEmployeesCount: state.employees.totalEmployeesCount, // Map totalEmployeesCount from Redux state to props
   totalProductsCount: state.products.totalProductsCount,
   totalSalesCount: state.orders.totalSalesCount,
+  isLoading: state.loadingErrors.isLoading,
+  isError: state.loadingErrors.isError,
 });
 const mapDispatchToProps = {
   totalEmployees,
