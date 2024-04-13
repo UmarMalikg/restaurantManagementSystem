@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import adminStyles from "../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import { Table, Row } from "react-native-table-component";
@@ -16,12 +16,36 @@ import {
   deleteEmployee,
 } from "../../redux/actions/employeeActions";
 
-const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
+import SocketContext from "../../context/socketContext";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../socketConfig/socketFunctions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+
+const Employees = ({
+  fetchEmployeeData,
+  employeeData,
+  deleteEmployee,
+  isLoading,
+  isError,
+}) => {
   useEffect(() => {
     fetchEmployeeData();
   }, [fetchEmployeeData]);
 
+  const handleEmployeeChanged = () => {
+    employeeData(); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "employeeChanged", handleEmployeeChanged);
+  }, [socket]);
+
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
 
   const [searchText, setSearchText] = useState("");
   const filteredEmployeeData = employeeData.filter((employee) =>
@@ -88,6 +112,15 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
       style={index % 2 === 0 ? adminStyles.evenRow : adminStyles.oddRow}
     />
   ));
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
+
   return (
     <View style={adminStyles.theScreen}>
       <View style={adminStyles.dataViewerHeader}>
@@ -130,6 +163,8 @@ const Employees = ({ fetchEmployeeData, employeeData, deleteEmployee }) => {
 const mapStateToProps = (state) => {
   return {
     employeeData: state.employees.employeeData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
