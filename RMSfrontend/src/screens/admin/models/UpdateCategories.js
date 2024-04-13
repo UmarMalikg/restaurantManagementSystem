@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -8,14 +8,23 @@ import {
   getCategoryById,
 } from "../../../redux/actions/categoryActions";
 
+import SocketContext from "../../../context/socketContext";
+import { emitSocket } from "../../../socketConfig/socketFunctions";
+
+import Loader from "../../Loader";
+import ErrorPage from "../../ErrorPage";
+
 const UpdateCategories = ({
   route,
   updateCategory,
   selectedCategory,
   getCategoryById,
+  isLoading,
+  isError,
 }) => {
   const { categoryId } = route.params;
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
   // defining the fields required for the submission of form
   const [formData, setFormData] = useState({
     name: "",
@@ -51,33 +60,46 @@ const UpdateCategories = ({
   // defining the field that handles the change of selection of image
 
   // defining the for submission function
-  const submitForm = () => {
+  const submitForm = async () => {
     // Check if all required fields are filled
-    if (!formData.name) {
-      console.log("Please fill in all fields");
-      alert("Please fill in all required fields");
-      return;
+    try {
+      if (!formData.name) {
+        console.log("Please fill in all fields");
+        alert("Please fill in all required fields");
+        return;
+      }
+
+      // Pass an object with properties name, description, img, and price to addProduct
+      const categoryData = {
+        name: formData.name,
+      };
+
+      // Dispatch the addProduct action
+      await updateCategory(categoryId, categoryData);
+      console.log("updated");
+      navigation.navigate("Categories");
+
+      // Optionally, you can reset the form after submission
+      setFormData({
+        name: "",
+      });
+
+      emitSocket(socket, "categoryChanged");
+    } catch (err) {
+      console.error(err);
     }
-
-    // Pass an object with properties name, description, img, and price to addProduct
-    const categoryData = {
-      name: formData.name,
-    };
-
-    // Dispatch the addProduct action
-    updateCategory(categoryId, categoryData);
-    console.log("updated");
-    navigation.navigate("Categories");
-
-    // Optionally, you can reset the form after submission
-    setFormData({
-      name: "",
-    });
   };
 
   if (!selectedCategory) {
     // Render loading indicator or placeholder while data is being fetched
     return <Text>Loading...</Text>;
+  }
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
   }
   return (
     <View style={adminStyles.model}>
@@ -115,6 +137,8 @@ const UpdateCategories = ({
 const mapStateToProps = (state) => {
   return {
     selectedCategory: state.categories.selectedCategory,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 const mapDispatchToProps = {
