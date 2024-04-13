@@ -1,11 +1,14 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import cachierStyles from "../styles/cachierStyles";
 import defaultStyles from "../../defaultStyles";
 import { connect } from "react-redux";
 import { getOrderById } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
+
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
 
 const PrintSlip = ({
   route,
@@ -15,6 +18,8 @@ const PrintSlip = ({
   productData,
   fetchTableData,
   tableData,
+  isLoading,
+  isError,
 }) => {
   const { orderId } = route.params;
 
@@ -32,6 +37,13 @@ const PrintSlip = ({
 
   if (selectedOrder !== null) {
     console.log(selectedOrder.totalPrice);
+  }
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
   }
 
   return selectedOrder !== null ? (
@@ -273,6 +285,8 @@ const mapStateToProps = (state) => {
     selectedOrder: state.orders.selectedOrder,
     productData: state.products.productData,
     tableData: state.tables.tableData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
