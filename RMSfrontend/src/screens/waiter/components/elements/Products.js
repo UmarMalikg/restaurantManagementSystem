@@ -9,6 +9,7 @@ import {
 import { Text, View, FlatList, Image, Pressable } from "react-native";
 import waiterStyles from "../../../styles/waiterStyles";
 import { useAppContext } from "../../../../context/States";
+import Loader from "../../../Loader";
 
 const numColumns = 5; // Number of columns
 
@@ -19,6 +20,8 @@ const Products = ({
   increaseQuantity,
   decreaseQuantity,
   quantity,
+  isLoading,
+  isError,
 }) => {
   const { employee, updateItemsForOrder, addedItemsForOrder } = useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -158,6 +161,8 @@ const mapStateToProps = (state) => {
     productData: state.products.productData,
     selectedCategory: state.categories.selectedCategory,
     quantity: state.qty,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 

@@ -24,6 +24,7 @@ import {
   emitSocket,
   changeViaSocket,
 } from "../../socketConfig/socketFunctions";
+import Loader from "../Loader";
 
 const Orders = ({
   fetchOrderData,
@@ -36,6 +37,8 @@ const Orders = ({
   tableData,
   fetchEmployeeData,
   employeeData,
+  isLoading,
+  isError,
 }) => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
@@ -83,6 +86,17 @@ const Orders = ({
       console.error(err);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    <View style={defaultStyles.container}>
+      <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>Error</Text>
+    </View>;
+  }
+
   if (displayOrders().length === 0) {
     return (
       <View style={defaultStyles.container}>
@@ -252,6 +266,8 @@ const mapStateToProps = (state) => {
     productData: state.products.productData,
     tableData: state.tables.tableData,
     employeeData: state.employees.employeeData,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 

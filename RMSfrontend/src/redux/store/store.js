@@ -8,6 +8,7 @@ import employeeReducer from "../reducers/employeeReducer";
 import userReducer from "../reducers/userReducer";
 import orderReducer from "../reducers/orderReducer";
 import floorReducer from "../reducers/floorReducer";
+import loadingErrorReducer from "../reducers/loadingErrorReducer";
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   orders: orderReducer,
   floors: floorReducer,
+  loadingErrors: loadingErrorReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

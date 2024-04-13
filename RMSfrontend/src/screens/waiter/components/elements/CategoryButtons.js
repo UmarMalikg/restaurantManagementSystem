@@ -6,12 +6,15 @@ import {
   selectCategory,
 } from "../../../../redux/actions/categoryActions";
 import waiterStyles from "../../../styles/waiterStyles"; // Adjust import path as needed
+import Loader from "../../../Loader";
 
 const CategoryButtons = ({
   categoryData,
   fetchCategoryData,
   selectCategory,
   selectedCategory,
+  isLoading,
+  isError,
 }) => {
   useEffect(() => {
     fetchCategoryData();
@@ -58,6 +61,8 @@ const mapStateToProps = (state) => {
   return {
     categoryData: state.categories.categoryData,
     selectedCategory: state.categories.selectedCategory,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
 
