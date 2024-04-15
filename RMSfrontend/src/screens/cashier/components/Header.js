@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 import HeaderImage from "../../common/HeaderImage";
+import HeaderNotificationButton from "../../common/HeaderNotificationButton";
+import HeaderLogo from "../../common/HeaderLogo";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -14,9 +16,7 @@ const Header = () => {
     // <ScrollView>
     <View style={waiterStyles.header}>
       {/* left */}
-      <View>
-        <Text>LOGO</Text>
-      </View>
+      <HeaderLogo />
       {/* centre */}
       <View
         style={{
@@ -30,9 +30,7 @@ const Header = () => {
 
       {employee && employee.isCachier ? (
         <View style={waiterStyles.headerEmployeeAction}>
-          <View>
-            <Text>Notifications</Text>
-          </View>
+          <HeaderNotificationButton />
           <HeaderLogoutButton />
 
           <View style={waiterStyles.headerEmployeeInfo}>

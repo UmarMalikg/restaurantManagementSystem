@@ -351,7 +351,8 @@ const waiterStyles = StyleSheet.create({
   },
   singleItem: {
     backgroundColor: darkGreen,
-    width: 120,
+    width: 150,
+    height: 220,
     borderRadius: 10,
     margin: 10,
     paddingHorizontal: 10,

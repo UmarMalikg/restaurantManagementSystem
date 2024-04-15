@@ -17,6 +17,8 @@ import {
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
+import AdminEditIcon from "../common/AdminEditIcon";
+import AdminDeleteIcon from "../common/AdminDeleteIcon";
 
 const Categories = ({
   fetchCategoryData,
@@ -114,10 +116,10 @@ const Categories = ({
                         goToUpdate(category._id);
                       }}
                     >
-                      <Text>edit</Text>
+                      <AdminEditIcon />
                     </Pressable>
                     <Pressable onPress={() => deleteACategory(category._id)}>
-                      <Text>delete</Text>
+                      <AdminDeleteIcon />
                     </Pressable>
                   </View>
                 </View>

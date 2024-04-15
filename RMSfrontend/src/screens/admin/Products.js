@@ -20,6 +20,9 @@ import { changeViaSocket } from "../../socketConfig/socketFunctions";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
+import AdminDeleteIcon from "../common/AdminDeleteIcon";
+import AdminEditIcon from "../common/AdminEditIcon";
+
 const Products = ({
   fetchProductData,
   productData,
@@ -86,14 +89,14 @@ const Products = ({
       }}
     >
       <Pressable onPress={() => deleteProduct(product._id)}>
-        <Text>delete</Text>
+        <AdminDeleteIcon />
       </Pressable>
       <Pressable
         onPress={() => {
           goToUpdate(product._id);
         }}
       >
-        <Text>edit</Text>
+        <AdminEditIcon />
       </Pressable>
     </View>,
   ]);

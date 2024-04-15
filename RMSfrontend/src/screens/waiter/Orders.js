@@ -19,12 +19,16 @@ import { useNavigation } from "@react-navigation/native";
 import SocketContext from "../../context/socketContext";
 
 import { useAppContext } from "../../context/States";
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   emitSocket,
   changeViaSocket,
 } from "../../socketConfig/socketFunctions";
 import Loader from "../Loader";
+
+import { FontAwesome6 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Orders = ({
   fetchOrderData,
@@ -165,6 +169,21 @@ const Orders = ({
                 <ScrollView showsHorizontalScrollIndicator={false}>
                   {/* single Item */}
                   <View style={waiterStyles.allItems}>
+                    <View
+                      style={[
+                        waiterStyles.singleItem,
+                        defaultStyles.rowCenteredFlex,
+                      ]}
+                    >
+                      <Pressable>
+                        <Ionicons
+                          name="add-circle-outline"
+                          size={100}
+                          color="black"
+                        />
+                        <Text>Add new item(s)</Text>
+                      </Pressable>
+                    </View>
                     {order.orderItems.map((item) => {
                       const product = productData.find(
                         (p) => p._id === item.item
@@ -174,15 +193,15 @@ const Orders = ({
                         <View key={item.item} style={waiterStyles.singleItem}>
                           <View
                             style={[
-                              defaultStyles.rowSpacingFlex,
+                              defaultStyles.rowCenteredFlex,
                               defaultStyles.mrg6,
                             ]}
                           >
                             <View>
-                              <Text>{item?.itemStatus || "NA"}</Text>
+                              <Text style={defaultStyles.fWB}>Status: </Text>
                             </View>
                             <View>
-                              <Text>Time</Text>
+                              <Text>{item?.itemStatus || "NA"}</Text>
                             </View>
                           </View>
 
@@ -228,7 +247,7 @@ const Orders = ({
 
                           <View
                             style={[
-                              defaultStyles.rowCenteredFlex,
+                              defaultStyles.rowSpacingAroundFlex,
                               defaultStyles.mrgV8,
                             ]}
                           >
@@ -240,8 +259,37 @@ const Orders = ({
                                   "Completed"
                                 )
                               }
+                              style={[
+                                defaultStyles.padH15,
+                                defaultStyles.padV3,
+                                { backgroundColor: "#f0f" },
+                              ]}
                             >
-                              <Text>Completed</Text>
+                              <FontAwesome6
+                                name="check"
+                                size={24}
+                                color="black"
+                              />
+                            </Pressable>
+                            <Pressable
+                              onPress={() =>
+                                changeItemsStatus(
+                                  order._id,
+                                  item._id,
+                                  "Completed"
+                                )
+                              }
+                              style={[
+                                defaultStyles.padH15,
+                                defaultStyles.padV3,
+                                { backgroundColor: "#f0f" },
+                              ]}
+                            >
+                              <MaterialCommunityIcons
+                                name="delete-restore"
+                                size={24}
+                                color="black"
+                              />
                             </Pressable>
                           </View>
                         </View>

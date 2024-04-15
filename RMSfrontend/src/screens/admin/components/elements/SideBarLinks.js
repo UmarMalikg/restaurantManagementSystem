@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import adminStyles from "../../../styles/adminStyles";
 import { useAppContext } from "../../../../context/States";
+import defaultStyles from "../../../../defaultStyles";
 
 const SideBarLinks = ({ text, icon, link }) => {
   const { updateAdminActivedLink, adminActivedLink } = useAppContext();
@@ -44,35 +45,18 @@ const SideBarLinks = ({ text, icon, link }) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      {/* <View
-        style={[
-          (isHovered || isPressed) && adminStyles.hoverSideBarLinksBefore,
-          isActive && adminStyles.activeSideBarLinksBefore,
-        ]}
-      ></View>
-      <View
-        style={[
-          (isHovered || isPressed) && adminStyles.hoverSideBarLinksAfter,
-          isActive && adminStyles.activeSideBarLinksAfter,
-        ]}
-      ></View> */}
-      <Image
-        style={[
-          adminStyles.sideBarLinkIcon,
-          (isHovered || isPressed) && adminStyles.hoverSideBarLinks,
-          isActive && adminStyles.activeSideBarLinks,
-        ]}
-        source={`${icon}`}
-      />
-      <Text
-        style={[
-          adminStyles.sideBarLinkText,
-          (isHovered || isPressed) && adminStyles.hoverSideBarLinks,
-          isActive && adminStyles.activeSideBarLinks,
-        ]}
-      >
-        {text}
-      </Text>
+      {icon}
+      <View style={defaultStyles.mrgL15}>
+        <Text
+          style={[
+            adminStyles.sideBarLinkText,
+            (isHovered || isPressed) && adminStyles.hoverSideBarLinks,
+            isActive && adminStyles.activeSideBarLinks,
+          ]}
+        >
+          {text}
+        </Text>
+      </View>
     </Pressable>
   );
 };

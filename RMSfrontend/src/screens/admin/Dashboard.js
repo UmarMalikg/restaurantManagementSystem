@@ -16,6 +16,11 @@ import { changeViaSocket } from "../../socketConfig/socketFunctions";
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
+
 const Dashboard = ({
   totalEmployees,
   totalEmployeesCount,
@@ -69,23 +74,36 @@ const Dashboard = ({
             recordNums={totalProductsCount}
             bgColor={`#98BDFF`}
             link={`Products`}
+            recordIcon={
+              <MaterialCommunityIcons
+                name="food-fork-drink"
+                size={40}
+                color="black"
+              />
+            }
           />
           <RecordOverview
             recordName={`Total Employess`}
             recordNums={totalEmployeesCount}
             bgColor={`#4b49ac`}
             link={`Employees`}
+            recordIcon={<FontAwesome6 name="users" size={40} color="black" />}
           />
           <RecordOverview
             recordName={`Total Sales`}
             recordNums={totalSalesCount}
             bgColor={`#7978e9`}
+            recordIcon={
+              <MaterialIcons name="point-of-sale" size={40} color="black" />
+            }
           />
           <RecordOverview
             recordName={`Revenue Generated`}
             recordNums={18}
             bgColor={`#f3797e`}
-            recordIcon={require("../../../assets/images/Admin/dummy.jpg")}
+            recordIcon={
+              <Fontisto name="shopping-sale" size={40} color="black" />
+            }
           />
         </View>
         <View style={adminStyles.charts}>

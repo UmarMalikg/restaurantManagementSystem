@@ -22,6 +22,9 @@ import { changeViaSocket } from "../../socketConfig/socketFunctions";
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
 
+import AdminDeleteIcon from "../common/AdminDeleteIcon";
+import AdminEditIcon from "../common/AdminEditIcon";
+
 const Employees = ({
   fetchEmployeeData,
   employeeData,
@@ -86,14 +89,14 @@ const Employees = ({
       }}
     >
       <Pressable onPress={() => deleteEmployee(employee._id)}>
-        <Text>delete</Text>
+        <AdminDeleteIcon />
       </Pressable>
       <Pressable
         onPress={() => {
           goToUpdate(employee._id);
         }}
       >
-        <Text>edit</Text>
+        <AdminEditIcon />
       </Pressable>
     </View>,
   ]);

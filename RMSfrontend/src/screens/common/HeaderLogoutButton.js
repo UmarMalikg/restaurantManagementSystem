@@ -3,6 +3,9 @@ import React from "react";
 
 import { useAppContext } from "../../context/States";
 
+import { MaterialIcons } from "@expo/vector-icons";
+import defaultStyles from "../../defaultStyles";
+
 const HeaderLogoutButton = () => {
   const { updateEmployee } = useAppContext();
   const clearTokens = () => {
@@ -29,13 +32,13 @@ const HeaderLogoutButton = () => {
   };
 
   return (
-    <View>
+    <View style={defaultStyles.mrgH20}>
       <Pressable
         onPress={() => {
           logout();
         }}
       >
-        <Text>Log Out</Text>
+        <MaterialIcons name="logout" size={24} color="black" />
       </Pressable>
     </View>
   );

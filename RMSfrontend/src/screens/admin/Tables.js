@@ -12,6 +12,8 @@ import { changeViaSocket } from "../../socketConfig/socketFunctions";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
+import AdminDeleteIcon from "../common/AdminDeleteIcon";
+import AdminEditIcon from "../common/AdminEditIcon";
 
 const Tables = ({
   fetchTableData,
@@ -110,10 +112,10 @@ const Tables = ({
                           goToUpdate(table._id);
                         }}
                       >
-                        <Text>edit</Text>
+                        <AdminEditIcon />
                       </Pressable>
                       <Pressable onPress={() => deleteTable(table._id)}>
-                        <Text>delete</Text>
+                        <AdminDeleteIcon />
                       </Pressable>
                     </View>
                   </View>

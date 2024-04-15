@@ -27,9 +27,7 @@ const RecordOverview = ({
         <Text style={adminStyles.recordName}>{recordName}</Text>
         <Text style={adminStyles.recordNums}>{recordNums}</Text>
       </View>
-      <View style={adminStyles.recordIconPos}>
-        <Image style={adminStyles.recordIcon} source={`${recordIcon}`} />
-      </View>
+      <View style={adminStyles.recordIconPos}>{recordIcon}</View>
     </Pressable>
   );
 };

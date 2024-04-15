@@ -5,6 +5,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 import HeaderImage from "../../common/HeaderImage";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import HeaderNotificationButton from "../../common/HeaderNotificationButton";
+import HeaderLogo from "../../common/HeaderLogo";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -14,9 +18,7 @@ const Header = () => {
     // <ScrollView>
     <View style={waiterStyles.header}>
       {/* left */}
-      <View>
-        <Text>LOGO</Text>
-      </View>
+      <HeaderLogo />
       {/* centre */}
       <View
         style={{
@@ -30,22 +32,20 @@ const Header = () => {
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.navigate("WaiterHome")}
         >
-          <Text>Home</Text>
+          <Ionicons name="home-outline" size={24} color="black" />
         </Pressable>
         <Pressable
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.navigate("Orders")}
         >
-          <Text>Orders</Text>
+          <MaterialIcons name="addchart" size={24} color="black" />
         </Pressable>
       </View>
       {/* right */}
 
       {employee && employee.isWaiter ? (
         <View style={waiterStyles.headerEmployeeAction}>
-          <View>
-            <Text>Notifications</Text>
-          </View>
+          <HeaderNotificationButton />
           <HeaderLogoutButton />
 
           <View style={waiterStyles.headerEmployeeInfo}>

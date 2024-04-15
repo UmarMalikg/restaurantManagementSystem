@@ -7,6 +7,8 @@ import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 
 import { useAppContext } from "../../../context/States";
 import HeaderImage from "../../common/HeaderImage";
+import HeaderNotificationButton from "../../common/HeaderNotificationButton";
+import HeaderLogo from "../../common/HeaderLogo";
 
 const NavBar = () => {
   const navigation = useNavigation();
@@ -15,16 +17,11 @@ const NavBar = () => {
 
   return (
     <View style={adminStyles.navBar}>
-      <Image
-        source={require("../../../../assets/images/logo.png")}
-        style={{ height: 40, width: 250 }}
-      />
+      <HeaderLogo />
 
       {employee && employee.isAdmin ? (
         <View style={waiterStyles.headerEmployeeAction}>
-          <View>
-            <Text>Notifications</Text>
-          </View>
+          <HeaderNotificationButton />
 
           <HeaderLogoutButton />
           <View style={waiterStyles.headerEmployeeInfo}>
