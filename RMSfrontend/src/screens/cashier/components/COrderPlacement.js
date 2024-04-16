@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Image, ScrollView, Text, Pressable, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  Pressable,
+  View,
+  Picker,
+  TextInput,
+} from "react-native";
 import waiterStyles from "../../styles/waiterStyles";
+import adminStyles from "../../styles/waiterStyles";
 import { useAppContext } from "../../../context/States";
 import { connect } from "react-redux";
 import { fetchProductData } from "../../../redux/actions/productAction";
 import { addOrder } from "../../../redux/actions/orderActions";
 import { useNavigation } from "@react-navigation/native";
-import { fetchTableData } from "../../../redux/actions/tableActions";
 import {
   successAlertBackground,
   successAlertMessage,
@@ -20,28 +28,21 @@ import SocketContext from "../../../context/socketContext";
 
 import { emitSocket } from "../../../socketConfig/socketFunctions";
 
-const OrderPlacement = ({
-  fetchProductData,
-  fetchTableData,
-  tableData,
-  productData,
-  addOrder,
-}) => {
+const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
   useEffect(() => {
     fetchProductData();
-    fetchTableData();
-  }, [fetchProductData, fetchTableData]);
+  }, [fetchProductData]);
 
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
+  const [selectedOrderType, setSelectedOrderType] = useState("");
+  const [customerDeliveryAddress, setCustomerDeliveryAddress] = useState("");
 
   const {
     addedItemsForOrder,
     employee,
-    selectedTable,
     updateItemsForOrder,
     setAddedItemsforOrder,
-    setSelectedTable,
   } = useAppContext();
 
   const [popUpMessage, setPopUpMessage] = useState("");
@@ -120,18 +121,23 @@ const OrderPlacement = ({
         return alert("please select an item for taking the order");
       } else if (!employee) {
         return alert("Please Login first");
-      } else if (!selectedTable) {
+      } else if (!selectedOrderType) {
         return alert("please select the table before taking order");
       }
       // console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
+      //   let newOrder;
       const newOrder = {
-        tableNo: selectedTable,
+        orderType: selectedOrderType,
         orderItems: addedItemsForOrder,
         orderTaker: employee._id,
+        ...(selectedOrderType === "Delivery"
+          ? { deliveryAddress: customerDeliveryAddress }
+          : { customerName: customerDeliveryAddress }),
       };
       await addOrder(newOrder);
       setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
-      setSelectedTable(null);
+      setSelectedOrderType("");
+      setCustomerDeliveryAddress("");
       setPopUpMessage("Successfully ordered!");
       showPopUp(setIsOrdered);
       emitSocket(socket, "orderChanged");
@@ -142,7 +148,8 @@ const OrderPlacement = ({
 
   const cancelOrder = () => {
     setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
-    setSelectedTable(null);
+    setSelectedOrderType("");
+    setCustomerDeliveryAddress("");
     setPopUpMessage("Order Canelled!");
     showPopUp(setIsOrderCancelled);
   };
@@ -162,18 +169,26 @@ const OrderPlacement = ({
   return (
     <View style={waiterStyles.orderPlacement}>
       <View style={waiterStyles.orderSelectTableBox}>
-        <Pressable
-          style={waiterStyles.orderSelectTable}
-          onPress={() => selectTable()}
-        >
-          <Text style={waiterStyles.orderSelectTableText}>
-            {selectedTable
-              ? `${
-                  tableData.find((t) => t._id === selectedTable)?.name
-                } Selected`
-              : `Select Table`}
-          </Text>
-        </Pressable>
+        <View>
+          <Picker
+            style={adminStyles.modelInput}
+            selectedValue={selectedOrderType}
+            onValueChange={(value) => setSelectedOrderType(value)}
+          >
+            <Picker.Item label="Select the Order Type" value="" />
+            <Picker.Item label="Take-Away" value="Take-Away" />
+            <Picker.Item label="Delivery" value="Delivery" />
+          </Picker>
+        </View>
+        <View>
+          {selectedOrderType === "Delivery" && (
+            <TextInput
+              placeholder="Delivery Address"
+              value={customerDeliveryAddress}
+              onChangeText={(text) => setCustomerDeliveryAddress(text)}
+            />
+          )}
+        </View>
       </View>
 
       <ScrollView
@@ -396,14 +411,12 @@ const OrderPlacement = ({
 const mapStateToProps = (state) => {
   return {
     productData: state.products.productData,
-    tableData: state.tables.tableData,
   };
 };
 
 const mapDispatchToProps = {
   fetchProductData,
   addOrder,
-  fetchTableData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderPlacement);
+export default connect(mapStateToProps, mapDispatchToProps)(COrderPlacement);

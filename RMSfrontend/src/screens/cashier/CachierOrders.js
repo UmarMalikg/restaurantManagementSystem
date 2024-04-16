@@ -68,6 +68,9 @@ const CachierOrders = ({
     changeViaSocket(socket, "productChanged", handleProductChanged);
     changeViaSocket(socket, "tableChanged", handleTableChanged);
   }, [socket]);
+  useEffect(() => {
+    changeViaSocket(socket, "orderChanged", handleOrderChanged);
+  }, [socket]);
 
   const [page, setPage] = useState(1); // Current page number
   const [itemsPerPage, setItemsPerPage] = useState(20); // Number of items per page
@@ -89,8 +92,11 @@ const CachierOrders = ({
     })
     .filter((order) => {
       // Filter by search text if available
-      return order.orderItems.some((item) =>
-        item.item.includes(searchText.toLowerCase())
+      return (
+        order.orderItems &&
+        order.orderItems.some((item) =>
+          item.item.includes(searchText.toLowerCase())
+        )
       );
     })
     .slice(startIndex, endIndex);
@@ -295,8 +301,8 @@ const CachierOrders = ({
                       {order.orderType === "Dine-In"
                         ? `${table?.name || "NA"}`
                         : order.orderType === "Delivery"
-                        ? "Delivery Address"
-                        : "Customer Name"}
+                        ? `${order?.deliveryAddress || "NA"}`
+                        : `${table?.customerName || "NA"}`}
                     </Text>
                   </View>
                   <View

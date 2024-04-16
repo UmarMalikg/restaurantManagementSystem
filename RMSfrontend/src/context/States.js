@@ -52,6 +52,45 @@ export const AppProvider = ({ children }) => {
       ]);
     }
   };
+  // states that keep track of added Items for order
+  const [updatedAddedItemsForOrder, setUpdatedAddedItemsforOrder] = useState([
+    { item: "", qty: "", itemStatus: "Pending" },
+  ]);
+  const updateUpdatedItemsForOrder = (item, qty, itemStatus) => {
+    // Find if the item already exists in orderItems
+    const existingItemIndex = updatedAddedItemsForOrder.findIndex(
+      (updatedAddedItemsForOrder) => updatedAddedItemsForOrder.item === item
+    );
+
+    // Find if there's an empty item index in addedItemsForOrder
+    const emptyItemIndex = updatedAddedItemsForOrder.findIndex(
+      (updatedAddedItemsForOrder) =>
+        updatedAddedItemsForOrder.item === "" &&
+        updatedAddedItemsForOrder.qty === ""
+    );
+
+    if (emptyItemIndex !== -1) {
+      // If an empty item exists, update it
+      const addFirstItem = [{ item, qty, itemStatus }];
+      setUpdatedAddedItemsforOrder(addFirstItem);
+      console.log("first item", addFirstItem);
+    } else if (existingItemIndex !== -1) {
+      const updateUpdatedItemsForOrder = [...updatedAddedItemsForOrder];
+      updateUpdatedItemsForOrder[existingItemIndex].qty = qty;
+      setUpdatedAddedItemsforOrder(updateUpdatedItemsForOrder);
+      console.log("Item updated:", updateUpdatedItemsForOrder);
+    } else {
+      // If the item doesn't exist, add it to orderItems
+      setUpdatedAddedItemsforOrder([
+        ...updatedAddedItemsForOrder,
+        { item, qty, itemStatus },
+      ]);
+      console.log("Item added:", [
+        ...updatedAddedItemsForOrder,
+        { item, qty, itemStatus },
+      ]);
+    }
+  };
 
   // states for checking the actived admin link
   const [adminActivedLink, setAdminActivedLink] = useState("Dashboard");
@@ -76,6 +115,9 @@ export const AppProvider = ({ children }) => {
         addedItemsForOrder,
         updateItemsForOrder,
         setAddedItemsforOrder,
+        updatedAddedItemsForOrder,
+        updateUpdatedItemsForOrder,
+        setUpdatedAddedItemsforOrder,
         selectedTable,
         updateSelectedTable,
         setSelectedTable,

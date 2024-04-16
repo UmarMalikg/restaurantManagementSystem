@@ -12,7 +12,6 @@ import {
   deleteItem,
 } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
-import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
 
 import { useNavigation } from "@react-navigation/native";
@@ -32,15 +31,13 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ErrorPage from "../ErrorPage";
 
-const Orders = ({
+const MyOrders = ({
   fetchOrderData,
   updateOrderItemStatus,
   updateOrderStatus,
   orderData,
   fetchProductData,
   productData,
-  fetchTableData,
-  tableData,
   fetchEmployeeData,
   employeeData,
   isLoading,
@@ -55,9 +52,8 @@ const Orders = ({
   useEffect(() => {
     fetchOrderData();
     fetchProductData();
-    fetchTableData();
     fetchEmployeeData();
-  }, [fetchOrderData, fetchProductData, fetchTableData, fetchEmployeeData]);
+  }, [fetchOrderData, fetchProductData, fetchEmployeeData]);
 
   const handleOrderChange = () => {
     fetchOrderData();
@@ -130,7 +126,6 @@ const Orders = ({
       {/* all orders */}
       <ScrollView>
         {displayOrders().map((order) => {
-          const table = tableData.find((t) => t._id === order.tableNo);
           return (
             <View
               key={order._id}
@@ -143,11 +138,13 @@ const Orders = ({
                     <View style={[defaultStyles.rowFlex, defaultStyles.mrgH15]}>
                       <View>
                         <Text style={[defaultStyles.fWB, defaultStyles.fs22]}>
-                          Table No:{" "}
+                          Delivery Type:{" "}
                         </Text>
                       </View>
                       <View>
-                        <Text style={[defaultStyles.fs22]}>{table.name}</Text>
+                        <Text style={[defaultStyles.fs22]}>
+                          {order.orderType}
+                        </Text>
                       </View>
                     </View>
                     <View style={[defaultStyles.rowFlex, defaultStyles.mrgH15]}>
@@ -326,7 +323,6 @@ const mapStateToProps = (state) => {
   return {
     orderData: state.orders.orderData,
     productData: state.products.productData,
-    tableData: state.tables.tableData,
     employeeData: state.employees.employeeData,
     isLoading: state.loadingErrors.isLoading,
     isError: state.loadingErrors.isError,
@@ -338,8 +334,7 @@ const mapDispatchToProps = {
   updateOrderStatus,
   updateOrderItemStatus,
   fetchProductData,
-  fetchTableData,
   fetchEmployeeData,
   deleteItem,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(MyOrders);

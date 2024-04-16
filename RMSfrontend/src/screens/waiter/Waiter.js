@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import Tables from "./models/Tables";
 import Orders from "./Orders";
+import UpdateOrder from "../common/updateOrder/UpdateOrder";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,7 @@ const Waiter = () => {
           }}
         >
           <Stack.Screen name="Tables" component={Tables} />
+          <Stack.Screen name="UpdateOrder" component={UpdateOrder} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

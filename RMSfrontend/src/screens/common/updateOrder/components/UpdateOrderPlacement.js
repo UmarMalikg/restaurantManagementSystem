@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Image, ScrollView, Text, Pressable, View } from "react-native";
-import waiterStyles from "../../styles/waiterStyles";
-import { useAppContext } from "../../../context/States";
+import waiterStyles from "../../../styles/waiterStyles";
+import { useAppContext } from "../../../../context/States";
 import { connect } from "react-redux";
-import { fetchProductData } from "../../../redux/actions/productAction";
-import { addOrder } from "../../../redux/actions/orderActions";
+import { fetchProductData } from "../../../../redux/actions/productAction";
+import {
+  updateOrderData,
+  getOrderById,
+} from "../../../../redux/actions/orderActions";
 import { useNavigation } from "@react-navigation/native";
-import { fetchTableData } from "../../../redux/actions/tableActions";
+import { fetchTableData } from "../../../../redux/actions/tableActions";
 import {
   successAlertBackground,
   successAlertMessage,
@@ -14,40 +17,48 @@ import {
   dangerAlertMessage,
   warningAertBackground,
   warningAertMessage,
-} from "../../../constants/stylesConstants";
+} from "../../../../constants/stylesConstants";
 
-import SocketContext from "../../../context/socketContext";
+import SocketContext from "../../../../context/socketContext";
 
-import { emitSocket } from "../../../socketConfig/socketFunctions";
+import { emitSocket } from "../../../../socketConfig/socketFunctions";
+import updateOrderStyle from "../../../styles/updateOrderStyle";
+import Loader from "../../../Loader";
+import ErrorPage from "../../../ErrorPage";
+import defaultStyles from "../../../../defaultStyles";
 
-const OrderPlacement = ({
+const UpdateOrderPlacement = ({
+  orderId,
   fetchProductData,
   fetchTableData,
   tableData,
   productData,
-  addOrder,
+  updateOrderData,
+  getOrderById,
+  selectedOrder,
+  isLoading,
+  isError,
 }) => {
   useEffect(() => {
     fetchProductData();
     fetchTableData();
-  }, [fetchProductData, fetchTableData]);
+    getOrderById(orderId);
+  }, [fetchProductData, fetchTableData, getOrderById, orderId]);
 
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
 
   const {
-    addedItemsForOrder,
+    updatedAddedItemsForOrder,
     employee,
-    selectedTable,
-    updateItemsForOrder,
-    setAddedItemsforOrder,
+    updateUpdatedItemsForOrder,
+    setUpdatedAddedItemsforOrder,
     setSelectedTable,
   } = useAppContext();
 
   const [popUpMessage, setPopUpMessage] = useState("");
   const [isOrdered, setIsOrdered] = useState(false);
   const [isOrderCancelled, setIsOrderCancelled] = useState(false);
-  const [isDrafted, setIsDrafted] = useState(false);
 
   const showPopUp = (set) => {
     set(true);
@@ -57,7 +68,7 @@ const OrderPlacement = ({
     }, 1000);
   };
 
-  const emptyItemIndex = addedItemsForOrder.find(
+  const emptyItemIndex = updatedAddedItemsForOrder.find(
     (item) => item.item === "" && item.qty === ""
   );
 
@@ -65,7 +76,7 @@ const OrderPlacement = ({
 
   const priceCalculator = () => {
     let itemCharges = 0;
-    addedItemsForOrder.forEach((item) => {
+    updatedAddedItemsForOrder.forEach((item) => {
       const product = productData.find((p) => p._id === item.item);
       if (product) {
         itemCharges += product.price * item.qty;
@@ -76,43 +87,39 @@ const OrderPlacement = ({
 
   const quantityIncrease = (productId) => {
     // Find if the item already exists in addedItemsForOrder
-    const existingItem = addedItemsForOrder.find(
+    const existingItem = updatedAddedItemsForOrder.find(
       (item) => item.item === productId
     );
 
     if (existingItem) {
       // If the item exists, update its quantity
       const updatedQty = existingItem.qty + 1;
-      updateItemsForOrder(productId, updatedQty);
+      updateUpdatedItemsForOrder(productId, updatedQty);
       priceCalculator(); // Recalculate the total charges
     } else {
       // If the item doesn't exist, add it with quantity 1
-      updateItemsForOrder(productId, 1);
+      updateUpdatedItemsForOrder(productId, 1);
       priceCalculator(); // Recalculate the total charges
     }
   };
 
   const quantityDecrease = (productId) => {
     // Find if the item already exists in addedItemsForOrder
-    const existingItem = addedItemsForOrder.find(
+    const existingItem = updatedAddedItemsForOrder.find(
       (item) => item.item === productId
     );
 
     if (existingItem && existingItem.qty > 1) {
       // If the item exists and quantity is greater than 1, decrease its quantity
       const updatedQty = existingItem.qty - 1;
-      updateItemsForOrder(productId, updatedQty);
+      updateUpdatedItemsForOrder(productId, updatedQty);
       priceCalculator(); // Recalculate the total charges
     }
   };
 
   useEffect(() => {
     priceCalculator();
-  }, [addedItemsForOrder, productData]);
-
-  const selectTable = () => {
-    employee ? navigation.navigate("Tables") : alert("Login first");
-  };
+  }, [updatedAddedItemsForOrder, productData]);
 
   const submitOrderform = async () => {
     try {
@@ -120,60 +127,75 @@ const OrderPlacement = ({
         return alert("please select an item for taking the order");
       } else if (!employee) {
         return alert("Please Login first");
-      } else if (!selectedTable) {
-        return alert("please select the table before taking order");
       }
-      // console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
       const newOrder = {
-        tableNo: selectedTable,
-        orderItems: addedItemsForOrder,
-        orderTaker: employee._id,
+        orderItems: updatedAddedItemsForOrder,
+        status: "Pending",
       };
-      await addOrder(newOrder);
-      setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
-      setSelectedTable(null);
-      setPopUpMessage("Successfully ordered!");
+      await updateOrderData(orderId, newOrder);
+      setUpdatedAddedItemsforOrder([
+        { item: "", qty: "", itemStatus: "Pending" },
+      ]);
+      setPopUpMessage("Successfully updated!");
       showPopUp(setIsOrdered);
       emitSocket(socket, "orderChanged");
+      navigation.goBack();
     } catch (err) {
       console.error(err);
+      setPopUpMessage("Successfully updated!");
+      showPopUp(setIsOrdered);
     }
   };
 
-  const cancelOrder = () => {
-    setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
+  const discardChanges = () => {
+    setUpdatedAddedItemsforOrder([
+      { item: "", qty: "", itemStatus: "Pending" },
+    ]);
     setSelectedTable(null);
-    setPopUpMessage("Order Canelled!");
+    setPopUpMessage("Changes Discarded!");
     showPopUp(setIsOrderCancelled);
-  };
-
-  const draftOrder = () => {
-    setPopUpMessage("Order Drafted!");
-    showPopUp(setIsDrafted);
+    navigation.goBack();
   };
 
   const deleteListedItem = (productId) => {
-    const updatedItems = addedItemsForOrder.filter(
+    const updatedItems = updatedAddedItemsForOrder.filter(
       (item) => item.item !== productId
     );
-    setAddedItemsforOrder(updatedItems);
+    setUpdatedAddedItemsforOrder(updatedItems);
   };
 
+  useEffect(() => {
+    if (selectedOrder && selectedOrder.orderItems) {
+      const updatedItems = selectedOrder.orderItems.map((item) => ({
+        item: item.item,
+        qty: item.qty,
+        itemStatus: item.itemStatus,
+      }));
+      // Update updatedAddedItemsForOrder with the new items
+      setUpdatedAddedItemsforOrder(updatedItems);
+      console.log(selectedOrder.totalPrice);
+    }
+  }, [selectedOrder]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
+
   return (
-    <View style={waiterStyles.orderPlacement}>
+    <View style={updateOrderStyle.orderPlacment}>
       <View style={waiterStyles.orderSelectTableBox}>
-        <Pressable
-          style={waiterStyles.orderSelectTable}
-          onPress={() => selectTable()}
-        >
-          <Text style={waiterStyles.orderSelectTableText}>
-            {selectedTable
-              ? `${
-                  tableData.find((t) => t._id === selectedTable)?.name
-                } Selected`
-              : `Select Table`}
-          </Text>
-        </Pressable>
+        <View style={defaultStyles.rowFlex}>
+          <View>
+            <Text style={defaultStyles.fWB}>Order type: {"  "}</Text>
+          </View>
+          <View>
+            <Text>{selectedOrder !== null && selectedOrder.orderType}</Text>
+          </View>
+        </View>
       </View>
 
       <ScrollView
@@ -184,7 +206,7 @@ const OrderPlacement = ({
           {emptyItemIndex ? (
             <View></View>
           ) : (
-            addedItemsForOrder?.map((item) => {
+            updatedAddedItemsForOrder?.map((item) => {
               const product = productData.find((p) => p._id === item.item);
 
               return (
@@ -322,13 +344,13 @@ const OrderPlacement = ({
           </View>
           <View style={{ position: "relative" }}>
             <Pressable
-              onPress={() => cancelOrder()}
+              onPress={() => discardChanges()}
               style={[
                 waiterStyles.orderButtons,
                 waiterStyles.orderCancelButton,
               ]}
             >
-              <Text style={waiterStyles.orderButtonsText}>Cancel</Text>
+              <Text style={waiterStyles.orderButtonsText}>Discard Changes</Text>
             </Pressable>
             {isOrderCancelled && (
               <View
@@ -355,38 +377,6 @@ const OrderPlacement = ({
               </View>
             )}
           </View>
-          {/* <View style={{ position: "relative" }}>
-            <Pressable
-              style={[waiterStyles.orderButtons, waiterStyles.orderDraftButton]}
-              onPress={draftOrder}
-            >
-              <Text style={waiterStyles.orderButtonsText}>Draft</Text>
-            </Pressable>
-            {isDrafted && (
-              <View
-                style={{
-                  position: "absolute",
-                  top: -25,
-                  display: "flex",
-                  right: 0,
-                  borderRadius: 5,
-                  zIndex: 1, // Set the maximum width to 400% of its parent
-                  width: "200%",
-                  backgroundColor: warningAertBackground,
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: warningAertMessage,
-                    fontWeight: "bold",
-                  }}
-                >
-                  {popUpMessage}
-                </Text>
-              </View>
-            )}
-          </View> */}
         </View>
       </View>
     </View>
@@ -397,13 +387,20 @@ const mapStateToProps = (state) => {
   return {
     productData: state.products.productData,
     tableData: state.tables.tableData,
+    orderData: state.orders.orderData,
+    selectedOrder: state.orders.selectedOrder,
+    isLoading: state.loadingErrors.isLoading,
+    isError: state.loadingErrors.isError,
   };
 };
-
 const mapDispatchToProps = {
   fetchProductData,
-  addOrder,
+  updateOrderData,
   fetchTableData,
+  getOrderById,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderPlacement);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdateOrderPlacement);

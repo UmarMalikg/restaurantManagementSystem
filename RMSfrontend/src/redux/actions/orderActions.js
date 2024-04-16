@@ -42,6 +42,11 @@ import {
   TOTAL_ORDERS_COUNT_REQUEST,
   TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
   TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
+
+  // dlete item from order
+  DELETE_ORDER_ITEM_REQUEST,
+  DELETE_ORDER_ITEM_REQUEST_FAILURE,
+  DELETE_ORDER_ITEM_REQUEST_SUCCESS,
 } from "../../constants/orderConstants";
 
 // Action Creators
@@ -73,6 +78,11 @@ export const updateOrder = (order) => ({
 export const updateOrderItemStatusRequest = (orderId, itemId, newStatus) => ({
   type: UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
   payload: { orderId, itemId, newStatus },
+});
+
+export const deleteOrderItemRequest = (orderId, itemId) => ({
+  type: DELETE_ORDER_ITEM_REQUEST_SUCCESS,
+  payload: { orderId, itemId },
 });
 
 export const updateOrderStatusRequest = (orderId, newStatus) => ({
@@ -232,6 +242,27 @@ export const totalSales = () => {
         type: TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
         payload: err.message,
       }); // Dispatching failure action with error message
+    }
+  };
+};
+
+export const deleteItem = (orderId, itemId) => {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_ORDER_ITEM_REQUEST });
+    try {
+      const response = await axios.put(
+        `${api}/orders/${orderId}/items/${itemId}/delete`
+      );
+      dispatch({
+        type: DELETE_ORDER_ITEM_REQUEST_SUCCESS,
+        payload: { orderId, itemId },
+      });
+    } catch (err) {
+      console.error(`Error deleting order item:`, err);
+      dispatch({
+        type: DELETE_ORDER_ITEM_REQUEST_FAILURE,
+        payload: err.message,
+      });
     }
   };
 };

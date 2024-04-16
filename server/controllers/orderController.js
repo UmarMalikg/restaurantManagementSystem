@@ -72,6 +72,7 @@ const updateOrder = async (req, res) => {
       return res.status(404).json({ message: "No such order" });
     }
     await Order.findByIdAndUpdate(orderId, updateData, { new: true });
+    return res.status(200).json({ message: "Updated Successfully" });
   } catch (err) {
     return res.status(500).json({ message: "Error updating the order" });
   }
@@ -184,6 +185,46 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+const deleteOrderItem = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const itemId = req.params.itemId;
+
+    // Find the order by its ID
+    const order = await Order.findById(orderId);
+
+    // Check if the order exists
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Find the index of the item in the order's orderItems array
+    const itemIndex = order.orderItems.findIndex(
+      (item) => item._id.toString() === itemId
+    );
+
+    // Check if the item exists in the order
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item in this order not found" });
+    }
+
+    // Remove the item from the order's orderItems array
+    order.orderItems.splice(itemIndex, 1);
+
+    // Save the updated order
+    await order.save();
+
+    // Return a success response
+    return res
+      .status(200)
+      .json({ message: "Item deleted successfully", order });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Error deleting item from order", error: err });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrderById,
@@ -192,4 +233,5 @@ module.exports = {
   updateOrder,
   updateOrderItemStatus,
   updateOrderStatus,
+  deleteOrderItem,
 };

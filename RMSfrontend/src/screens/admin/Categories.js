@@ -32,7 +32,7 @@ const Categories = ({
   }, [fetchCategoryData]);
 
   const handleCategoryChanged = () => {
-    fetchFloorData(); // Wait for the data to be fetched
+    fetchCategoryData(); // Wait for the data to be fetched
     console.log("Category data fetched successfully");
   };
   useEffect(() => {

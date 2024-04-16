@@ -9,6 +9,7 @@ const {
   updateOrder,
   updateOrderItemStatus,
   updateOrderStatus,
+  deleteOrderItem,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -24,5 +25,7 @@ router
 router.route("/:orderId/items/:itemId/status").put(updateOrderItemStatus);
 
 router.route("/:orderId/status").put(updateOrderStatus);
+
+router.route("/:orderId/items/:itemId/delete").put(deleteOrderItem);
 
 module.exports = router;

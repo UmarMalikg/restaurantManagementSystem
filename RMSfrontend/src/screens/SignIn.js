@@ -74,10 +74,10 @@ const SignIn = () => {
       <View style={defaultStyles.container}>
         <View style={loginRegisterFormStyles.loginBox}>
           <View style={loginRegisterFormStyles.formHeader}>
-            <Text style={loginRegisterFormStyles.TitleText}>Sign In</Text>
+            <Text style={loginRegisterFormStyles.TitleText}>Sign in</Text>
           </View>
           <View style={loginRegisterFormStyles.quote}>
-            <Text>Welcome back! Login to access the RMS</Text>
+            <Text>Welcome back! Login to the RMS</Text>
           </View>
           <TextInput
             placeholder="Enter ID..."
@@ -97,18 +97,18 @@ const SignIn = () => {
             style={loginRegisterFormStyles.loginRegisterButton}
           >
             <Text style={loginRegisterFormStyles.loginRegisterButtonText}>
-              Sign In
+              Sign in
             </Text>
           </Pressable>
           {/* <Pressable onPress={() => navigation.navigate("Home")}>
           <Text>Go back to Home</Text>
         </Pressable> */}
-          <View style={defaultStyles.rowCenteredFlex}>
+          {/* <View style={defaultStyles.rowCenteredFlex}>
             <Text>Don't have account? </Text>
             <Pressable onPress={() => navigation.navigate("Register")}>
               <Text style={{ fontWeight: "bold", color: "#00f" }}>Sign Up</Text>
             </Pressable>
-          </View>
+          </View> */}
         </View>
       </View>
     </ImageBackground>

@@ -1,20 +1,20 @@
 // Products.js
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchProductData } from "../../../../redux/actions/productAction";
+import { fetchProductData } from "../../../../../redux/actions/productAction";
 import {
   increaseQuantity,
   decreaseQuantity,
-} from "../../../../redux/actions/quantityActions";
+} from "../../../../../redux/actions/quantityActions";
 import { Text, View, FlatList, Image, Pressable } from "react-native";
-import waiterStyles from "../../../styles/waiterStyles";
-import { useAppContext } from "../../../../context/States";
-import Loader from "../../../Loader";
-import ErrorPage from "../../../ErrorPage";
+import waiterStyles from "../../../../styles/waiterStyles";
+import { useAppContext } from "../../../../../context/States";
+import Loader from "../../../../Loader";
+import ErrorPage from "../../../../ErrorPage";
 
 const numColumns = 5; // Number of columns
 
-const Products = ({
+const ProductsUpdate = ({
   productData,
   fetchProductData,
   selectedCategory,
@@ -24,7 +24,8 @@ const Products = ({
   isLoading,
   isError,
 }) => {
-  const { employee, updateItemsForOrder, addedItemsForOrder } = useAppContext();
+  const { employee, updateUpdatedItemsForOrder, updatedAddedItemsForOrder } =
+    useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -44,8 +45,8 @@ const Products = ({
     }
   }, [selectedCategory, productData]);
 
-  const handleAddItemsToOrder = (item, qty, productId) => {
-    const existingItem = addedItemsForOrder.find(
+  const handleAddUpdateItemsToOrder = (item, qty, productId) => {
+    const existingItem = updatedAddedItemsForOrder.find(
       (item) => item.item === productId
     );
 
@@ -55,7 +56,7 @@ const Products = ({
     }
 
     if (employee) {
-      updateItemsForOrder(item, qty); // Call the updateOrderItems function with item and qty
+      updateUpdatedItemsForOrder(item, qty); // Call the updateOrderItems function with item and qty
     } else {
       alert("Please Login before taking order");
     }
@@ -148,7 +149,7 @@ const Products = ({
             <View style={waiterStyles.productCartButton}>
               <Pressable
                 onPress={() =>
-                  handleAddItemsToOrder(
+                  handleAddUpdateItemsToOrder(
                     item._id,
                     quantity[item._id] || 1,
                     item._id
@@ -181,4 +182,4 @@ const mapDispatchToProps = {
   decreaseQuantity,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsUpdate);

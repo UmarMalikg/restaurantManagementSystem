@@ -7,6 +7,7 @@ import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 import HeaderImage from "../../common/HeaderImage";
 import HeaderNotificationButton from "../../common/HeaderNotificationButton";
 import HeaderLogo from "../../common/HeaderLogo";
+import defaultStyles from "../../../defaultStyles";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -25,7 +26,23 @@ const Header = () => {
           justifyContent: "center",
           flexDirection: "row",
         }}
-      ></View>
+      >
+        <View style={defaultStyles.mrgH10}>
+          <Pressable onPress={() => navigation.navigate("CachierOrders")}>
+            <Text>ALL Orders</Text>
+          </Pressable>
+        </View>
+        <View style={defaultStyles.mrgH10}>
+          <Pressable onPress={() => navigation.navigate("TakeOrder")}>
+            <Text>Take Order</Text>
+          </Pressable>
+        </View>
+        <View style={defaultStyles.mrgH10}>
+          <Pressable onPress={() => navigation.navigate("MyOrders")}>
+            <Text>Taken Orders</Text>
+          </Pressable>
+        </View>
+      </View>
       {/* right */}
 
       {employee && employee.isCachier ? (

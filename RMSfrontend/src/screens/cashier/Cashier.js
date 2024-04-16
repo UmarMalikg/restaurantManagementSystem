@@ -8,6 +8,9 @@ import waiterStyles from "../styles/waiterStyles";
 import Header from "./components/Header";
 import CachierOrders from "./CachierOrders";
 import PrintSlip from "./PrintSlip";
+import TakeOrder from "./TakeOrder";
+import MyOrders from "./MyOrders";
+import UpdateOrder from "../common/updateOrder/UpdateOrder";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +43,15 @@ const Cashier = () => {
         <Stack.Group>
           <Stack.Screen name="CachierOrders" component={CachierOrders} />
           <Stack.Screen name="PrintSlip" component={PrintSlip} />
+          <Stack.Screen name="MyOrders" component={MyOrders} />
+          <Stack.Screen name="TakeOrder" component={TakeOrder} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            presentation: "transparentModal",
+          }}
+        >
+          <Stack.Screen name="UpdateOrder" component={UpdateOrder} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

@@ -1,11 +1,8 @@
-updating the data
 style kitchen
 
-Error Handling
 adding icons
-
-pictures uploaded on cloudinary
 
 graphs add in admin for revenue
 
 delete this file
+delete console logs

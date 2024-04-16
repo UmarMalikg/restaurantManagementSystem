@@ -7,6 +7,7 @@ import {
   UPDATE_ORDER_REQUEST_SUCCESS,
   UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
   UPDATE_ORDER_STATUS_REQUEST_SUCCESS,
+  DELETE_ORDER_ITEM_REQUEST_SUCCESS,
 } from "../../constants/orderConstants";
 
 const initialState = {
@@ -73,6 +74,25 @@ const orderReducer = (state = initialState, action) => {
             : order
         ),
       };
+    case DELETE_ORDER_ITEM_REQUEST_SUCCESS:
+      return {
+        ...state,
+        orderData: state.orderData.map((order) => {
+          if (order._id === action.payload.orderId) {
+            // Filter out the deleted item from the order's orderItems array
+            const updatedOrderItems = order.orderItems.filter(
+              (item) => item._id !== action.payload.itemId
+            );
+            // Return the updated order object with the modified orderItems array
+            return {
+              ...order,
+              orderItems: updatedOrderItems,
+            };
+          }
+          return order;
+        }),
+      };
+
     default:
       return state;
   }

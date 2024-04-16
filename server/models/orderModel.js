@@ -38,7 +38,7 @@ const orderSchema = mongoose.Schema(
     orderTaker: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: this.orderType === "Delivery" ? "users" : "employees",
+      ref: "employees",
     },
     status: {
       type: String,
@@ -66,7 +66,10 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: this.orderType === "Delivery" ? true : false,
     },
-
+    customerName: {
+      type: String,
+      required: this.orderType === "Take-Away" ? true : false,
+    },
     deliveryCharges: {
       type: Number,
       required: true,

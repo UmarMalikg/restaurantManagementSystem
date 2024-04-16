@@ -25,6 +25,9 @@ import {
   TOTAL_ORDERS_COUNT_REQUEST,
   TOTAL_ORDERS_COUNT_REQUEST_SUCCESS,
   TOTAL_ORDERS_COUNT_REQUEST_FAILURE,
+  DELETE_ORDER_ITEM_REQUEST,
+  DELETE_ORDER_ITEM_REQUEST_SUCCESS,
+  DELETE_ORDER_ITEM_REQUEST_FAILURE,
 } from "../../constants/orderConstants";
 
 // for employee
@@ -153,6 +156,7 @@ const loadingErrorReducer = (state = initialState, action) => {
     case UPDATE_ORDER_ITEM_STATUS_REQUEST:
     case UPDATE_ORDER_STATUS_REQUEST:
     case TOTAL_ORDERS_COUNT_REQUEST:
+    case DELETE_ORDER_ITEM_REQUEST:
 
     // for product
     case GET_PRODUCT_REQUEST:
@@ -198,6 +202,7 @@ const loadingErrorReducer = (state = initialState, action) => {
     case UPDATE_ORDER_ITEM_STATUS_REQUEST_FAILURE:
     case UPDATE_ORDER_STATUS_REQUEST_FAILURE:
     case TOTAL_ORDERS_COUNT_REQUEST_FAILURE:
+    case DELETE_ORDER_ITEM_REQUEST_FAILURE:
     // for product
     case GET_PRODUCT_REQUEST_FAILURE:
     case GET_PRODUCT_BY_ID_REQUEST_FAILURE:
@@ -241,6 +246,7 @@ const loadingErrorReducer = (state = initialState, action) => {
     case UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS:
     case UPDATE_ORDER_STATUS_REQUEST_SUCCESS:
     case TOTAL_ORDERS_COUNT_REQUEST_SUCCESS:
+    case DELETE_ORDER_ITEM_REQUEST_SUCCESS:
     // for product
     case GET_PRODUCT_REQUEST_SUCCESS:
     case GET_PRODUCT_BY_ID_REQUEST_SUCCESS:
