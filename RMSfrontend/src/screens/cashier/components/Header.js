@@ -8,6 +8,7 @@ import HeaderImage from "../../common/HeaderImage";
 import HeaderNotificationButton from "../../common/HeaderNotificationButton";
 import HeaderLogo from "../../common/HeaderLogo";
 import defaultStyles from "../../../defaultStyles";
+import { FontAwesome6, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -29,17 +30,17 @@ const Header = () => {
       >
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("CachierOrders")}>
-            <Text>ALL Orders</Text>
+            <FontAwesome name="tasks" size={24} color="black" />
           </Pressable>
         </View>
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("TakeOrder")}>
-            <Text>Take Order</Text>
+            <MaterialIcons name="add-task" size={24} color="black" />
           </Pressable>
         </View>
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("MyOrders")}>
-            <Text>Taken Orders</Text>
+            <FontAwesome6 name="clipboard-list" size={24} color="black" />
           </Pressable>
         </View>
       </View>
