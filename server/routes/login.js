@@ -27,20 +27,20 @@ router.post("/", async (req, res) => {
           const accessToken = jwt.sign(
             { userName: userName },
             process.env.JWT_SECRET,
-            { expiresIn: "5m" }
+            { expiresIn: "1d" }
           );
 
           // creating a refreshToken to recreact the access token when it expires
           const refreshToken = jwt.sign(
             { userName: userName },
             process.env.JWT_REF_SECRET,
-            { expiresIn: "10m" }
+            { expiresIn: "2d" }
           );
 
           // storing both tokens in cookies
-          res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
+          res.cookie(`accessToken`, accessToken, { maxAge: 86400000 });
           res.cookie(`refreshToken`, refreshToken, {
-            maxAge: 600000,
+            maxAge: 172800000,
             // httpOnly: true,
             secure: true,
             // sameSite: "strict",
@@ -98,22 +98,22 @@ router.post("/", async (req, res) => {
           const accessToken = jwt.sign(
             { userName: userName },
             process.env.JWT_SECRET,
-            { expiresIn: "5m" }
+            { expiresIn: "1d" }
           );
 
           // creating a refreshToken to recreact the access token when it expires
           const refreshToken = jwt.sign(
             { userName: userName },
             process.env.JWT_REF_SECRET,
-            { expiresIn: "10m" }
+            { expiresIn: "2d" }
           );
 
           // storing both tokens in cookies
-          res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
+          res.cookie(`accessToken`, accessToken, { maxAge: 86400000 });
           res.cookie(`refreshToken`, refreshToken, {
-            maxAge: 600000,
+            maxAge: 172800000,
             // httpOnly: true,
-            secure: true,
+            // secure: true,
             // sameSite: "strict",
           });
 

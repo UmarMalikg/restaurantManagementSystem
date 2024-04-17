@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../context/States";
 import defaultStyles from "../defaultStyles";
 import loginRegisterFormStyles from "./styles/loginRegisterPageStyle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let isWeb = Platform.OS === "web";
 
@@ -34,8 +35,11 @@ const SignIn = () => {
       });
       if (res.data.Login) {
         if (res.data.employee) {
-          updateEmployee(res.data.employee);
-          localStorage.setItem("employee", JSON.stringify(res.data.employee));
+          await updateEmployee(res.data.employee);
+          await AsyncStorage.setItem(
+            "employee",
+            JSON.stringify(res.data.employee)
+          );
           switch (true) {
             case res.data.Admin:
               navigation.navigate("Admin");
@@ -101,8 +105,8 @@ const SignIn = () => {
             </Text>
           </Pressable>
           {/* <Pressable onPress={() => navigation.navigate("Home")}>
-          <Text>Go back to Home</Text>
-        </Pressable> */}
+            <Text>Go back to Home</Text>
+          </Pressable> */}
           {/* <View style={defaultStyles.rowCenteredFlex}>
             <Text>Don't have account? </Text>
             <Pressable onPress={() => navigation.navigate("Register")}>

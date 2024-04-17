@@ -3,8 +3,10 @@ import React, { useEffect } from "react";
 import { api } from "../../api/api";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { fetchCategoryData } from "../../redux/actions/categoryActions";
+import { connect } from "react-redux";
 
-const Home = () => {
+const Home = ({ fetchCategoryData, categoryData }) => {
   const navigation = useNavigation();
 
   axios.defaults.withCredentials = true;
@@ -23,6 +25,11 @@ const Home = () => {
 
     fetchToken();
   }, [navigation]);
+
+  useEffect(() => {
+    fetchCategoryData();
+  }, [fetchCategoryData]);
+  console.log(categoryData);
   return (
     <View>
       <Text>Home</Text>
@@ -33,4 +40,13 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    categoryData: state.categories.categoryData,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchCategoryData,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -5,6 +5,7 @@ import { useAppContext } from "../../context/States";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import defaultStyles from "../../defaultStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HeaderLogoutButton = () => {
   const { updateEmployee } = useAppContext();
@@ -16,7 +17,7 @@ const HeaderLogoutButton = () => {
   };
 
   const clearEmployeesInfoFromLocalStorage = () => {
-    localStorage.removeItem("employee");
+    AsyncStorage.removeItem("employee");
   };
 
   const logout = async () => {

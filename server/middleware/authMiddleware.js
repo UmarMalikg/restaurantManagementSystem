@@ -42,9 +42,9 @@ const renewToken = (req, res, next) => {
       const accessToken = jwt.sign(
         { userName: decoded.userName },
         process.env.JWT_SECRET,
-        { expiresIn: "1m" }
+        { expiresIn: "1d" }
       );
-      res.cookie(`accessToken`, accessToken, { maxAge: 300000 });
+      res.cookie(`accessToken`, accessToken, { maxAge: 86400000 });
       if (next) {
         next(); // Token renewed successfully
       }

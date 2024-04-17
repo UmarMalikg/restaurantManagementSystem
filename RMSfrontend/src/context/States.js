@@ -1,12 +1,28 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const storedEmployee = localStorage.getItem("employee");
-  const initialEmployee = storedEmployee ? JSON.parse(storedEmployee) : null;
   // state that keep track of logined employee
-  const [employee, setEmployee] = useState(initialEmployee);
+  const [employee, setEmployee] = useState(null);
+
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      try {
+        const storedEmployee = await AsyncStorage.getItem("employee");
+        if (storedEmployee) {
+          const initialEmployee = JSON.parse(storedEmployee);
+          setEmployee(initialEmployee);
+        }
+      } catch (error) {
+        console.error("Error fetching employee data from AsyncStorage:", error);
+      }
+    };
+
+    fetchEmployee();
+  }, []);
+
   const updateEmployee = (newEmployee) => {
     setEmployee(newEmployee);
   };
