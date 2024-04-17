@@ -43,7 +43,7 @@ const AddTables = ({
     // Fetch category data when the component mounts
     fetchFloorData();
   }, [fetchFloorData]);
-  console.log("floorData:", floorData);
+  // console.log("floorData:", floorData);
 
   const handleFloorChanged = () => {
     fetchFloorData(); // Wait for the data to be fetched
