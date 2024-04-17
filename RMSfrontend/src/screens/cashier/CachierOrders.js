@@ -93,6 +93,7 @@ const CachierOrders = ({
     .filter((order) => {
       // Filter by search text if available
       return (
+        order &&
         order.orderItems &&
         order.orderItems.some((item) =>
           item.item.includes(searchText.toLowerCase())
