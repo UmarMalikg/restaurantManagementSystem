@@ -71,18 +71,19 @@ const Tables = ({ tableData, fetchTableData }) => {
                 }),
               }}
             >
-              {filteredData.map((table) => (
-                <Pressable
-                  style={[
-                    waiterStyles.sideBarTables,
-                    table.isReserved && { backgroundColor: "red" },
-                  ]}
-                  key={table._id}
-                  onPress={() => selectTable(table._id)}
-                >
-                  <Text key={table._id}>{table.name}</Text>
-                </Pressable>
-              ))}
+              {tableData &&
+                filteredData.map((table) => (
+                  <Pressable
+                    style={[
+                      waiterStyles.sideBarTables,
+                      table.isReserved && { backgroundColor: "red" },
+                    ]}
+                    key={table._id}
+                    onPress={() => selectTable(table._id)}
+                  >
+                    <Text key={table._id}>{table.name}</Text>
+                  </Pressable>
+                ))}
             </View>
           </ScrollView>
         </View>
