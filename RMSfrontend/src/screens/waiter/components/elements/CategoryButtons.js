@@ -38,19 +38,20 @@ const CategoryButtons = ({
           >
             <Text>All</Text>
           </Pressable>
-          {categoryData.map((category) => (
-            <Pressable
-              key={category._id}
-              style={[
-                waiterStyles.categoryButtons,
-                selectedCategory === category._id &&
-                  waiterStyles.selectedCategoryButtons,
-              ]}
-              onPress={() => handleCategoryClick(category._id)} // Handle other category clicks
-            >
-              <Text>{category.name}</Text>
-            </Pressable>
-          ))}
+          {categoryData &&
+            categoryData.map((category) => (
+              <Pressable
+                key={category._id}
+                style={[
+                  waiterStyles.categoryButtons,
+                  selectedCategory === category._id &&
+                    waiterStyles.selectedCategoryButtons,
+                ]}
+                onPress={() => handleCategoryClick(category._id)} // Handle other category clicks
+              >
+                <Text>{category.name}</Text>
+              </Pressable>
+            ))}
         </View>
       </ScrollView>
     </>

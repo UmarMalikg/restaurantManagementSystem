@@ -12,8 +12,6 @@ import {
   successAlertMessage,
   dangerAlertBackground,
   dangerAlertMessage,
-  warningAertBackground,
-  warningAertMessage,
 } from "../../../constants/stylesConstants";
 
 import SocketContext from "../../../context/socketContext";
@@ -47,7 +45,6 @@ const OrderPlacement = ({
   const [popUpMessage, setPopUpMessage] = useState("");
   const [isOrdered, setIsOrdered] = useState(false);
   const [isOrderCancelled, setIsOrderCancelled] = useState(false);
-  const [isDrafted, setIsDrafted] = useState(false);
 
   const showPopUp = (set) => {
     set(true);
@@ -57,16 +54,17 @@ const OrderPlacement = ({
     }, 1000);
   };
 
-  const emptyItemIndex = addedItemsForOrder.find(
-    (item) => item.item === "" && item.qty === ""
-  );
+  const emptyItemIndex =
+    addedItemsForOrder &&
+    addedItemsForOrder.find((item) => item.item === "" && item.qty === "");
 
   const [totalCharges, setTotalCharges] = useState(0);
 
   const priceCalculator = () => {
     let itemCharges = 0;
     addedItemsForOrder.forEach((item) => {
-      const product = productData.find((p) => p._id === item.item);
+      const product =
+        productData && productData.find((p) => p._id === item.item);
       if (product) {
         itemCharges += product.price * item.qty;
       }
@@ -147,11 +145,6 @@ const OrderPlacement = ({
     showPopUp(setIsOrderCancelled);
   };
 
-  const draftOrder = () => {
-    setPopUpMessage("Order Drafted!");
-    showPopUp(setIsDrafted);
-  };
-
   const deleteListedItem = (productId) => {
     const updatedItems = addedItemsForOrder.filter(
       (item) => item.item !== productId
@@ -169,6 +162,7 @@ const OrderPlacement = ({
           <Text style={waiterStyles.orderSelectTableText}>
             {selectedTable
               ? `${
+                  tableData &&
                   tableData.find((t) => t._id === selectedTable)?.name
                 } Selected`
               : `Select Table`}
@@ -185,16 +179,19 @@ const OrderPlacement = ({
             <View></View>
           ) : (
             addedItemsForOrder?.map((item) => {
-              const product = productData.find((p) => p._id === item.item);
+              const product =
+                productData && productData.find((p) => p._id === item.item);
 
               return (
                 <View style={waiterStyles.singleOrderMenuBox}>
                   <View style={waiterStyles.orderMenuImgBox}>
-                    {productData.find((p) => p._id === item.item) ? (
+                    {productData &&
+                    productData.find((p) => p._id === item.item) ? (
                       <Image
                         style={waiterStyles.orderMenuImg}
                         source={{
                           uri: `${
+                            productData &&
                             productData.find((p) => p._id === item.item).img
                           }`,
                         }}

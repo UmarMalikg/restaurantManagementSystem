@@ -41,7 +41,11 @@ dotenv.config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:19006",
+    origin: [
+      "http://localhost:19006",
+      "http://192.168.43.125:19006",
+      "exp://192.168.43.125:8081",
+    ],
     credentials: true,
   })
 );

@@ -38,12 +38,17 @@ router.post("/", async (req, res) => {
           );
 
           // storing both tokens in cookies
-          res.cookie(`accessToken`, accessToken, { maxAge: 86400000 });
+          res.cookie(`accessToken`, accessToken, {
+            maxAge: 86400000,
+            httpOnly: true,
+            secure: false,
+            sameSite: "none",
+          });
           res.cookie(`refreshToken`, refreshToken, {
             maxAge: 172800000,
-            // httpOnly: true,
-            secure: true,
-            // sameSite: "strict",
+            httpOnly: true,
+            secure: false,
+            sameSite: "none",
           });
 
           //Checking for the employee roles to grant access based on their roles.
@@ -109,12 +114,17 @@ router.post("/", async (req, res) => {
           );
 
           // storing both tokens in cookies
-          res.cookie(`accessToken`, accessToken, { maxAge: 86400000 });
+          res.cookie(`accessToken`, accessToken, {
+            maxAge: 86400000,
+            httpOnly: true,
+            secure: false,
+            sameSite: "none",
+          });
           res.cookie(`refreshToken`, refreshToken, {
             maxAge: 172800000,
-            // httpOnly: true,
-            // secure: true,
-            // sameSite: "strict",
+            httpOnly: true,
+            secure: false,
+            sameSite: "none",
           });
 
           //Checking for the employee roles to grant access based on their roles.
