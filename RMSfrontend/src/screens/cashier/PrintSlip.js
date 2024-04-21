@@ -416,18 +416,38 @@ const PrintSlip = ({
             </View>
           </View>
 
-          <View style={defaultStyles.rowCenteredFlex}>
-            <Text>Add Discount</Text>
-            <TextInput
-              placeholder="Add Discount"
-              value={discount.toString()} // Bind the discount state to the TextInput value
-              onChangeText={(text) => setDiscount(parseFloat(text) || 0)} // Convert input to float and update the discount state
-            />
-            <Pressable onPress={makeChanges}>
-              <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
-                Save Changes
-              </Text>
-            </Pressable>
+          <View>
+            {/* <View>
+              <Text>Add Discount</Text>
+            </View> */}
+            <View>
+              <TextInput
+                style={[{ borderRadius: 10, backgroundColor: "#fff" }]}
+                placeholder="Add Discount in %age"
+                value={discount === 0 ? "" : discount.toString()} // Bind the discount state to the TextInput value
+                onChangeText={(text) => {
+                  const parsedDiscount = parseFloat(text);
+                  if (
+                    !isNaN(parsedDiscount) &&
+                    parsedDiscount >= 0 &&
+                    parsedDiscount <= 100
+                  ) {
+                    // If the input is a valid number between 0 and 100, update the discount state
+                    setDiscount(parsedDiscount);
+                  } else if (text === "") {
+                    // If the input is empty, set the discount to 0
+                    setDiscount(0);
+                  }
+                }}
+              />
+            </View>
+            <View>
+              <Pressable onPress={makeChanges}>
+                <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                  Save Changes
+                </Text>
+              </Pressable>
+            </View>
           </View>
 
           <View style={defaultStyles.rowCenteredFlex}>
