@@ -8,6 +8,7 @@ import {
   UPDATE_ORDER_ITEM_STATUS_REQUEST_SUCCESS,
   UPDATE_ORDER_STATUS_REQUEST_SUCCESS,
   DELETE_ORDER_ITEM_REQUEST_SUCCESS,
+  UPDATE_ORDER_DISCOUNT_REQUEST_SUCCESS,
 } from "../../constants/orderConstants";
 
 const initialState = {
@@ -91,6 +92,16 @@ const orderReducer = (state = initialState, action) => {
           }
           return order;
         }),
+      };
+    case UPDATE_ORDER_DISCOUNT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        // Update the order with the new discount
+        orderData: state.orderData.map((order) =>
+          order._id === action.payload.orderId
+            ? action.payload.updatedOrder
+            : order
+        ),
       };
 
     default:

@@ -1,19 +1,25 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import cachierStyles from "../styles/cachierStyles";
 import defaultStyles from "../../defaultStyles";
 import { connect } from "react-redux";
-import { getOrderById } from "../../redux/actions/orderActions";
+import { getOrderById, updateDiscount } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchFloorData } from "../../redux/actions/floorActions";
 import { isWeb } from "../../constants/stylesConstants";
 import ViewShot from "react-native-view-shot";
+import SocketContext from "../../context/socketContext";
+import {
+  emitSocket,
+  changeViaSocket,
+} from "../../socketConfig/socketFunctions";
 
 import * as Print from "expo-print";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
+import { TextInput } from "react-native-paper";
 
 let today = new Date();
 let date =
@@ -26,6 +32,7 @@ let date =
 const PrintSlip = ({
   route,
   getOrderById,
+  updateDiscount,
   selectedOrder,
   fetchProductData,
   productData,
@@ -38,6 +45,7 @@ const PrintSlip = ({
 }) => {
   const { orderId } = route.params;
   const printRef = useRef(null);
+  const socket = useContext(SocketContext);
 
   const handlePrint = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
@@ -72,15 +80,34 @@ const PrintSlip = ({
     fetchFloorData,
   ]);
 
+  const handleOrderChanged = () => {
+    getOrderById(orderId); // Wait for the data to be fetched
+    console.log("Floor data fetched successfully");
+  };
+  useEffect(() => {
+    changeViaSocket(socket, "orderChanged", handleOrderChanged);
+  }, [socket]);
+
   useEffect(() => {
     if (selectedOrder !== null) {
       console.log("not noll", selectedOrder);
     }
   }, [selectedOrder]);
 
-  if (selectedOrder !== null) {
-    console.log(selectedOrder.totalPrice);
-  }
+  const [discount, setDiscount] = useState(0);
+
+  const makeChanges = async () => {
+    try {
+      // Call the updateDiscount action to update the discount for the order
+      await updateDiscount(orderId, discount);
+      emitSocket(socket, "orderChanged");
+      // Optionally, you can navigate to another screen or perform any other action upon successful update
+    } catch (err) {
+      console.error("Error updating discount:", err);
+      // Handle errors, such as displaying an error message to the user
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -243,7 +270,8 @@ const PrintSlip = ({
 
               {/* Render order items */}
               {selectedOrder.orderItems.map((item) => {
-                const product = productData.find((p) => p._id === item.item); // Find corresponding product
+                const product =
+                  productData && productData.find((p) => p._id === item.item); // Find corresponding product
 
                 return (
                   <View
@@ -389,6 +417,20 @@ const PrintSlip = ({
           </View>
 
           <View style={defaultStyles.rowCenteredFlex}>
+            <Text>Add Discount</Text>
+            <TextInput
+              placeholder="Add Discount"
+              value={discount.toString()} // Bind the discount state to the TextInput value
+              onChangeText={(text) => setDiscount(parseFloat(text) || 0)} // Convert input to float and update the discount state
+            />
+            <Pressable onPress={makeChanges}>
+              <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                Save Changes
+              </Text>
+            </Pressable>
+          </View>
+
+          <View style={defaultStyles.rowCenteredFlex}>
             <Pressable
               style={[
                 defaultStyles.mrg15,
@@ -424,6 +466,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getOrderById,
+  updateDiscount,
   fetchProductData,
   fetchTableData,
   fetchFloorData,
