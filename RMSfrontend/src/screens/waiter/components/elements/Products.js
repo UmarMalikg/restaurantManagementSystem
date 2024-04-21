@@ -34,9 +34,9 @@ const Products = ({
   useEffect(() => {
     // Filter products based on the selected category
     if (selectedCategory) {
-      const filtered = productData.filter(
-        (product) => product.category === selectedCategory
-      );
+      const filtered =
+        productData &&
+        productData.filter((product) => product.category === selectedCategory);
       setFilteredProducts(filtered);
     } else {
       // If no category is selected, show all products
@@ -45,9 +45,9 @@ const Products = ({
   }, [selectedCategory, productData]);
 
   const handleAddItemsToOrder = (item, qty, productId) => {
-    const existingItem = addedItemsForOrder.find(
-      (item) => item.item === productId
-    );
+    const existingItem =
+      addedItemsForOrder &&
+      addedItemsForOrder.find((item) => item.item === productId);
 
     if (existingItem) {
       alert(`Item already added`);

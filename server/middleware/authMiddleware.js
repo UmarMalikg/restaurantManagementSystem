@@ -47,8 +47,8 @@ const renewToken = (req, res, next) => {
       res.cookie(`accessToken`, accessToken, {
         maxAge: 86400000,
         httpOnly: true,
-        secure: false,
-        SameSite: "None",
+        // secure: true,
+        // SameSite: "None",
       });
       if (next) {
         next(); // Token renewed successfully

@@ -6,9 +6,12 @@ import { useAppContext } from "../../context/States";
 import { MaterialIcons } from "@expo/vector-icons";
 import defaultStyles from "../../defaultStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const HeaderLogoutButton = () => {
   const { updateEmployee } = useAppContext();
+  const navigation = useNavigation();
+
   const clearTokens = () => {
     document.cookie =
       "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -26,7 +29,7 @@ const HeaderLogoutButton = () => {
       clearTokens();
       clearEmployeesInfoFromLocalStorage();
       updateEmployee(null);
-      window.location.reload();
+      navigation.navigate("SignIn");
     } catch (error) {
       console.error("Error logging out:", error);
     }
