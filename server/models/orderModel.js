@@ -79,6 +79,7 @@ const orderSchema = mongoose.Schema(
     discount: {
       type: Number,
       min: 0,
+      max: 100,
       default: 0,
     },
 
@@ -144,8 +145,12 @@ orderSchema.pre("save", async function (next) {
     }
 
     // Add delivery charges and apply discounts if applicable
+    // Apply discount percentage
+    const discountAmount = (totalPrice * this.discount) / 100;
+    totalPrice -= discountAmount;
+
+    // Add delivery charges
     totalPrice += this.deliveryCharges;
-    totalPrice -= this.discount;
 
     // Ensure total price is non-negative
     this.totalPrice = Math.max(totalPrice, 0);
