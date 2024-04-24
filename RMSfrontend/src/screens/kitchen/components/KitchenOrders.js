@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Picker } from "react-native";
+import { View, Text, ScrollView, Image, Picker, Pressable } from "react-native";
 import React, { useContext, useEffect } from "react";
 import waiterStyles from "../../styles/waiterStyles";
 import defaultStyles from "../../../defaultStyles";
@@ -95,6 +95,17 @@ const KitchenOrders = ({
     }
   };
 
+  const changeOrderStatus = async (orderId, status) => {
+    try {
+      console.log(`in try`);
+      await updateOrderStatus(orderId, status);
+      console.log(`after update`);
+      emitSocket(socket, "orderChanged");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -107,11 +118,75 @@ const KitchenOrders = ({
       {/* all orders */}
       <ScrollView>
         {displayOrders().map((order) => (
-          <View key={order._id}>
+          <View key={order._id} style={waiterStyles.singleOrder}>
             {/* single order */}
             <View>
-              <View>
-                <Text>{order.status}</Text>
+              <View style={defaultStyles.rowSpacingFlex}>
+                <View style={[defaultStyles.rowFlex]}>
+                  <View style={[defaultStyles.rowFlex, defaultStyles.mrgH15]}>
+                    <View>
+                      <Text style={[defaultStyles.fWB, defaultStyles.fs22]}>
+                        Order Status:{" "}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={[defaultStyles.fs22]}>{order.status}</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={[defaultStyles.mrgH15, defaultStyles.rowFlex]}>
+                  <Pressable
+                    onPress={() => {
+                      changeOrderStatus(order._id, "Preparing");
+                    }}
+                    style={[
+                      {
+                        padding: 10,
+                        borderRadius: 4,
+                        backgroundColor: "#3ea381",
+                      },
+                      defaultStyles.mrgH20,
+                    ]}
+                  >
+                    <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
+                      Preparing
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      changeOrderStatus(order._id, "Ready");
+                    }}
+                    style={[
+                      {
+                        padding: 10,
+                        borderRadius: 4,
+                        backgroundColor: "#3ea381",
+                      },
+                      defaultStyles.mrgH20,
+                    ]}
+                  >
+                    <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
+                      Ready
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      changeOrderStatus(order._id, "Delivered");
+                    }}
+                    style={[
+                      {
+                        padding: 10,
+                        borderRadius: 4,
+                        backgroundColor: "#3ea381",
+                      },
+                      defaultStyles.mrgH20,
+                    ]}
+                  >
+                    <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
+                      Delivered
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
               <ScrollView showsHorizontalScrollIndicator={false}>
                 {/* single Item */}
@@ -133,9 +208,6 @@ const KitchenOrders = ({
                           >
                             <View>
                               <Text>{item?.itemStatus || "NA"}</Text>
-                            </View>
-                            <View>
-                              <Text>Time</Text>
                             </View>
                           </View>
 
