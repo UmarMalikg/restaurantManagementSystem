@@ -42,6 +42,7 @@ const Waiter = () => {
         <Stack.Group>
           <Stack.Screen name="WaiterHome" component={Home} />
           <Stack.Screen name="Orders" component={Orders} />
+          <Stack.Screen name="UpdateOrder" component={UpdateOrder} />
         </Stack.Group>
         <Stack.Group
           screenOptions={{
@@ -49,7 +50,6 @@ const Waiter = () => {
           }}
         >
           <Stack.Screen name="Tables" component={Tables} />
-          <Stack.Screen name="UpdateOrder" component={UpdateOrder} />
         </Stack.Group>
       </Stack.Navigator>
     </View>

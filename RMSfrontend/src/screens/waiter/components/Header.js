@@ -32,13 +32,13 @@ const Header = () => {
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.navigate("WaiterHome")}
         >
-          <Ionicons name="home-outline" size={24} color="black" />
+          <Ionicons name="home-outline" size={24} color="#fff" />
         </Pressable>
         <Pressable
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.navigate("Orders")}
         >
-          <MaterialIcons name="addchart" size={24} color="black" />
+          <MaterialIcons name="addchart" size={24} color="#fff" />
         </Pressable>
       </View>
       {/* right */}

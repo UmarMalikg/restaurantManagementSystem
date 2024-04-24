@@ -11,6 +11,7 @@ const defaultStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    color: "#fff",
   },
   // navbar
   navBar: {
@@ -574,7 +575,7 @@ const defaultStyles = StyleSheet.create({
     top: -3,
     height: 25,
     width: 25,
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#fff",
     borderRadius: 25,
   },
 });

@@ -147,6 +147,7 @@ const Products = ({
             </View>
             <View style={waiterStyles.productCartButton}>
               <Pressable
+                style={{ zIndex: 1000 }}
                 onPress={() =>
                   handleAddItemsToOrder(
                     item._id,

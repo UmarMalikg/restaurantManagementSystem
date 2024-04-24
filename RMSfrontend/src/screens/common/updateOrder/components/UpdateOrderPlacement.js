@@ -190,10 +190,14 @@ const UpdateOrderPlacement = ({
       <View style={waiterStyles.orderSelectTableBox}>
         <View style={defaultStyles.rowFlex}>
           <View>
-            <Text style={defaultStyles.fWB}>Order type: {"  "}</Text>
+            <Text style={[defaultStyles.fWB, defaultStyles.fs22]}>
+              Order type: {"  "}
+            </Text>
           </View>
           <View>
-            <Text>{selectedOrder !== null && selectedOrder.orderType}</Text>
+            <Text style={[defaultStyles.fs20]}>
+              {selectedOrder !== null && selectedOrder.orderType}
+            </Text>
           </View>
         </View>
       </View>
@@ -279,8 +283,8 @@ const UpdateOrderPlacement = ({
       </ScrollView>
 
       <View style={waiterStyles.orderCalculationsBox}>
-        <View style={waiterStyles.orderLeftCircle}></View>
-        <View style={waiterStyles.orderRightCircle}></View>
+        {/* <View style={waiterStyles.orderLeftCircle}></View>
+        <View style={waiterStyles.orderRightCircle}></View> */}
         <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>

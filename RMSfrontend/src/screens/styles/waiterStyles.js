@@ -6,6 +6,7 @@ import {
   darkGreen,
   lightGreen,
   darkBlueGreen,
+  navBarHeight,
 } from "../../constants/stylesConstants";
 import defaultStyles from "../../defaultStyles";
 
@@ -13,9 +14,13 @@ const waiterStyles = StyleSheet.create({
   // styles for sideBar
   container: {
     flex: 1,
+    color: "#fff",
   },
   // styles for Header
-  header: [defaultStyles.navBar, { backgroundColor: "#EDEDED" }],
+  header: [
+    defaultStyles.navBar,
+    { backgroundColor: "#35454d", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" },
+  ],
   headerEmployeeAction: [defaultStyles.rowFlex],
 
   headerEmployeeInfo: [defaultStyles.rowCenteredFlex],
@@ -53,13 +58,11 @@ const waiterStyles = StyleSheet.create({
   tables: [defaultStyles.container],
   tableBox: {
     position: "absolute",
-    top: 70,
+    top: navBarHeight + 10,
     width: isWeb ? "70%" : "100%",
-    bottom: 5,
-    top: 70,
-    backgroundColor: fullLightGreen,
-    borderWidth: 3,
-    borderColor: "#004346",
+    bottom: 10,
+    backgroundColor: "#e5e8ec",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   },
   cancelButtonPosition: {
     position: "absolute",
@@ -84,7 +87,8 @@ const waiterStyles = StyleSheet.create({
   },
   sideBarTables: {
     flex: 1 / 2,
-    backgroundColor: darkGreen,
+    backgroundColor: "#f3f3f3",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     borderRadius: 10,
     alignItems: "center",
     padding: 10,
@@ -95,12 +99,12 @@ const waiterStyles = StyleSheet.create({
   // styles for sideBar
   orderPlacement: {
     position: "absolute",
-    top: 70,
+    top: navBarHeight,
     bottom: 0,
-    right: 20,
-    width: 350,
-    backgroundColor: darkGreen,
-    borderRadius: 20,
+    right: 0,
+    width: 370,
+    backgroundColor: "#F0EEFF",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   },
   orderCalculationsBox: {
     // position: "absolute",
@@ -120,12 +124,13 @@ const waiterStyles = StyleSheet.create({
   orderButtonsText: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "#fff",
   },
   orderPlaceButton: {
-    backgroundColor: "#0f0",
+    backgroundColor: "#3ea381",
   },
   orderCancelButton: {
-    backgroundColor: "#f00",
+    backgroundColor: "#fb6068",
   },
   orderDraftButton: {
     backgroundColor: "#ff0",
@@ -213,7 +218,7 @@ const waiterStyles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 20,
   },
-  orderMenuQtyActionText: { fontSize: 18, fontWeight: "bold" },
+  orderMenuQtyActionText: { fontSize: 18, fontWeight: "bold", color: "#fff" },
   orderMenuQtyTextBox: { marginHorizontal: 10 },
   orderMenuQtyText: {},
   orderMenuActionBox: {},
@@ -225,22 +230,23 @@ const waiterStyles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 5,
     borderRadius: 30,
-    backgroundColor: "#0a0",
+    backgroundColor: "#3ea381",
   },
   orderSelectTableText: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#fff",
   },
 
   // styles for HomeSection
   homeSection: {
     position: "absolute",
     top: 70,
-    left: 20,
+    left: 0,
     bottom: 0,
     right: 370,
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#fff",
   },
   //catagories buttons styling
   category: {
@@ -280,7 +286,8 @@ const waiterStyles = StyleSheet.create({
     aspectRatio: "auto", // To maintain a square aspect ratio
     marginVertical: 15,
     marginHorizontal: 15,
-    backgroundColor: lightGreen, // Example background color
+    backgroundColor: "#e5e5e5", // Example background color
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     shadowColor: "rgba(d, d, d, 0.5)", // Shadow color and opacity
     shadowOffset: {
       width: 5, // Horizontal offset
@@ -339,12 +346,17 @@ const waiterStyles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#fff",
     paddingHorizontal: 20,
   },
 
   // styles for order page
-  singleOrder: {},
+  singleOrder: {
+    backgroundColor: "#e5e8ec",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    marginVertical: 10,
+    padding: 10,
+  },
   allItems: {
     display: "flex",
     alignItems: "center",
@@ -352,7 +364,8 @@ const waiterStyles = StyleSheet.create({
     flexDirection: "row",
   },
   singleItem: {
-    backgroundColor: darkGreen,
+    backgroundColor: "#f3f3f3",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     width: 150,
     height: 220,
     borderRadius: 10,

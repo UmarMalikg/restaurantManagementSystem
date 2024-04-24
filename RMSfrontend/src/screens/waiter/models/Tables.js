@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { fetchTableData } from "../../../redux/actions/tableActions";
 
 import { useAppContext } from "../../../context/States";
+import defaultStyles from "../../../defaultStyles";
 let isWeb = Platform.OS === "web";
 
 // setSelectedTable
@@ -46,7 +47,9 @@ const Tables = ({ tableData, fetchTableData }) => {
             onPress={() => navigation.navigate("WaiterHome")}
             style={waiterStyles.cancelButton}
           >
-            <Text style={{ fontSize: 19 }}>X</Text>
+            <Text style={[{ fontSize: 19, color: "#f00" }, defaultStyles.fWB]}>
+              X
+            </Text>
           </Pressable>
         </View>
         <View style={{ position: "absolute", left: 10, top: 10 }}>

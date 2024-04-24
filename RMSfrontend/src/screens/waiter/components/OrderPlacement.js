@@ -17,6 +17,7 @@ import {
 import SocketContext from "../../../context/socketContext";
 
 import { emitSocket } from "../../../socketConfig/socketFunctions";
+import AdminDeleteIcon from "../../common/AdminDeleteIcon";
 
 const OrderPlacement = ({
   fetchProductData,
@@ -242,7 +243,7 @@ const OrderPlacement = ({
 
                     <View style={waiterStyles.orderMenuActionBox}>
                       <Pressable onPress={() => deleteListedItem(item.item)}>
-                        <Text>delete</Text>
+                        <AdminDeleteIcon />
                       </Pressable>
                     </View>
                   </View>
@@ -254,8 +255,8 @@ const OrderPlacement = ({
       </ScrollView>
 
       <View style={waiterStyles.orderCalculationsBox}>
-        <View style={waiterStyles.orderLeftCircle}></View>
-        <View style={waiterStyles.orderRightCircle}></View>
+        {/* <View style={waiterStyles.orderLeftCircle}></View>
+        <View style={waiterStyles.orderRightCircle}></View> */}
         <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>
@@ -331,9 +332,8 @@ const OrderPlacement = ({
               <View
                 style={{
                   position: "absolute",
-                  top: -30,
-                  left: "50%", // Center the text horizontally
-                  transform: [{ translateX: "-50%" }], // Move the text back half of its width to center it
+                  top: -25,
+                  right: 0,
                   borderRadius: 5,
                   zIndex: 1,
                   width: "200%",
@@ -352,38 +352,6 @@ const OrderPlacement = ({
               </View>
             )}
           </View>
-          {/* <View style={{ position: "relative" }}>
-            <Pressable
-              style={[waiterStyles.orderButtons, waiterStyles.orderDraftButton]}
-              onPress={draftOrder}
-            >
-              <Text style={waiterStyles.orderButtonsText}>Draft</Text>
-            </Pressable>
-            {isDrafted && (
-              <View
-                style={{
-                  position: "absolute",
-                  top: -25,
-                  display: "flex",
-                  right: 0,
-                  borderRadius: 5,
-                  zIndex: 1, // Set the maximum width to 400% of its parent
-                  width: "200%",
-                  backgroundColor: warningAertBackground,
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: warningAertMessage,
-                    fontWeight: "bold",
-                  }}
-                >
-                  {popUpMessage}
-                </Text>
-              </View>
-            )}
-          </View> */}
         </View>
       </View>
     </View>

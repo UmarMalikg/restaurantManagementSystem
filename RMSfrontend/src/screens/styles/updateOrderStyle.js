@@ -17,22 +17,21 @@ import {
 } from "../../constants/stylesConstants";
 import defaultStyles from "../../defaultStyles";
 
-const updateOrderPlacementWidth = 400;
+const updateOrderPlacementWidth = 370;
 
 const updateOrderStyle = StyleSheet.create({
   page: {
     position: "absolute",
-    top: navBarHeight + 10,
-    bottom: 10,
-    left: 20,
-    right: 20,
+    top: navBarHeight,
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: "#fff",
-    borderRadius: 10,
   },
   backButtonPosition: {
     position: "absolute",
     top: 0,
-    left: 0,
+    left: 20,
     zIndex: 1000000,
   },
   orderPlacment: {
@@ -41,7 +40,7 @@ const updateOrderStyle = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: updateOrderPlacementWidth,
-    // backgroundColor: "#0f0",
+    backgroundColor: "#F0EEFF",
   },
   updateProductCategoryPosition: {
     position: "absolute",
