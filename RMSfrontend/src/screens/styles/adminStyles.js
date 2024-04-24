@@ -388,7 +388,7 @@ const adminStyles = StyleSheet.create({
   orderData: [
     defaultStyles.rowSpacingFlex,
     {
-      backgroundColor: "#e5e8ecf5f5f5",
+      backgroundColor: "#e5e8ec",
       boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     },
   ],

@@ -30,17 +30,17 @@ const Header = () => {
       >
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("CachierOrders")}>
-            <FontAwesome name="tasks" size={24} color="black" />
+            <FontAwesome name="tasks" size={24} color="#fff" />
           </Pressable>
         </View>
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("TakeOrder")}>
-            <MaterialIcons name="add-task" size={24} color="black" />
+            <MaterialIcons name="add-task" size={24} color="#fff" />
           </Pressable>
         </View>
         <View style={defaultStyles.mrgH10}>
           <Pressable onPress={() => navigation.navigate("MyOrders")}>
-            <FontAwesome6 name="clipboard-list" size={24} color="black" />
+            <FontAwesome6 name="clipboard-list" size={24} color="#fff" />
           </Pressable>
         </View>
       </View>

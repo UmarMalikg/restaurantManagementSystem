@@ -8,7 +8,7 @@ const cachierStyles = StyleSheet.create({
     bottom: 0,
     top: navBarHeight,
     right: 0,
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#fff",
   },
 
   //   print stlip design

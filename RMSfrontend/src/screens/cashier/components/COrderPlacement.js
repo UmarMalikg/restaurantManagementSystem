@@ -272,8 +272,8 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
       </ScrollView>
 
       <View style={waiterStyles.orderCalculationsBox}>
-        <View style={waiterStyles.orderLeftCircle}></View>
-        <View style={waiterStyles.orderRightCircle}></View>
+        {/* <View style={waiterStyles.orderLeftCircle}></View>
+        <View style={waiterStyles.orderRightCircle}></View> */}
         <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>

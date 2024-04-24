@@ -127,10 +127,7 @@ const MyOrders = ({
       <ScrollView>
         {displayOrders().map((order) => {
           return (
-            <View
-              key={order._id}
-              style={{ backgroundColor: "#ff0", marginVertical: 10 }}
-            >
+            <View key={order._id} style={waiterStyles.singleOrder}>
               {/* single order */}
               <View>
                 <View style={defaultStyles.rowSpacingFlex}>
@@ -167,12 +164,14 @@ const MyOrders = ({
                         {
                           padding: 10,
                           borderRadius: 4,
-                          backgroundColor: "#0ff",
+                          backgroundColor: "#3ea381",
                         },
                         defaultStyles.mrgH20,
                       ]}
                     >
-                      <Text>Completed ?</Text>
+                      <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
+                        Completed ?
+                      </Text>
                     </Pressable>
                   </View>
                 </View>
@@ -279,13 +278,13 @@ const MyOrders = ({
                               style={[
                                 defaultStyles.padH15,
                                 defaultStyles.padV3,
-                                { backgroundColor: "#f0f" },
+                                { backgroundColor: "#48629c" },
                               ]}
                             >
                               <FontAwesome6
                                 name="check"
                                 size={24}
-                                color="black"
+                                color="#fff"
                               />
                             </Pressable>
                             <Pressable
@@ -293,13 +292,13 @@ const MyOrders = ({
                               style={[
                                 defaultStyles.padH15,
                                 defaultStyles.padV3,
-                                { backgroundColor: "#f0f" },
+                                { backgroundColor: "#fb6068" },
                               ]}
                             >
                               <MaterialCommunityIcons
                                 name="delete-restore"
                                 size={24}
-                                color="black"
+                                color="#fff"
                               />
                             </Pressable>
                           </View>
