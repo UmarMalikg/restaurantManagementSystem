@@ -101,7 +101,7 @@ const Products = ({
     </View>,
   ]);
 
-  const widthArr = [80, 120, 220, 180, 120, 120];
+  const widthArr = [80, 120, 270, 240, 200, 120];
 
   const rows = tableData.map((rowData, index) => (
     <Row

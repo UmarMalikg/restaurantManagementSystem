@@ -172,8 +172,8 @@ const adminStyles = StyleSheet.create({
   goToModelButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 30,
-    backgroundColor: fullDarkBlue,
+    borderRadius: 10,
+    backgroundColor: "#232c3c",
   },
   goToModelButtonText: {
     color: "#fff",
@@ -197,7 +197,7 @@ const adminStyles = StyleSheet.create({
     borderRadius: 20,
   },
   // styles for tables
-  tableHead: { height: 40, backgroundColor: fullDarkBlue },
+  tableHead: { height: 40, backgroundColor: "#35454d" },
   tableBorderStyle: { borderWidth: 2, borderColor: fullDarkBlue },
   tableHeadText: {
     fontWeight: "bold",
@@ -224,7 +224,8 @@ const adminStyles = StyleSheet.create({
     ],
     width: addModelWidth,
     height: addModelHeight,
-    backgroundColor: "#fff",
+    backgroundColor: "#E5E8EC",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     borderRadius: 20,
     padding: 30,
   },
@@ -370,7 +371,7 @@ const adminStyles = StyleSheet.create({
   orderHeader: [
     defaultStyles.rowSpacingFlex,
     {
-      backgroundColor: fullDarkBlue,
+      backgroundColor: "#35454d",
       padding: 10,
     },
   ],
@@ -387,7 +388,8 @@ const adminStyles = StyleSheet.create({
   orderData: [
     defaultStyles.rowSpacingFlex,
     {
-      backgroundColor: "#fff",
+      backgroundColor: "#e5e8ecf5f5f5",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     },
   ],
   orderTableNo: {
@@ -461,7 +463,8 @@ const adminStyles = StyleSheet.create({
   catTabBox: {
     padding: 10,
     borderRadius: 15,
-    backgroundColor: `#ddd`,
+    backgroundColor: `#e5e8ec`,
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   },
   catTabNameText: {
     fontWeight: "bold",

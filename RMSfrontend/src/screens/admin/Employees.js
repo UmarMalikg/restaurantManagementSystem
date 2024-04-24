@@ -101,7 +101,7 @@ const Employees = ({
     </View>,
   ]);
 
-  const widthArr = [60, 80, 150, 60, 180, 120, 80, 80];
+  const widthArr = [60, 90, 180, 90, 230, 160, 100, 120];
 
   const rows = tableData.map((rowData, index) => (
     <Row
