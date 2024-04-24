@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+// https://coolors.co/e5e8ec-ededed-f0eeff-f1f2f4-f4f3fb-f5f5f5-f6f6ee-f7f7f7-f8f8ff-ffffff
 import {
   isWeb,
   navBarHeight,
@@ -26,7 +27,8 @@ const adminStyles = StyleSheet.create({
   navBar: [
     defaultStyles.navBar,
     {
-      backgroundColor: darkGreen,
+      backgroundColor: "#35454d",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     },
   ],
   // styles for sideBar
@@ -37,10 +39,11 @@ const adminStyles = StyleSheet.create({
     width: adminLeftSidebarWidth,
     bottom: 0,
     top: navBarHeight,
-    backgroundColor: darkGreen,
+    backgroundColor: "#232c3c",
     paddingTop: 10,
     paddingLeft: 20,
   },
+
   sideBarLinks: {
     display: "flex",
     alignItems: "center",
@@ -53,10 +56,10 @@ const adminStyles = StyleSheet.create({
     borderBottomRightRadius: -50,
   },
   activeSideBarLinks: {
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#006496",
   },
   hoverSideBarLinks: {
-    backgroundColor: lightGreen,
+    backgroundColor: "#444b59",
   },
 
   ///commented
@@ -143,6 +146,7 @@ const adminStyles = StyleSheet.create({
   sideBarLinkText: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "#fff",
   },
 
   // styles for all the screens
@@ -152,7 +156,7 @@ const adminStyles = StyleSheet.create({
     bottom: 0,
     top: navBarHeight,
     right: 0,
-    backgroundColor: fullLightGreen,
+    backgroundColor: "#fff",
   },
   // styles for table Page
   tablePosition: {
@@ -183,8 +187,8 @@ const adminStyles = StyleSheet.create({
     fontSize: 20,
   },
   dataSearcher: {
-    borderColor: "#ccc",
-    backgroundColor: "#fff",
+    borderColor: "#EDEDED",
+    backgroundColor: "#EDEDED",
     padding: 10,
     marginHorizontal: 30,
     marginTop: 20,

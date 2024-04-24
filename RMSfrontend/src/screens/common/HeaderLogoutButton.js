@@ -42,7 +42,7 @@ const HeaderLogoutButton = () => {
           logout();
         }}
       >
-        <MaterialIcons name="logout" size={24} color="black" />
+        <MaterialIcons name="logout" size={24} color="#fff" />
       </Pressable>
     </View>
   );

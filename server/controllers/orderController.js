@@ -231,7 +231,7 @@ const updateOrderDiscount = async (req, res) => {
     const { discount } = req.body;
 
     // Check if the discount is a valid number
-    if (typeof discount !== "number") {
+    if (typeof discount !== "number" || discount < 0 || discount > 100) {
       return res.status(400).json({ error: "Discount must be a number" });
     }
 

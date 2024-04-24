@@ -15,7 +15,7 @@ const waiterStyles = StyleSheet.create({
     flex: 1,
   },
   // styles for Header
-  header: [defaultStyles.navBar, { backgroundColor: fullDarkgreen }],
+  header: [defaultStyles.navBar, { backgroundColor: "#EDEDED" }],
   headerEmployeeAction: [defaultStyles.rowFlex],
 
   headerEmployeeInfo: [defaultStyles.rowCenteredFlex],
@@ -39,12 +39,14 @@ const waiterStyles = StyleSheet.create({
   headerEmployeeNameText: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "#fff",
   },
   headerEmployeeRole: {
     // marginTop: 10,
   },
   headerEmployeeRoleText: {
     fontSize: 16,
+    color: "#fff",
   },
 
   // styles for sideBar

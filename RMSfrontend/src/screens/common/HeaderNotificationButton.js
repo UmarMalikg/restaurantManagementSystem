@@ -6,7 +6,7 @@ import defaultStyles from "../../defaultStyles";
 const HeaderNotificationButton = () => {
   return (
     <View style={defaultStyles.mrgH20}>
-      <Ionicons name="notifications-circle-outline" size={24} color="black" />
+      <Ionicons name="notifications-circle-outline" size={24} color="#fff" />
     </View>
   );
 };
