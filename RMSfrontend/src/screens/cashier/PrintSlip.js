@@ -483,15 +483,24 @@ const PrintSlip = ({
             </View> */}
             {isFBR && (
               <View>
-                <View style={[defaultStyles.colCenteredFlex]}>
+                <View
+                  style={[defaultStyles.colCenteredFlex, defaultStyles.mrgT10]}
+                >
                   <View>
-                    <Text>FBR Invoice #</Text>
+                    <Text style={[defaultStyles.fWB, defaultStyles.mrgR10]}>
+                      FBR Invoice #
+                    </Text>
                   </View>
                   <View>
                     <Text>{FBRInvoice && FBRInvoice}</Text>
                   </View>
                 </View>
-                <View style={[defaultStyles.rowSpacingAroundFlex]}>
+                <View
+                  style={[
+                    defaultStyles.rowSpacingAroundFlex,
+                    defaultStyles.mrgT10,
+                  ]}
+                >
                   <View>
                     <Image
                       source={require("../../../assets/images/fbrlogo.png")}

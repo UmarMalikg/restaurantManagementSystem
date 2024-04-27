@@ -18,6 +18,7 @@ import SocketContext from "../../../context/socketContext";
 
 import { emitSocket } from "../../../socketConfig/socketFunctions";
 import AdminDeleteIcon from "../../common/AdminDeleteIcon";
+import { TextInput } from "react-native-paper";
 
 const OrderPlacement = ({
   fetchProductData,
@@ -60,9 +61,12 @@ const OrderPlacement = ({
     addedItemsForOrder.find((item) => item.item === "" && item.qty === "");
 
   const [totalCharges, setTotalCharges] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
 
   const priceCalculator = () => {
     let itemCharges = 0;
+    let discountedAmount = 0;
     addedItemsForOrder.forEach((item) => {
       const product =
         productData && productData.find((p) => p._id === item.item);
@@ -70,7 +74,10 @@ const OrderPlacement = ({
         itemCharges += product.price * item.qty;
       }
     });
-    setTotalCharges(itemCharges);
+    setSubTotal(itemCharges);
+    discountedAmount = (itemCharges * discount) / 100;
+    const totalCharges = itemCharges - discountedAmount;
+    setTotalCharges(totalCharges);
   };
 
   const quantityIncrease = (productId) => {
@@ -107,7 +114,7 @@ const OrderPlacement = ({
 
   useEffect(() => {
     priceCalculator();
-  }, [addedItemsForOrder, productData]);
+  }, [addedItemsForOrder, productData, discount]);
 
   const selectTable = () => {
     employee ? navigation.navigate("Tables") : alert("Login first");
@@ -122,11 +129,12 @@ const OrderPlacement = ({
       } else if (!selectedTable) {
         return alert("please select the table before taking order");
       }
-      // console.log(addedItemsForOrder, selectedTable, employee._id, totalCharges);
+      // console.log(addedItemsForOrder, selectedTable, employee._id, );
       const newOrder = {
         tableNo: selectedTable,
         orderItems: addedItemsForOrder,
         orderTaker: employee._id,
+        discount: discount,
       };
       await addOrder(newOrder);
       setAddedItemsforOrder([{ item: "", qty: "", itemStatus: "Pending" }]);
@@ -260,12 +268,10 @@ const OrderPlacement = ({
         <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>
-              <Text style={waiterStyles.orderChargesDesText}>charges</Text>
+              <Text style={waiterStyles.orderChargesDesText}>sub total</Text>
             </View>
             <View>
-              <Text style={waiterStyles.orderChargesPriceText}>
-                {totalCharges}
-              </Text>
+              <Text style={waiterStyles.orderChargesPriceText}>{subTotal}</Text>
             </View>
           </View>
           <View style={waiterStyles.singleOrderCharge}>
@@ -273,7 +279,33 @@ const OrderPlacement = ({
               <Text style={waiterStyles.orderChargesDesText}>discount</Text>
             </View>
             <View>
-              <Text style={waiterStyles.orderChargesPriceText}>0</Text>
+              <TextInput
+                placeholder="0"
+                style={{
+                  backgroundColor: "transparent",
+                  borderWidth: 0,
+                  height: 22,
+                  color: "#F00",
+                  textAlign: "right",
+                }}
+                value={discount === 0 ? "" : discount.toString()}
+                onChangeText={(text) => {
+                  priceCalculator();
+                  const parsedDiscount = parseFloat(text);
+                  if (
+                    !isNaN(parsedDiscount) &&
+                    parsedDiscount >= 0 &&
+                    parsedDiscount <= 100
+                  ) {
+                    // If the input is a valid number between 0 and 100, update the discount state
+                    setDiscount(parsedDiscount);
+                  } else if (text === "") {
+                    // If the input is empty, set the discount to 0
+                    setDiscount(0);
+                  }
+                  priceCalculator();
+                }}
+              />
             </View>
           </View>
         </View>

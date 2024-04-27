@@ -41,6 +41,7 @@ const Orders = ({
   deleteOrder,
   getOrderById,
   orderData,
+  selectedOrder,
   fetchProductData,
   productData,
   fetchTableData,
@@ -92,20 +93,23 @@ const Orders = ({
 
   const deleteAnOrder = async (orderId) => {
     try {
-      const order = await getOrderById(orderId);
-      if (order) {
-        const pending = order.orderItems.every(
+      await getOrderById(orderId);
+      if (selectedOrder) {
+        const pending = selectedOrder.orderItems.every(
           (item) => item.itemStatus === "Pending"
         );
 
         if (pending) {
           await deleteOrder(orderId);
           emitSocket(socket, "orderChanged");
+          return;
         } else {
           alert("The order has been processed and cannot be deleted.");
+          return;
         }
       } else {
         alert("Order not found.");
+        return;
       }
     } catch (err) {
       console.error(err);
@@ -386,6 +390,7 @@ const mapStateToProps = (state) => {
   return {
     orderData: state.orders.orderData,
     productData: state.products.productData,
+    selectedOrder: state.orders.selectedOrder,
     tableData: state.tables.tableData,
     employeeData: state.employees.employeeData,
     isLoading: state.loadingErrors.isLoading,
