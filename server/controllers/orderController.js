@@ -289,6 +289,30 @@ const updateDeliveryCharges = async (req, res) => {
   }
 };
 
+const updatePayment = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const { isPaid } = req.body;
+
+    // Find the order by ID
+    const order = await Order.findById(orderId);
+
+    // Check if the order exists
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    // Update the discount and recalculate total price
+    order.isPaid = isPaid;
+    await order.save();
+
+    return res.status(200).json({ message: "Paid successfully", order });
+  } catch (error) {
+    console.error("Error updating Payment:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrderById,
@@ -300,4 +324,5 @@ module.exports = {
   deleteOrderItem,
   updateOrderDiscount,
   updateDeliveryCharges,
+  updatePayment,
 };

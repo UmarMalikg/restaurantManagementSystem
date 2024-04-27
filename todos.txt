@@ -1,7 +1,10 @@
-style kitchen
-
-adding icons
-
+category in admin
+revenue generated in admin
+searchbar in waiter
+removing the notification icon
+updating the logo
+in select table displaying the floor
+in orderPlacement displaying floor with table
 graphs add in admin for revenue
 
 delete this file

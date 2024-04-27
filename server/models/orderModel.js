@@ -125,6 +125,7 @@ orderSchema.pre("save", async function (next) {
     }
     let totalPrice = 0;
     let subTotal = 0;
+    let taxPrice = 0;
     const orderItems = this.orderItems;
 
     let status;
@@ -171,12 +172,16 @@ orderSchema.pre("save", async function (next) {
     const discountAmount = (totalPrice * this.discount) / 100;
     totalPrice -= discountAmount;
 
+    taxPrice = subTotal * 0.18;
+
     // Add delivery charges
     totalPrice += this.deliveryCharges;
+    totalPrice += this.taxPrice;
 
     // Ensure total price is non-negative
     this.totalPrice = Math.max(totalPrice, 0);
     this.subTotal = Math.max(subTotal, 0);
+    this.taxPrice = taxPrice;
     this.status = status;
 
     next();

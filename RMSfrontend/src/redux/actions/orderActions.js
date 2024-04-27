@@ -57,6 +57,11 @@ import {
   UPDATE_ORDER_DELIVERY_CHARGES_REQUEST,
   UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_SUCCESS,
   UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_FAILURE,
+
+  // for payment update
+  UPDATE_ORDER_PAYMENT_REQUEST,
+  UPDATE_ORDER_PAYMENT_REQUEST_SUCCESS,
+  UPDATE_ORDER_PAYMENT_REQUEST_FAILURE,
 } from "../../constants/orderConstants";
 
 // Action Creators
@@ -329,6 +334,35 @@ export const updatedeliveryCharges = (orderId, deliveryCharges) => {
       // Dispatch failure action with the error message
       dispatch({
         type: UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_FAILURE,
+        payload:
+          error.message || "Failed to update order discountdelivery charges",
+      });
+    }
+  };
+};
+export const updatePayment = (orderId, isPaid) => {
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_ORDER_PAYMENT_REQUEST }); // Dispatch request action
+
+    try {
+      // Make the PATCH request to update the discount
+      const response = await axios.patch(
+        `${api}/orders/${orderId}/updatePayment`,
+        {
+          isPaid,
+        }
+      );
+
+      // Dispatch success action with the updated order data
+      dispatch({
+        type: UPDATE_ORDER_PAYMENT_REQUEST_SUCCESS,
+        payload: response.data.order, // Assuming the response contains the updated order
+      });
+    } catch (error) {
+      console.error("Error updating order discount delivery charges:", error);
+      // Dispatch failure action with the error message
+      dispatch({
+        type: UPDATE_ORDER_PAYMENT_REQUEST_FAILURE,
         payload:
           error.message || "Failed to update order discountdelivery charges",
       });

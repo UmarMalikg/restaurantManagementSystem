@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Image, ScrollView, Text, Pressable, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  Pressable,
+  View,
+  TextInput,
+} from "react-native";
 import waiterStyles from "../../../styles/waiterStyles";
 import { useAppContext } from "../../../../context/States";
 import { connect } from "react-redux";
@@ -26,6 +33,7 @@ import updateOrderStyle from "../../../styles/updateOrderStyle";
 import Loader from "../../../Loader";
 import ErrorPage from "../../../ErrorPage";
 import defaultStyles from "../../../../defaultStyles";
+import AdminDeleteIcon from "../../AdminDeleteIcon";
 
 const UpdateOrderPlacement = ({
   orderId,
@@ -73,16 +81,28 @@ const UpdateOrderPlacement = ({
   );
 
   const [totalCharges, setTotalCharges] = useState(0);
+  const [discount, setDiscount] = useState(
+    selectedOrder !== null ? selectedOrder.discount : 0
+  );
+  const [subTotal, setSubTotal] = useState(0);
+  const [deliveryCharges, setDeliveryCharges] = useState(
+    selectedOrder !== null ? selectedOrder.deliveryCharges : 0
+  );
 
   const priceCalculator = () => {
     let itemCharges = 0;
+    let discountedAmount = 0;
     updatedAddedItemsForOrder.forEach((item) => {
-      const product = productData.find((p) => p._id === item.item);
+      const product =
+        productData && productData.find((p) => p._id === item.item);
       if (product) {
         itemCharges += product.price * item.qty;
       }
     });
-    setTotalCharges(itemCharges);
+    setSubTotal(itemCharges);
+    discountedAmount = (itemCharges * discount) / 100;
+    const totalCharges = itemCharges - discountedAmount + deliveryCharges;
+    setTotalCharges(totalCharges);
   };
 
   const quantityIncrease = (productId) => {
@@ -119,7 +139,16 @@ const UpdateOrderPlacement = ({
 
   useEffect(() => {
     priceCalculator();
-  }, [updatedAddedItemsForOrder, productData]);
+    if (selectedOrder !== null && selectedOrder.orderType !== "Delivery") {
+      setDeliveryCharges(0);
+    }
+  }, [
+    updatedAddedItemsForOrder,
+    productData,
+    discount,
+    deliveryCharges,
+    selectedOrder,
+  ]);
 
   const submitOrderform = async () => {
     try {
@@ -271,7 +300,7 @@ const UpdateOrderPlacement = ({
 
                     <View style={waiterStyles.orderMenuActionBox}>
                       <Pressable onPress={() => deleteListedItem(item.item)}>
-                        <Text>delete</Text>
+                        <AdminDeleteIcon />
                       </Pressable>
                     </View>
                   </View>
@@ -288,12 +317,10 @@ const UpdateOrderPlacement = ({
         <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>
-              <Text style={waiterStyles.orderChargesDesText}>charges</Text>
+              <Text style={waiterStyles.orderChargesDesText}>sub total</Text>
             </View>
             <View>
-              <Text style={waiterStyles.orderChargesPriceText}>
-                {totalCharges}
-              </Text>
+              <Text style={waiterStyles.orderChargesPriceText}>{subTotal}</Text>
             </View>
           </View>
           <View style={waiterStyles.singleOrderCharge}>
@@ -301,9 +328,69 @@ const UpdateOrderPlacement = ({
               <Text style={waiterStyles.orderChargesDesText}>discount</Text>
             </View>
             <View>
-              <Text style={waiterStyles.orderChargesPriceText}>0</Text>
+              <TextInput
+                placeholder="0"
+                style={{
+                  backgroundColor: "transparent",
+                  borderWidth: 0,
+                  height: 22,
+                  textAlign: "right",
+                }}
+                value={discount === 0 ? "" : discount.toString()}
+                onChangeText={(text) => {
+                  priceCalculator();
+                  const parsedDiscount = parseFloat(text);
+                  if (
+                    !isNaN(parsedDiscount) &&
+                    parsedDiscount >= 0 &&
+                    parsedDiscount <= 100
+                  ) {
+                    // If the input is a valid number between 0 and 100, update the discount state
+                    setDiscount(parsedDiscount);
+                  } else if (text === "") {
+                    // If the input is empty, set the discount to 0
+                    setDiscount(0);
+                  }
+                  priceCalculator();
+                }}
+              />
             </View>
           </View>
+          {selectedOrder !== null && selectedOrder.orderType === "Delivery" && (
+            <View style={waiterStyles.singleOrderCharge}>
+              <View>
+                <Text style={waiterStyles.orderChargesDesText}>
+                  delivery Charges
+                </Text>
+              </View>
+              <View>
+                <TextInput
+                  placeholder="0"
+                  style={{
+                    backgroundColor: "transparent",
+                    borderWidth: 0,
+                    height: 22,
+                    textAlign: "right",
+                  }}
+                  value={
+                    deliveryCharges === 0 ? "" : deliveryCharges.toString()
+                  }
+                  onChangeText={(text) => {
+                    priceCalculator();
+                    const parsedDeliveryCharges = parseFloat(text);
+                    if (!isNaN(parsedDeliveryCharges)) {
+                      // If the input is a valid number between 0 and 100, update the discount state
+                      setDeliveryCharges(parsedDeliveryCharges);
+                    } else if (text === "") {
+                      // If the input is empty, set the discount to 0
+                      setDeliveryCharges(0);
+                    }
+                    priceCalculator();
+                  }}
+                />
+              </View>
+            </View>
+          )}
         </View>
 
         <View style={waiterStyles.orderTotal}>

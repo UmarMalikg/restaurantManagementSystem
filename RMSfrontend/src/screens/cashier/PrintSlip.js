@@ -184,8 +184,10 @@ const PrintSlip = ({
                 </View> */}
               </View>
             </View>
-            <View>
-              <Text>Order Details</Text>
+            <View style={defaultStyles.mrgB6}>
+              <Text style={[defaultStyles.fWB, defaultStyles.fs18]}>
+                Order Details
+              </Text>
             </View>
             <View style={cachierStyles.printOrderDetail}>
               {/* SINGLE LINE */}
@@ -294,8 +296,10 @@ const PrintSlip = ({
             {/* restaturant detail view */}
 
             {/* order detail view */}
-            <View>
-              <Text>Order Information</Text>
+            <View style={defaultStyles.mrgB6}>
+              <Text style={[defaultStyles.fWB, defaultStyles.fs18]}>
+                Order Information
+              </Text>
             </View>
             <View style={cachierStyles.printOrderDetail}>
               {/* SINGLE LINE */}
@@ -340,23 +344,6 @@ const PrintSlip = ({
                 );
               })}
               {/* End of order items */}
-              {selectedOrder && selectedOrder.orderType === "Delivery" && (
-                <View
-                  style={[
-                    defaultStyles.rowSpacingFlex,
-                    cachierStyles.singleLine,
-                  ]}
-                >
-                  <View style={defaultStyles.mrgH20}>
-                    <Text style={[defaultStyles.fWB, defaultStyles.fs15]}>
-                      delivery Charges
-                    </Text>
-                  </View>
-                  <View style={defaultStyles.mrgH20}>
-                    <Text>{selectedOrder.deliveryCharges}</Text>
-                  </View>
-                </View>
-              )}
 
               <View
                 style={[defaultStyles.rowSpacingFlex, cachierStyles.singleLine]}
@@ -397,6 +384,23 @@ const PrintSlip = ({
                   </Text>
                 </View>
               </View>
+              {selectedOrder && selectedOrder.orderType === "Delivery" && (
+                <View
+                  style={[
+                    defaultStyles.rowSpacingFlex,
+                    cachierStyles.singleLine,
+                  ]}
+                >
+                  <View style={defaultStyles.mrgH20}>
+                    <Text style={[defaultStyles.fWB, defaultStyles.fs15]}>
+                      delivery Charges
+                    </Text>
+                  </View>
+                  <View style={defaultStyles.mrgH20}>
+                    <Text>{selectedOrder.deliveryCharges}</Text>
+                  </View>
+                </View>
+              )}
               <View
                 style={[defaultStyles.rowSpacingFlex, cachierStyles.singleLine]}
               >
@@ -562,11 +566,7 @@ const PrintSlip = ({
                 }
                 onChangeText={(text) => {
                   const parsedDeliveryCharges = parseFloat(text);
-                  if (
-                    !isNaN(parsedDeliveryCharges) &&
-                    parsedDeliveryCharges >= 0 &&
-                    parsedDeliveryCharges <= 100
-                  ) {
+                  if (!isNaN(parsedDeliveryCharges)) {
                     // If the input is a valid number between 0 and 100, update the discount state
                     setAddDeliveryCharges(parsedDeliveryCharges);
                   } else if (text === "") {

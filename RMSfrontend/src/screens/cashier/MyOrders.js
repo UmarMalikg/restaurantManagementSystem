@@ -71,7 +71,9 @@ const MyOrders = ({
   // function to display Orders for the current employee
   const displayOrders = () => {
     // Filter orders based on the logged-in employee's ID
-    return orderData.filter((order) => order.orderTaker === employee._id);
+    return orderData.filter(
+      (order) => order.orderTaker === employee._id && !order.isPaid
+    );
   };
 
   const changeOrderStatus = async (orderId) => {

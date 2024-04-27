@@ -78,7 +78,9 @@ const Orders = ({
     // Filter orders based on the logged-in employee's ID
     return (
       orderData &&
-      orderData.filter((order) => order.orderTaker === employee._id)
+      orderData.filter(
+        (order) => order.orderTaker === employee._id && !order.isPaid
+      )
     );
   };
 

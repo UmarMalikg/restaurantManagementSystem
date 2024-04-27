@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 import adminStyles from "../styles/adminStyles";
+import defaultStyles from "../../defaultStyles";
 import { fetchOrderData } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
@@ -84,8 +85,13 @@ const OrderLists = ({
     })
     .filter((order) => {
       // Filter by search text if available
-      return order.orderItems.some((item) =>
-        item.item.includes(searchText.toLowerCase())
+      return (
+        order &&
+        order.isPaid &&
+        order.orderItems &&
+        order.orderItems.some((item) =>
+          item.item.includes(searchText.toLowerCase())
+        )
       );
     })
     .slice(startIndex, endIndex);
@@ -109,6 +115,16 @@ const OrderLists = ({
   if (isError) {
     return <ErrorPage />;
   }
+
+  // if (displayedOrders && displayedOrders.length === 0) {
+  //   return (
+  //     <View style={defaultStyles.container}>
+  //       <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>
+  //         There's No Order...
+  //       </Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={adminStyles.theScreen}>
@@ -191,7 +207,12 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       {order.orderType === "Dine-In"
                         ? "Table No"
                         : order.orderType === "Delivery"
@@ -206,7 +227,12 @@ const OrderLists = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       Employee Name
                     </Text>
                   </View>
@@ -217,7 +243,14 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Image</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Image
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -226,7 +259,12 @@ const OrderLists = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       Product Name
                     </Text>
                   </View>
@@ -237,7 +275,14 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Quantity</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Quantity
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -246,7 +291,14 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Price</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Price
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -255,7 +307,14 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Total</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Total
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -264,7 +323,14 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Type</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Type
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -273,7 +339,14 @@ const OrderLists = ({
                       { flex: 3 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>TotalField</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      TotalField
+                    </Text>
                   </View>
                 </View>
                 <View style={adminStyles.orderData}>
@@ -284,12 +357,12 @@ const OrderLists = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text>
+                    <Text style={[{ textAlign: "center" }]}>
                       {order.orderType === "Dine-In"
                         ? `${table?.name || "NA"}`
                         : order.orderType === "Delivery"
-                        ? "Delivery Address"
-                        : "Customer Name"}
+                        ? order.deliveryAddress || "NA"
+                        : order.customerName || "NA"}
                     </Text>
                   </View>
                   <View
@@ -299,7 +372,7 @@ const OrderLists = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text>
+                    <Text style={[{ textAlign: "center" }]}>
                       {`${employee?.personalInfo.firstName} ${employee?.personalInfo.lastName}` ||
                         "NA"}
                     </Text>
@@ -332,16 +405,22 @@ const OrderLists = ({
                             )}
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 2 }]}>
-                            <Text>{product?.name || "NA"}</Text>
+                            <Text style={[{ textAlign: "center" }]}>
+                              {product?.name || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>{orderItem?.qty || "NA"}</Text>
+                            <Text style={[{ textAlign: "center" }]}>
+                              {orderItem?.qty || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>{product?.price || "NA"}</Text>
+                            <Text style={[{ textAlign: "center" }]}>
+                              {product?.price || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>
+                            <Text style={[{ textAlign: "center" }]}>
                               {product?.price * orderItem?.qty || "NA"}
                             </Text>
                           </View>
