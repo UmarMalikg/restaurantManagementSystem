@@ -11,6 +11,7 @@ const {
   updateOrderStatus,
   deleteOrderItem,
   updateOrderDiscount,
+  updateDeliveryCharges,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -21,8 +22,10 @@ router
   .route("/:orderId")
   .get(getOrderById)
   .delete(deleteOrder)
-  .put(updateOrder)
-  .patch(updateOrderDiscount);
+  .put(updateOrder);
+
+router.route("/:orderId/updatedeliveryCharges").patch(updateDeliveryCharges);
+router.route("/:orderId/updatediscount").patch(updateOrderDiscount);
 
 router.route("/:orderId/items/:itemId/status").put(updateOrderItemStatus);
 

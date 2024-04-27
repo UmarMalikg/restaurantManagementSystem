@@ -10,6 +10,8 @@ import {
   updateOrderItemStatus,
   updateOrderStatus,
   deleteItem,
+  deleteOrder,
+  getOrderById,
 } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
@@ -35,6 +37,8 @@ const MyOrders = ({
   fetchOrderData,
   updateOrderItemStatus,
   updateOrderStatus,
+  deleteOrder,
+  getOrderById,
   orderData,
   fetchProductData,
   productData,
@@ -76,6 +80,24 @@ const MyOrders = ({
       await updateOrderStatus(orderId, "Completed");
       console.log(`after update`);
       emitSocket(socket, "orderChanged");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteAnOrder = async (orderId) => {
+    try {
+      const order = await getOrderById(orderId);
+      const pending =
+        (await order) &&
+        order.orderItems.every((item) => item && item.itemStatus === "Pending");
+
+      if (pending) {
+        await deleteOrder(orderId);
+        emitSocket(socket, "orderChanged");
+      } else {
+        alert("The order has puched from the kitchen."); // Notify the user that the order has items in the kitchen
+      }
     } catch (err) {
       console.error(err);
     }
@@ -155,7 +177,12 @@ const MyOrders = ({
                       </View>
                     </View>
                   </View>
-                  <View style={defaultStyles.mrgH15}>
+                  <View
+                    style={[
+                      defaultStyles.mrgH15,
+                      defaultStyles.rowCenteredFlex,
+                    ]}
+                  >
                     <Pressable
                       onPress={() => {
                         changeOrderStatus(order._id);
@@ -170,7 +197,24 @@ const MyOrders = ({
                       ]}
                     >
                       <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
-                        Completed ?
+                        Completed
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        deleteAnOrder(order._id);
+                      }}
+                      style={[
+                        {
+                          padding: 10,
+                          borderRadius: 4,
+                          backgroundColor: "#fb6068",
+                        },
+                        defaultStyles.mrgH20,
+                      ]}
+                    >
+                      <Text style={[defaultStyles.fWB, { color: "#fff" }]}>
+                        Delete
                       </Text>
                     </Pressable>
                   </View>
@@ -335,5 +379,7 @@ const mapDispatchToProps = {
   fetchProductData,
   fetchEmployeeData,
   deleteItem,
+  deleteOrder,
+  getOrderById,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyOrders);

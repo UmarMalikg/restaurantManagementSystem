@@ -24,6 +24,7 @@ import { changeViaSocket } from "../../socketConfig/socketFunctions";
 
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
+import defaultStyles from "../../defaultStyles";
 
 const CachierOrders = ({
   fetchOrderData,
@@ -205,7 +206,12 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       {order.orderType === "Dine-In"
                         ? "Table No"
                         : order.orderType === "Delivery"
@@ -220,7 +226,12 @@ const CachierOrders = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       Employee Name
                     </Text>
                   </View>
@@ -231,7 +242,14 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Image</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Image
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -240,7 +258,12 @@ const CachierOrders = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
                       Product Name
                     </Text>
                   </View>
@@ -251,7 +274,14 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Quantity</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Quantity
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -269,7 +299,14 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Total</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Total
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -278,7 +315,14 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>Type</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      Type
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -287,7 +331,14 @@ const CachierOrders = ({
                       { flex: 3 },
                     ]}
                   >
-                    <Text style={adminStyles.orderHeaderText}>TotalField</Text>
+                    <Text
+                      style={[
+                        adminStyles.orderHeaderText,
+                        { textAlign: "center" },
+                      ]}
+                    >
+                      TotalField
+                    </Text>
                   </View>
                 </View>
                 <View style={adminStyles.orderData}>
@@ -298,12 +349,12 @@ const CachierOrders = ({
                       { flex: 1 },
                     ]}
                   >
-                    <Text>
+                    <Text style={{ textAlign: "center" }}>
                       {order.orderType === "Dine-In"
                         ? `${table?.name || "NA"}`
                         : order.orderType === "Delivery"
                         ? `${order?.deliveryAddress || "NA"}`
-                        : `${table?.customerName || "NA"}`}
+                        : `${order?.customerName || "NA"}`}
                     </Text>
                   </View>
                   <View
@@ -313,7 +364,7 @@ const CachierOrders = ({
                       { flex: 2 },
                     ]}
                   >
-                    <Text>
+                    <Text style={{ textAlign: "center" }}>
                       {`${employee?.personalInfo.firstName} ${employee?.personalInfo.lastName}` ||
                         "NA"}
                     </Text>
@@ -341,21 +392,29 @@ const CachierOrders = ({
                               />
                             ) : (
                               <View>
-                                <Text>Image</Text>
+                                <Text style={{ textAlign: "center" }}>
+                                  Image
+                                </Text>
                               </View>
                             )}
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 2 }]}>
-                            <Text>{product?.name || "NA"}</Text>
+                            <Text style={{ textAlign: "center" }}>
+                              {product?.name || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>{orderItem?.qty || "NA"}</Text>
+                            <Text style={{ textAlign: "center" }}>
+                              {orderItem?.qty || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>{product?.price || "NA"}</Text>
+                            <Text style={{ textAlign: "center" }}>
+                              {product?.price || "NA"}
+                            </Text>
                           </View>
                           <View style={[adminStyles.rowCentered, { flex: 1 }]}>
-                            <Text>
+                            <Text style={{ textAlign: "center" }}>
                               {product?.price * orderItem?.qty || "NA"}
                             </Text>
                           </View>
@@ -365,7 +424,9 @@ const CachierOrders = ({
                   </View>
 
                   <View style={[adminStyles.orderTypeStyle, { flex: 1 }]}>
-                    <Text>{order.orderType}</Text>
+                    <Text style={{ textAlign: "center" }}>
+                      {order.orderType}
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -421,13 +482,30 @@ const CachierOrders = ({
                         </Text>
                       </View>
                     </View>
-                    <Pressable
-                      onPress={() => {
-                        getReciept(order._id);
-                      }}
-                    >
-                      <Text>Print</Text>
-                    </Pressable>
+                    <View style={[defaultStyles.rowCenteredFlex]}>
+                      <Pressable
+                        style={[
+                          defaultStyles.padV10,
+                          defaultStyles.padH20,
+                          defaultStyles.rowCenteredFlex,
+                          defaultStyles.mrgT10,
+                          { backgroundColor: "#3ea381", borderRadius: 7 },
+                        ]}
+                        onPress={() => {
+                          getReciept(order._id);
+                        }}
+                      >
+                        <Text
+                          style={[
+                            defaultStyles.fWB,
+                            defaultStyles.fs18,
+                            { color: "#fff" },
+                          ]}
+                        >
+                          Get Reciept
+                        </Text>
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
               </View>

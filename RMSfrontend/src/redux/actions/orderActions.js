@@ -52,6 +52,11 @@ import {
   UPDATE_ORDER_DISCOUNT_REQUEST,
   UPDATE_ORDER_DISCOUNT_REQUEST_SUCCESS,
   UPDATE_ORDER_DISCOUNT_REQUEST_FAILURE,
+
+  // for updating the delivery charges
+  UPDATE_ORDER_DELIVERY_CHARGES_REQUEST,
+  UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_SUCCESS,
+  UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_FAILURE,
 } from "../../constants/orderConstants";
 
 // Action Creators
@@ -278,9 +283,12 @@ export const updateDiscount = (orderId, discount) => {
 
     try {
       // Make the PATCH request to update the discount
-      const response = await axios.patch(`${api}/orders/${orderId}`, {
-        discount,
-      });
+      const response = await axios.patch(
+        `${api}/orders/${orderId}/updatediscount`,
+        {
+          discount,
+        }
+      );
 
       // Dispatch success action with the updated order data
       dispatch({
@@ -293,6 +301,36 @@ export const updateDiscount = (orderId, discount) => {
       dispatch({
         type: UPDATE_ORDER_DISCOUNT_REQUEST_FAILURE,
         payload: error.message || "Failed to update order discount",
+      });
+    }
+  };
+};
+
+export const updatedeliveryCharges = (orderId, deliveryCharges) => {
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_ORDER_DELIVERY_CHARGES_REQUEST }); // Dispatch request action
+
+    try {
+      // Make the PATCH request to update the discount
+      const response = await axios.patch(
+        `${api}/orders/${orderId}/updatedeliveryCharges`,
+        {
+          deliveryCharges,
+        }
+      );
+
+      // Dispatch success action with the updated order data
+      dispatch({
+        type: UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_SUCCESS,
+        payload: response.data.order, // Assuming the response contains the updated order
+      });
+    } catch (error) {
+      console.error("Error updating order discount delivery charges:", error);
+      // Dispatch failure action with the error message
+      dispatch({
+        type: UPDATE_ORDER_DELIVERY_CHARGES_REQUEST_FAILURE,
+        payload:
+          error.message || "Failed to update order discountdelivery charges",
       });
     }
   };

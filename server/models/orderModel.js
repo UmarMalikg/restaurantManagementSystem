@@ -23,6 +23,12 @@ const orderItemSchema = mongoose.Schema({
 
 const orderSchema = mongoose.Schema(
   {
+    orderNo: {
+      type: Number,
+      required: true,
+      unique: true,
+      default: 1,
+    },
     tableNo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "tables",
@@ -89,6 +95,12 @@ const orderSchema = mongoose.Schema(
       min: 0,
       default: 0,
     },
+    subTotal: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
+    },
     taxPrice: {
       type: Number,
       required: true,
@@ -103,7 +115,16 @@ const orderSchema = mongoose.Schema(
 
 orderSchema.pre("save", async function (next) {
   try {
+    const lastOrder = await this.constructor.findOne(
+      {},
+      {},
+      { sort: { orderNo: -1 } }
+    );
+    if (lastOrder) {
+      this.orderNo = lastOrder.orderNo + 1;
+    }
     let totalPrice = 0;
+    let subTotal = 0;
     const orderItems = this.orderItems;
 
     let status;
@@ -142,6 +163,7 @@ orderSchema.pre("save", async function (next) {
     for (const i of orderItems) {
       const item = await Product.findById(i.item);
       totalPrice += item.price * i.qty;
+      subTotal += item.price * i.qty;
     }
 
     // Add delivery charges and apply discounts if applicable
@@ -154,6 +176,7 @@ orderSchema.pre("save", async function (next) {
 
     // Ensure total price is non-negative
     this.totalPrice = Math.max(totalPrice, 0);
+    this.subTotal = Math.max(subTotal, 0);
     this.status = status;
 
     next();

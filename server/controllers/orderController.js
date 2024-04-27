@@ -256,6 +256,39 @@ const updateOrderDiscount = async (req, res) => {
   }
 };
 
+const updateDeliveryCharges = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const { deliveryCharges } = req.body;
+
+    // Check if the discount is a valid number
+    if (typeof deliveryCharges !== "number") {
+      return res
+        .status(400)
+        .json({ error: "deliveryCharges must be a number" });
+    }
+
+    // Find the order by ID
+    const order = await Order.findById(orderId);
+
+    // Check if the order exists
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    // Update the discount and recalculate total price
+    order.deliveryCharges = deliveryCharges;
+    await order.save();
+
+    return res
+      .status(200)
+      .json({ message: "Discount updated successfully", order });
+  } catch (error) {
+    console.error("Error updating order discount:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrderById,
@@ -266,4 +299,5 @@ module.exports = {
   updateOrderStatus,
   deleteOrderItem,
   updateOrderDiscount,
+  updateDeliveryCharges,
 };

@@ -9,7 +9,7 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL("http://192.168.42.170:19006"); // Change the URL accordingly
+  mainWindow.loadURL("http://localhost:19006"); // Change the URL accordingly
 
   mainWindow.on("closed", function () {
     app.quit();

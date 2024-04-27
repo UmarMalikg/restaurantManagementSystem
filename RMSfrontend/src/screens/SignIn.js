@@ -84,7 +84,7 @@ const SignIn = () => {
             <Text>Welcome back! Login to the RMS</Text>
           </View>
           <TextInput
-            placeholder="Enter ID..."
+            placeholder="Enter username..."
             value={userName}
             onChangeText={(text) => setUserName(text)}
             style={loginRegisterFormStyles.inputfield}

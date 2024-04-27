@@ -181,9 +181,14 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
           </Picker>
         </View>
         <View>
-          {selectedOrderType === "Delivery" && (
+          {(selectedOrderType === "Delivery" ||
+            selectedOrderType === "Take-Away") && (
             <TextInput
-              placeholder="Delivery Address"
+              placeholder={
+                selectedOrderType === "Delivery"
+                  ? "Delivery Address"
+                  : "CustomerName"
+              }
               value={customerDeliveryAddress}
               onChangeText={(text) => setCustomerDeliveryAddress(text)}
             />
