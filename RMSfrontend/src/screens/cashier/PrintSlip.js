@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView } from "react-native";
+import { View, Text, Pressable, ScrollView, Image } from "react-native";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import cachierStyles from "../styles/cachierStyles";
 import defaultStyles from "../../defaultStyles";
