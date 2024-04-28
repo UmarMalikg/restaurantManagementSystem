@@ -4,6 +4,7 @@ import waiterStyles from "../../styles/waiterStyles";
 import { useAppContext } from "../../../context/States";
 import { connect } from "react-redux";
 import { fetchProductData } from "../../../redux/actions/productAction";
+import { fetchFloorData } from "../../../redux/actions/floorActions";
 import { addOrder } from "../../../redux/actions/orderActions";
 import { useNavigation } from "@react-navigation/native";
 import { fetchTableData } from "../../../redux/actions/tableActions";
@@ -23,6 +24,8 @@ import { TextInput } from "react-native-paper";
 const OrderPlacement = ({
   fetchProductData,
   fetchTableData,
+  fetchFloorData,
+  floorData,
   tableData,
   productData,
   addOrder,
@@ -30,7 +33,8 @@ const OrderPlacement = ({
   useEffect(() => {
     fetchProductData();
     fetchTableData();
-  }, [fetchProductData, fetchTableData]);
+    fetchFloorData();
+  }, [fetchProductData, fetchTableData, fetchFloorData]);
 
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
@@ -170,11 +174,13 @@ const OrderPlacement = ({
         >
           <Text style={waiterStyles.orderSelectTableText}>
             {selectedTable
-              ? `${
-                  tableData &&
-                  tableData.find((t) => t._id === selectedTable)?.name
-                } Selected`
-              : `Select Table`}
+              ? (() => {
+                  const table = tableData.find((t) => t._id === selectedTable);
+                  const floorName =
+                    table && floorData.find((f) => f._id === table.floor)?.name;
+                  return `${table?.name || ""}, ${floorName || ""} Selected`;
+                })()
+              : "Select Table"}
           </Text>
         </Pressable>
       </View>
@@ -394,6 +400,7 @@ const mapStateToProps = (state) => {
   return {
     productData: state.products.productData,
     tableData: state.tables.tableData,
+    floorData: state.floors.floorData,
   };
 };
 
@@ -401,6 +408,7 @@ const mapDispatchToProps = {
   fetchProductData,
   addOrder,
   fetchTableData,
+  fetchFloorData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPlacement);
