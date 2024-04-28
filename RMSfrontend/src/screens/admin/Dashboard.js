@@ -19,7 +19,7 @@ import ErrorPage from "../ErrorPage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
+// import { Fontisto } from "@expo/vector-icons";
 
 const Dashboard = ({
   totalEmployees,
@@ -56,15 +56,6 @@ const Dashboard = ({
     changeViaSocket(socket, "productChanged", handleProductChanged);
     changeViaSocket(socket, "orderChanged", handleOrderChanged);
   }, [socket]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
-
   return (
     <View style={adminStyles.theScreen}>
       <ScrollView>
@@ -93,18 +84,19 @@ const Dashboard = ({
             recordName={`Total Sales`}
             recordNums={totalSalesCount}
             bgColor={`#7978e9`}
+            link={`OrderLists`}
             recordIcon={
               <MaterialIcons name="point-of-sale" size={40} color="black" />
             }
           />
-          <RecordOverview
+          {/* <RecordOverview
             recordName={`Revenue Generated`}
             recordNums={18}
             bgColor={`#f3797e`}
             recordIcon={
               <Fontisto name="shopping-sale" size={40} color="black" />
             }
-          />
+          /> */}
         </View>
         <View style={adminStyles.charts}>
           <SalesDetail />

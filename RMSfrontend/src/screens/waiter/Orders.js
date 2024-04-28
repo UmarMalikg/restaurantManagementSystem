@@ -79,7 +79,11 @@ const Orders = ({
     return (
       orderData &&
       orderData.filter(
-        (order) => order.orderTaker === employee._id && !order.isPaid
+        (order) =>
+          order &&
+          order.orderTaker &&
+          order.orderTaker === employee._id &&
+          !order.isPaid
       )
     );
   };

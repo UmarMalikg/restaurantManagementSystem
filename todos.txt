@@ -2,6 +2,15 @@ category in admin
 revenue generated in admin
 searchbar in waiter
 updating the logo
+table page add button
+sign in page typo
+Cashier subtotal spelling
+Waiter subtotal - remove this line
+
+
 
 delete console logs
 delete this file
+paid button in reciept page
+
+mongodb://UmarGulzar:t3r1P2962s012@ac-nkabd0r-shard-00-00.invy2e5.mongodb.net:27017,ac-nkabd0r-shard-00-01.invy2e5.mongodb.net:27017,ac-nkabd0r-shard-00-02.invy2e5.mongodb.net:27017/?ssl=true&replicaSet=atlas-71ldjz-shard-0&authSource=admin&retryWrites=true&w=majority
