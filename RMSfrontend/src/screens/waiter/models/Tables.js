@@ -6,6 +6,7 @@ import { SearchBar } from "react-native-elements";
 
 import { connect } from "react-redux";
 import { fetchTableData } from "../../../redux/actions/tableActions";
+import { fetchFloorData } from "../../../redux/actions/floorActions";
 
 import { useAppContext } from "../../../context/States";
 import defaultStyles from "../../../defaultStyles";
@@ -13,14 +14,15 @@ let isWeb = Platform.OS === "web";
 
 // setSelectedTable
 
-const Tables = ({ tableData, fetchTableData }) => {
+const Tables = ({ tableData, fetchTableData, fetchFloorData, floorData }) => {
   const [search, setSearch] = useState("");
 
   const { updateSelectedTable } = useAppContext();
 
   useEffect(() => {
     fetchTableData();
-  }, [fetchTableData]);
+    fetchFloorData();
+  }, [fetchTableData, fetchFloorData]);
 
   const navigation = useNavigation();
 
@@ -75,18 +77,33 @@ const Tables = ({ tableData, fetchTableData }) => {
               }}
             >
               {tableData &&
-                filteredData.map((table) => (
-                  <Pressable
-                    style={[
-                      waiterStyles.sideBarTables,
-                      table.isReserved && { backgroundColor: "red" },
-                    ]}
-                    key={table._id}
-                    onPress={() => selectTable(table._id)}
-                  >
-                    <Text key={table._id}>{table.name}</Text>
-                  </Pressable>
-                ))}
+                filteredData.map((table) => {
+                  const floor =
+                    floorData && floorData.find((f) => f._id === table.floor);
+                  return (
+                    <Pressable
+                      style={[
+                        waiterStyles.sideBarTables,
+                        table.isReserved && { backgroundColor: "red" },
+                      ]}
+                      key={table._id}
+                      onPress={() => selectTable(table._id)}
+                    >
+                      <Text
+                        key={table._id}
+                        style={[defaultStyles.fWB, defaultStyles.fs16]}
+                      >
+                        {table.name}
+                      </Text>
+                      <Text
+                        key={table._id}
+                        style={[defaultStyles.fs18, { textAlign: "right" }]}
+                      >
+                        {floor && floor.name}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
             </View>
           </ScrollView>
         </View>
@@ -98,11 +115,13 @@ const Tables = ({ tableData, fetchTableData }) => {
 const mapStateToProps = (state) => {
   return {
     tableData: state.tables.tableData,
+    floorData: state.floors.floorData,
   };
 };
 
 const mapDispatchToProps = {
   fetchTableData,
+  fetchFloorData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tables);

@@ -90,7 +90,6 @@ const waiterStyles = StyleSheet.create({
     backgroundColor: "#f3f3f3",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     borderRadius: 10,
-    alignItems: "center",
     padding: 10,
     marginHorizontal: 10,
     marginVertical: 3,
