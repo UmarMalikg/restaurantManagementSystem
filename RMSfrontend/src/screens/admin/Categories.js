@@ -101,11 +101,11 @@ const Categories = ({
                 </Text>
               </View>
               <View>
-                <View>
+                {/* <View>
                   <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
                     110
                   </Text>
-                </View>
+                </View> */}
                 <View
                   style={{
                     display: "flex",

@@ -62,7 +62,7 @@ const Header = () => {
                 </Text>
               </View>
               <View style={waiterStyles.headerEmployeeRole}>
-                <Text style={waiterStyles.headerEmployeeRoleText}>Cachier</Text>
+                <Text style={waiterStyles.headerEmployeeRoleText}>Cashier</Text>
               </View>
             </View>
           </View>

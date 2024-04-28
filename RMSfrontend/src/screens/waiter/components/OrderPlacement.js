@@ -271,10 +271,10 @@ const OrderPlacement = ({
       <View style={waiterStyles.orderCalculationsBox}>
         {/* <View style={waiterStyles.orderLeftCircle}></View>
         <View style={waiterStyles.orderRightCircle}></View> */}
-        <View style={waiterStyles.orderCharges}>
+        {/* <View style={waiterStyles.orderCharges}>
           <View style={waiterStyles.singleOrderCharge}>
             <View>
-              <Text style={waiterStyles.orderChargesDesText}>sub total</Text>
+              <Text style={waiterStyles.orderChargesDesText}>Sub Total:</Text>
             </View>
             <View>
               <Text style={waiterStyles.orderChargesPriceText}>{subTotal}</Text>
@@ -285,36 +285,10 @@ const OrderPlacement = ({
               <Text style={waiterStyles.orderChargesDesText}>discount</Text>
             </View>
             <View>
-              <TextInput
-                placeholder="0"
-                style={{
-                  backgroundColor: "transparent",
-                  borderWidth: 0,
-                  height: 22,
-                  color: "#F00",
-                  textAlign: "right",
-                }}
-                value={discount === 0 ? "" : discount.toString()}
-                onChangeText={(text) => {
-                  priceCalculator();
-                  const parsedDiscount = parseFloat(text);
-                  if (
-                    !isNaN(parsedDiscount) &&
-                    parsedDiscount >= 0 &&
-                    parsedDiscount <= 100
-                  ) {
-                    // If the input is a valid number between 0 and 100, update the discount state
-                    setDiscount(parsedDiscount);
-                  } else if (text === "") {
-                    // If the input is empty, set the discount to 0
-                    setDiscount(0);
-                  }
-                  priceCalculator();
-                }}
-              />
+            <Text style={waiterStyles.orderChargesDesText}>0</Text>
             </View>
           </View>
-        </View>
+        </View> */}
 
         <View style={waiterStyles.orderTotal}>
           <View>

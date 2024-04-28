@@ -44,8 +44,8 @@ const Products = ({
     console.log("Floor data fetched successfully");
   };
   const handleCategoryChanged = () => {
-    fetchProductData(); // Wait for the data to be fetched
-    console.log("Floor data fetched successfully");
+    fetchCategoryData(); // Wait for the data to be fetched
+    console.log("Category data fetched successfully");
   };
   useEffect(() => {
     changeViaSocket(socket, "productChanged", handleProductChanged);
@@ -53,14 +53,22 @@ const Products = ({
   }, [socket]);
 
   const [searchText, setSearchText] = useState("");
-  const filteredProductData = productData.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      categoryData
-        .find((category) => category._id === product.category)
-        ?.name.toLowerCase()
-        .includes(searchText.toLowerCase())
-  );
+  const filteredProductData =
+    productData &&
+    productData.filter((product) => {
+      const category =
+        product &&
+        categoryData &&
+        categoryData.find((category) => category._id === product.category);
+      return (
+        (product &&
+          product.name &&
+          product.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (category &&
+          category.name &&
+          category.name.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
 
   let serialNo = 1;
 

@@ -179,6 +179,9 @@ orderSchema.pre("save", async function (next) {
     totalPrice += this.taxPrice;
 
     // Ensure total price is non-negative
+    taxPrice = parseInt(taxPrice);
+    totalPrice = parseFloat(totalPrice.toFixed(2));
+
     this.totalPrice = Math.max(totalPrice, 0);
     this.subTotal = Math.max(subTotal, 0);
     this.taxPrice = taxPrice;
