@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import waiterStyles from "../../styles/waiterStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppContext } from "../../../context/States";
 import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 import HeaderImage from "../../common/HeaderImage";
-import HeaderNotificationButton from "../../common/HeaderNotificationButton";
+// import HeaderNotificationButton from "../../common/HeaderNotificationButton";
 import HeaderLogo from "../../common/HeaderLogo";
 import defaultStyles from "../../../defaultStyles";
 import { FontAwesome6, FontAwesome, MaterialIcons } from "@expo/vector-icons";
@@ -48,7 +48,7 @@ const Header = () => {
 
       {employee && employee.isCachier ? (
         <View style={waiterStyles.headerEmployeeAction}>
-          <HeaderNotificationButton />
+          {/* <HeaderNotificationButton /> */}
           <HeaderLogoutButton />
 
           <View style={waiterStyles.headerEmployeeInfo}>
@@ -69,7 +69,7 @@ const Header = () => {
         </View>
       ) : (
         <Pressable onPress={() => navigation.navigate("SignIn")}>
-          <Text>Sign In</Text>
+          <Text style={[defaultStyles.fWB, { color: "#fff" }]}>Sign In</Text>
         </Pressable>
       )}
     </View>

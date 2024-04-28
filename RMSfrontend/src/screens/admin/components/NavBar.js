@@ -1,5 +1,5 @@
-import { View, Text, Pressable, Image } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Pressable } from "react-native";
+import React from "react";
 import adminStyles from "../../styles/adminStyles";
 import { useNavigation } from "@react-navigation/native";
 import waiterStyles from "../../styles/waiterStyles";
@@ -7,8 +7,9 @@ import HeaderLogoutButton from "../../common/HeaderLogoutButton";
 
 import { useAppContext } from "../../../context/States";
 import HeaderImage from "../../common/HeaderImage";
-import HeaderNotificationButton from "../../common/HeaderNotificationButton";
+// import HeaderNotificationButton from "../../common/HeaderNotificationButton";
 import HeaderLogo from "../../common/HeaderLogo";
+import defaultStyles from "../../../defaultStyles";
 
 const NavBar = () => {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ const NavBar = () => {
 
       {employee && employee.isAdmin ? (
         <View style={waiterStyles.headerEmployeeAction}>
-          <HeaderNotificationButton />
+          {/* <HeaderNotificationButton /> */}
 
           <HeaderLogoutButton />
           <View style={waiterStyles.headerEmployeeInfo}>
@@ -42,7 +43,7 @@ const NavBar = () => {
       ) : (
         <View>
           <Pressable onPress={() => navigation.navigate("SignIn")}>
-            <Text>Log In</Text>
+            <Text style={[defaultStyles.fWB, { color: "#fff" }]}>Log In</Text>
           </Pressable>
         </View>
       )}
