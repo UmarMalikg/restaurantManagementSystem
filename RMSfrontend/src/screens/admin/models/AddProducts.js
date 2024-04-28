@@ -175,13 +175,14 @@ const AddProduct = ({ addProduct, fetchCategoryData, categoryData }) => {
           onValueChange={(itemValue) => handleChange("category", itemValue)}
         >
           <Picker.Item label="Select a Category" value="" />
-          {categoryData.map((category) => (
-            <Picker.Item
-              key={category._id}
-              label={category.name}
-              value={category._id}
-            />
-          ))}
+          {categoryData &&
+            categoryData.map((category) => (
+              <Picker.Item
+                key={category._id}
+                label={category && category.name}
+                value={category._id}
+              />
+            ))}
         </Picker>
         <Text style={adminStyles.modelLabel}>Product Quantity</Text>
         <TextInput

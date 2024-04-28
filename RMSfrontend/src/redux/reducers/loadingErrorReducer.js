@@ -186,7 +186,7 @@ const loadingErrorReducer = (state = initialState, action) => {
     case GET_TABLE_BY_ID_REQUEST:
       return {
         ...state,
-        // isLoading: true,
+        isLoading: true,
         isError: null,
       };
     // Set isLoading to false and update isError on request failure

@@ -27,6 +27,8 @@ import {
 import SocketContext from "../../../context/socketContext";
 
 import { emitSocket } from "../../../socketConfig/socketFunctions";
+import AdminDeleteIcon from "../../common/AdminDeleteIcon";
+import defaultStyles from "../../../defaultStyles";
 
 const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
   useEffect(() => {
@@ -160,6 +162,7 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
       setPopUpMessage("Successfully ordered!");
       showPopUp(setIsOrdered);
       emitSocket(socket, "orderChanged");
+      setDiscount(0);
     } catch (err) {
       console.error(err);
     }
@@ -171,6 +174,7 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
     setCustomerDeliveryAddress("");
     setPopUpMessage("Order Canelled!");
     showPopUp(setIsOrderCancelled);
+    setDiscount(0);
   };
 
   const draftOrder = () => {
@@ -188,9 +192,17 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
   return (
     <View style={waiterStyles.orderPlacement}>
       <View style={waiterStyles.orderSelectTableBox}>
-        <View>
+        <View style={defaultStyles.mrgB8}>
           <Picker
-            style={adminStyles.modelInput}
+            style={[
+              adminStyles.modelInput,
+              defaultStyles.padH15,
+              defaultStyles.padV5,
+              ,
+              {
+                borderRadius: 5,
+              },
+            ]}
             selectedValue={selectedOrderType}
             onValueChange={(value) => setSelectedOrderType(value)}
           >
@@ -203,6 +215,16 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
           {(selectedOrderType === "Delivery" ||
             selectedOrderType === "Take-Away") && (
             <TextInput
+              style={[
+                {
+                  backgroundColor: "transparent",
+                  borderRadius: 7,
+                  borderWidth: 1,
+                },
+                defaultStyles.padV5,
+                defaultStyles.padH10,
+                defaultStyles.fs18,
+              ]}
               placeholder={
                 selectedOrderType === "Delivery"
                   ? "Delivery Address"
@@ -284,7 +306,7 @@ const COrderPlacement = ({ fetchProductData, productData, addOrder }) => {
 
                     <View style={waiterStyles.orderMenuActionBox}>
                       <Pressable onPress={() => deleteListedItem(item.item)}>
-                        <Text>delete</Text>
+                        <AdminDeleteIcon />
                       </Pressable>
                     </View>
                   </View>

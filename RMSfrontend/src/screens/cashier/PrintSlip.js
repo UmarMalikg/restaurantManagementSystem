@@ -8,12 +8,15 @@ import {
   updateDiscount,
   updatedeliveryCharges,
 } from "../../redux/actions/orderActions";
+
 import { fetchProductData } from "../../redux/actions/productAction";
+import { updatePayment } from "../../redux/actions/orderActions";
 import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchFloorData } from "../../redux/actions/floorActions";
 import { isWeb } from "../../constants/stylesConstants";
 import ViewShot from "react-native-view-shot";
 import SocketContext from "../../context/socketContext";
+import { useNavigation } from "@react-navigation/native";
 import {
   emitSocket,
   changeViaSocket,
@@ -25,6 +28,8 @@ import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
 import { TextInput } from "react-native-paper";
 import QRCode from "react-native-qrcode-svg";
+
+import { AntDesign } from "@expo/vector-icons";
 
 let today = new Date();
 let date =
@@ -39,6 +44,7 @@ const PrintSlip = ({
   getOrderById,
   updateDiscount,
   updatedeliveryCharges,
+  updatePayment,
   selectedOrder,
   fetchProductData,
   productData,
@@ -49,6 +55,7 @@ const PrintSlip = ({
   isLoading,
   isError,
 }) => {
+  const navigation = useNavigation();
   const { orderId } = route.params;
   const printRef = useRef(null);
   const socket = useContext(SocketContext);
@@ -148,6 +155,16 @@ const PrintSlip = ({
     }
   };
 
+  const getPaid = async () => {
+    try {
+      await updatePayment(orderId, true);
+      emitSocket(socket, "orderChanged");
+      navigation.goBack();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -158,6 +175,11 @@ const PrintSlip = ({
 
   return selectedOrder !== null ? (
     <>
+      <View style={{ position: "absolute", left: 10, top: 80 }}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <AntDesign name="back" size={24} color="black" />
+        </Pressable>
+      </View>
       <View style={[cachierStyles.print]}>
         <ScrollView>
           <View
@@ -636,6 +658,27 @@ const PrintSlip = ({
                 Print
               </Text>
             </Pressable>
+            <Pressable
+              style={[
+                defaultStyles.padH12,
+                defaultStyles.padV6,
+                defaultStyles.mrg10,
+                { backgroundColor: `#3ea381`, borderRadius: 5 },
+              ]}
+              onPress={() => {
+                getPaid();
+              }}
+            >
+              <Text
+                style={[
+                  defaultStyles.fWB,
+                  defaultStyles.fs16,
+                  { color: "#fff", textAlign: "center" },
+                ]}
+              >
+                Paid
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
@@ -664,6 +707,7 @@ const mapDispatchToProps = {
   fetchProductData,
   fetchTableData,
   fetchFloorData,
+  updatePayment,
   updatedeliveryCharges,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PrintSlip);

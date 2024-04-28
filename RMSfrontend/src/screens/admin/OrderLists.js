@@ -75,26 +75,28 @@ const OrderLists = ({
   const endIndex = startIndex + itemsPerPage;
 
   // Slice the orderData array based on pagination
-  const displayedOrders = orderData
-    .filter((order) => {
-      // Filter by order type if a filter is selected
-      if (orderTypeFilter) {
-        return order.orderType === orderTypeFilter;
-      }
-      return true;
-    })
-    .filter((order) => {
-      // Filter by search text if available
-      return (
-        order &&
-        order.isPaid &&
-        order.orderItems &&
-        order.orderItems.some((item) =>
-          item.item.includes(searchText.toLowerCase())
-        )
-      );
-    })
-    .slice(startIndex, endIndex);
+  const displayedOrders =
+    orderData &&
+    orderData
+      .filter((order) => {
+        // Filter by order type if a filter is selected
+        if (orderTypeFilter) {
+          return order.orderType === orderTypeFilter;
+        }
+        return true;
+      })
+      .filter((order) => {
+        // Filter by search text if available
+        return (
+          order &&
+          order.isPaid &&
+          order.orderItems &&
+          order.orderItems.some((item) =>
+            item.item.includes(searchText.toLowerCase())
+          )
+        );
+      })
+      .slice(startIndex, endIndex);
 
   // Handle next and previous page navigation
   const nextPage = () => {
@@ -129,14 +131,14 @@ const OrderLists = ({
   return (
     <View style={adminStyles.theScreen}>
       <View>
-        <View>
+        {/* <View>
           <TextInput
             style={adminStyles.dataSearcher}
             placeholder="search the order with table No, id..."
             value={searchText}
             onChangeText={(text) => setSearchText(text)}
           />
-        </View>
+        </View> */}
         <View style={adminStyles.orderFilter}>
           <View style={adminStyles.orderTypeFilter}>
             <Pressable

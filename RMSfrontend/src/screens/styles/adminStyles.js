@@ -292,10 +292,10 @@ const adminStyles = StyleSheet.create({
     margin: 20,
   },
   recordOverviewBox: {
-    height: 125,
+    height: 155,
     borderRadius: 15,
     margin: 20,
-    width: 200,
+    width: "27%",
     ...(isWeb && {
       cursor: "pointer",
     }),

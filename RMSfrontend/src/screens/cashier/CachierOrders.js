@@ -14,10 +14,7 @@ import cachierStyles from "../styles/cachierStyles";
 
 import { useNavigation } from "@react-navigation/native";
 
-import {
-  fetchOrderData,
-  updatePayment,
-} from "../../redux/actions/orderActions";
+import { fetchOrderData } from "../../redux/actions/orderActions";
 import { fetchProductData } from "../../redux/actions/productAction";
 import { fetchTableData } from "../../redux/actions/tableActions";
 import { fetchEmployeeData } from "../../redux/actions/employeeActions";
@@ -34,7 +31,6 @@ import defaultStyles from "../../defaultStyles";
 
 const CachierOrders = ({
   fetchOrderData,
-  updatePayment,
   orderData,
   fetchProductData,
   productData,
@@ -116,15 +112,6 @@ const CachierOrders = ({
     navigation.navigate("PrintSlip", { orderId });
   };
 
-  const getPaid = async (orderId) => {
-    try {
-      await updatePayment(orderId, true);
-      emitSocket(socket, "orderChanged");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   // Handle next and previous page navigation
   const nextPage = () => {
     setPage(page + 1);
@@ -144,26 +131,26 @@ const CachierOrders = ({
     return <ErrorPage />;
   }
 
-  // if (displayedOrders && displayedOrders.length === 0) {
-  //   return (
-  //     <View style={defaultStyles.container}>
-  //       <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>
-  //         There's No Order...
-  //       </Text>
-  //     </View>
-  //   );
-  // }
+  if (displayedOrders && displayedOrders.length === 0) {
+    return (
+      <View style={defaultStyles.container}>
+        <Text style={[defaultStyles.fs25, defaultStyles.fWB]}>
+          There's No Order...
+        </Text>
+      </View>
+    );
+  }
   return (
     <View style={cachierStyles.screen}>
       <View>
-        <View>
+        {/* <View>
           <TextInput
             style={adminStyles.dataSearcher}
             placeholder="search the order with table No, id..."
             value={searchText}
             onChangeText={(text) => setSearchText(text)}
           />
-        </View>
+        </View> */}
         <View style={adminStyles.orderFilter}>
           <View style={adminStyles.orderTypeFilter}>
             <Pressable
@@ -533,28 +520,6 @@ const CachierOrders = ({
                           Get Reciept
                         </Text>
                       </Pressable>
-                      <Pressable
-                        style={[
-                          defaultStyles.padV6,
-                          defaultStyles.padH12,
-                          defaultStyles.rowCenteredFlex,
-                          defaultStyles.mrgT10,
-                          { backgroundColor: "#3ea381", borderRadius: 7 },
-                        ]}
-                        onPress={() => {
-                          getPaid(order._id);
-                        }}
-                      >
-                        <Text
-                          style={[
-                            defaultStyles.fWB,
-                            defaultStyles.fs18,
-                            { color: "#fff" },
-                          ]}
-                        >
-                          Paid
-                        </Text>
-                      </Pressable>
                     </View>
                   </View>
                 </View>
@@ -600,6 +565,5 @@ const mapDispatchToProps = {
   fetchProductData,
   fetchTableData,
   fetchEmployeeData,
-  updatePayment,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CachierOrders);

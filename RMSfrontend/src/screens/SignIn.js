@@ -90,7 +90,7 @@ const SignIn = () => {
             style={loginRegisterFormStyles.inputfield}
           />
           <TextInput
-            placeholder="Enter Password..."
+            placeholder="Enter password..."
             value={pswrd}
             onChangeText={(text) => setPswrd(text)}
             secureTextEntry

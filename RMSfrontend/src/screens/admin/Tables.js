@@ -90,13 +90,13 @@ const Tables = ({
               <View style={adminStyles.catTabBox} key={table._id}>
                 <View>
                   <View>
-                    <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
+                    <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
                       {table.name}
                     </Text>
                   </View>
                   <View>
                     <View>
-                      <Text style={[defaultStyles.fWB, defaultStyles.fs20]}>
+                      <Text style={[defaultStyles.fWB, defaultStyles.fs16]}>
                         {floor ? floor.name : "NA"}
                       </Text>
                     </View>
